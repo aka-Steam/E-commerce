@@ -1,0 +1,52 @@
+@import '../variables.css';
+
+.input-container {
+  position: relative;
+  width: max-content;
+}
+
+.input-field {
+  display: inline-block;
+
+  width: 370px;
+  height: 52px;
+  padding: 0 var(--space-xs);
+
+  outline: none;
+  border: 1px solid var(--input-border);
+
+  font-family: 'Roboto';
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.input-field:hover,
+.input-field:focus {
+  border-color: var(--input-border-focus);
+}
+
+.input-field:disabled,
+.input-field[disabled] {
+  background-color: var(--input-bg-disabled);
+  border-color: var(--input-border-disabled);
+  cursor: not-allowed;
+}
+
+.input-icon {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  margin-left: 8px;
+  z-index: 999;
+  cursor: pointer;
+}
+
+
+.input-field:disabled+.input-icon,
+.input-field[disabled]+.input-icon {
+  cursor: not-allowed;
+}
+
+.input-field:has(+ .input-icon) {
+  padding-right: 44px;
+}

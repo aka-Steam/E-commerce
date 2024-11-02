@@ -1,0 +1,78 @@
+.header{
+    position: relative;
+    
+    height: 90px;
+    padding: 0 100px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: var(--color-bg-header);
+    border-bottom: 2px solid var(--color-bdc-header);
+}
+
+.logoContainer,
+.otherActionsContainer,
+.navContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.logoContainer{
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.navContainer{
+    position: absolute;
+    top: 32px;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    width: 351px;
+}
+
+.navLink{
+    display: block;
+    text-decoration: none;
+    font-size: 18px;
+    color: var(--text-primary);
+}
+
+
+.navLink:hover,
+.navLink:focus{
+    color: var(--text-accent);
+}
+
+
+
+.otherActionsContainer{
+    gap: var(--space-xl);
+}
+
+
+// Заглушка для иконок корзины и профиля
+.iconStub{
+    content: '';
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--brand);
+    border-radius: 20%;
+}
+
+@media (max-width: 992px) {
+    .header{
+        padding: 0 60px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .header{
+        height: 50px;
+        padding: 0 50px;
+    }
+}

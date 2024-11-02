@@ -1,0 +1,70 @@
+@import '../variables.css';
+
+.loaderContainer {
+    width: 60px;
+    height: 60px;
+    padding: 10px;
+}
+
+.loader {
+    border: 5px solid rgba(0, 0, 0, 0); 
+    border-top: 5px solid var(--loader-bg);
+    border-left: 5px solid var(--loader-bg);
+    border-right: 5px solid var(--loader-bg);
+
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+
+    transform: rotate(-58deg);
+
+    /* Анимация вращения */
+    /* animation: spin 1.25s linear infinite; */
+}
+
+.loaderContainer.s {
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+}
+
+.loaderContainer.m {
+    width: 48px;
+    height: 48px;
+    padding: 8px;
+}
+
+.loaderContainer.l {
+    width: 60px;
+    height: 60px;
+    padding: 10px;
+
+}
+
+.s>.loader {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+}
+
+.m>.loader {
+    width: 32px;
+    height: 32px;
+    border-width: 4px;
+}
+
+.l>.loader {
+    width: 40px;
+    height: 40px;
+    border-width: 5px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
