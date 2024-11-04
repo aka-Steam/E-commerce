@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
 
 //  TODO - Вынести лОГО В КОМПОНЕНТ
-//  TODO - Добавить иконки карзины и профиля
+//  TODO - Добавить иконки корзины и профиля
 
 const Header = () => (
   <header className={styles.header}>

@@ -1,0 +1,56 @@
+@import 'styles/variables';
+
+.main{
+    padding: 60px 100px 100px 100px;
+}
+
+.backButton{
+    margin-bottom: 32px;
+}
+
+.productInfoContainer{
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap:48px;
+    margin-bottom: 48px;
+}
+
+.productDescription{
+    max-width: 653px;
+}
+
+.title{
+    margin-bottom: $space-xl;
+}
+
+.subtitle{
+    margin-bottom: 80px;
+}
+
+.price{
+    margin-bottom: 48px;
+}
+
+.reletadItemsTitle{
+    font-size: 32px;
+    margin-bottom: 32px;
+}
+
+@media (max-width: 992px) {
+    .main{
+        padding: 60px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .main{
+
+        padding: 50px;
+    }
+
+    .productInfoContainer{
+        flex-wrap: wrap;
+    }
+}

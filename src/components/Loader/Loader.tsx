@@ -1,5 +1,5 @@
 import React from 'react';
-import './Loader.css'
+import s from './Loader.module.scss'
 
 export type LoaderProps = {
     /** Размер */

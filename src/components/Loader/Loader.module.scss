@@ -1,4 +1,4 @@
-@import '../variables.css';
+@import 'styles/variables';
 
 .loaderContainer {
     width: 60px;
@@ -8,9 +8,9 @@
 
 .loader {
     border: 5px solid rgba(0, 0, 0, 0); 
-    border-top: 5px solid var(--loader-bg);
-    border-left: 5px solid var(--loader-bg);
-    border-right: 5px solid var(--loader-bg);
+    border-top: 5px solid $loader-bg;
+    border-left: 5px solid $loader-bg;
+    border-right: 5px solid $loader-bg;
 
     border-radius: 50%;
     width: 40px;
@@ -19,7 +19,7 @@
     transform: rotate(-58deg);
 
     /* Анимация вращения */
-    /* animation: spin 1.25s linear infinite; */
+    animation: spin 1.25s linear infinite;
 }
 
 .loaderContainer.s {

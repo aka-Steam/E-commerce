@@ -1,7 +1,48 @@
-.titleContainer{
+@import 'styles/variables';
 
+.main {
+    padding: 100px;
 }
 
-h1{
-    font-size: 44px;
+.titleContainer {
+    margin: 0 auto 48px auto;
+    max-width: 653px;
+    text-align: center;
+}
+
+.title {
+    margin-bottom: $space-xl;
+}
+
+.subtitle {
+    margin-bottom: $space-xxs;
+}
+
+.controlsContainer{
+    margin-bottom: 48px;
+}
+
+.controlsContainerGroup {
+    display: flex;
+    gap: $space-xl;
+    margin-bottom: $space-xl;
+}
+
+.filter{
+    max-width: 300px;
+}
+
+.contentTitleContainer{
+    display: flex;
+    align-items: center;
+    gap: $space-xl;
+}
+
+.contentTitle {
+    font-size: 32px;
+    line-height: 48px;
+}
+
+.contentCounter{
+    
 }
