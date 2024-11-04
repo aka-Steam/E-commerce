@@ -1,3 +1,5 @@
+@import 'styles/variables';
+
 .header{
     position: relative;
     
@@ -8,8 +10,8 @@
     justify-content: space-between;
     align-items: center;
 
-    background-color: var(--color-bg-header);
-    border-bottom: 2px solid var(--color-bdc-header);
+    background-color: $color-bg-header;
+    border-bottom: 2px solid $color-bdc-header;
 }
 
 .logoContainer,
@@ -21,9 +23,10 @@
 
 .logoContainer{
     align-items: center;
-    gap: var(--space-xs);
+    gap: $space-xs;
 }
 
+// TODO - При ширине =< 768px nav превратить в бургер 
 .navContainer{
     position: absolute;
     top: 32px;
@@ -35,31 +38,51 @@
 }
 
 .navLink{
+    position: relative;
+
     display: block;
     text-decoration: none;
     font-size: 18px;
-    color: var(--text-primary);
+    color: $text-primary;
+
+    transition: .3s;
 }
 
+.navLink::after{
+    content: '';
+    position: absolute;
+    display: none;
+
+    width: 112%;
+    height: 3px;
+
+    top: 56px;
+    left: -6%;
+
+    background-color: $text-accent;
+}
 
 .navLink:hover,
 .navLink:focus{
-    color: var(--text-accent);
+    font-weight: 600;
+    color: $text-accent;
 }
 
+.navLink:focus::after{
+    display: block;
+}
 
 
 .otherActionsContainer{
-    gap: var(--space-xl);
+    gap: $space-xl;
 }
-
-
-// Заглушка для иконок корзины и профиля
+ 
+// Временная заглушка для иконок корзины и профиля
 .iconStub{
     content: '';
     width: 30px;
     height: 30px;
-    border: 1px solid var(--brand);
+    border: 1px solid $brand;
     border-radius: 20%;
 }
 

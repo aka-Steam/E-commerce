@@ -1,0 +1,64 @@
+@import 'styles/variables';
+
+.input {
+  --l-input-text: #{$input-text};
+  --l-input-bg: #{$input-bg};
+  --l-input-border: #{$input-border};
+
+  width: 100%;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding: $space-s $space-xs;
+  background: var(--l-input-bg);
+  border: 1px solid var(--l-input-border);
+  transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+
+  &__field {
+    padding: 0;
+    display: block;
+    flex-grow: 1;
+    height: 100%;
+    outline: none;
+    font-family: 'Roboto';
+    appearance: none;
+    border: none;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+    color: var(--l-input-text);
+    transition: color 0.3s ease;
+    background: none;
+
+    &::placeholder {
+      color: $input-placeholder;
+      opacity: 1;
+    }
+  }
+
+  &:hover {
+    --l-input-text: #{$input-text-focus};
+    --l-input-bg: #{$input-bg-focus};
+    --l-input-border: #{$input-border-focus};
+  }
+
+  &:focus-within {
+    --l-input-text: #{$input-text-focus};
+    --l-input-bg: #{$input-bg-focus};
+    --l-input-border: #{$input-border-focus};
+  }
+
+  &_disabled {
+    pointer-events: none;
+    
+    --l-input-text: #{$input-text-disabled};
+    --l-input-bg: #{$input-bg-disabled};
+    --l-input-border: #{$input-border-disabled};
+  }
+
+  &__after {
+    display: flex;
+    flex-shrink: 0;
+    margin-left: $space-xxs;
+  }
+}

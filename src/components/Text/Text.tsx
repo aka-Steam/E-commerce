@@ -37,7 +37,7 @@ const Text: React.FC<TextProps> = ({
         maxLines && s[`text_multi-ellipsis`],
         className,
       )}
-      style={{ '--max-lines-count': maxLines } as React.CSSProperties}
+      style={{ WebkitLineClamp: maxLines }}
     >
       {children}
     </Tag>

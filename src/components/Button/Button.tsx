@@ -1,8 +1,7 @@
 import React from 'react';
-// import classnames from 'classnames'
-import styles from './Button.module.css'
-import Loader from '../Loader'
-import Text from '../Text'
+import styles from './Button.module.scss';
+import Loader from 'components/Loader';
+import Text from 'components/Text';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   /** Состояние загрузки */
@@ -23,13 +22,14 @@ const Button: React.FC<ButtonProps> = ({ loading, children, onClick, className, 
       className={`${styles.button} ${loading ? styles.loading : ''} ${className}`}
       disabled={loading}
       onClick={handleClick}
-      {...rest}>
+      {...rest}
+    >
       {loading && <Loader size="s" color="#FFFFFF" />}
-      <Text tag={'div'} view='button'>
+      <Text tag={'div'} view={'button'}>
         {children}
       </Text>
     </button>
-  )
+  );
 };
 
 export default Button;
