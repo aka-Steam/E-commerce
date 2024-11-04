@@ -1,15 +1,15 @@
 import React from 'react';
 import s from './Pagination.module.scss';
-
-
+import cn from 'classnames';
 
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  className?: string;
 };
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange, className }) => {
   // Функция для генерации массива страниц
   const getPageNumbers = () => {
     const pages = [];
@@ -32,58 +32,69 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div className={cn(s.pagination, className)}>
       {/* Кнопка для перехода на предыдущую страницу */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
+        className={s.pagination__button}
         style={{
-          border: 'none',
-          background: 'none',
           cursor: currentPage === 1 ? 'default' : 'pointer',
           opacity: currentPage === 1 ? 0.5 : 1,
         }}
       >
-        &#8592;
+        <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M19.043 25.6126L10.9561 17.5258C10.0011 16.5708 10.0011 15.008 10.9561 14.0529L19.043 5.96613"
+            stroke="black"
+            stroke-width="1.5"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </button>
 
       {/* Кнопки для страниц */}
-      {getPageNumbers().map((page, index) =>
-        typeof page === 'number' ? (
-          <button
-            key={index}
-            onClick={() => onPageChange(page)}
-            style={{
-              margin: '0 4px',
-              padding: '4px 8px',
-              backgroundColor: currentPage === page ? '#4CAF50' : 'transparent',
-              color: currentPage === page ? '#fff' : '#000',
-              border: currentPage === page ? '1px solid #4CAF50' : '1px solid #ccc',
-              borderRadius: '4px',
-              cursor: 'pointer',
-            }}
-          >
-            {page}
-          </button>
-        ) : (
-          <span key={index} style={{ margin: '0 4px' }}>
-            {page}
-          </span>
-        )
-      )}
+      <span className={s.pagination__pages}>
+        {getPageNumbers().map((page, index) =>
+          typeof page === 'number' ? (
+            <button
+              key={index}
+              onClick={() => onPageChange(page)}
+              className={cn(s.pagination__page, currentPage === page && s[`pagination__page--active`])}
+            >
+              {page}
+            </button>
+          ) : (
+            // Отображаем многоточие
+            <span className={s.pagination__ellipsis} key={index}>
+              {page}
+            </span>
+          ),
+        )}
+      </span>
 
       {/* Кнопка для перехода на следующую страницу */}
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
+        className={s.pagination__button}
         style={{
-          border: 'none',
-          background: 'none',
           cursor: currentPage === totalPages ? 'default' : 'pointer',
           opacity: currentPage === totalPages ? 0.5 : 1,
         }}
       >
-        &#8594;
+        <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M11.957 25.6126L20.0439 17.5258C20.9989 16.5708 20.9989 15.008 20.0439 14.0529L11.957 5.96613"
+            stroke="black"
+            stroke-width="1.5"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </button>
     </div>
   );
