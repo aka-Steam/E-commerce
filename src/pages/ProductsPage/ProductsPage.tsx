@@ -1,22 +1,76 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import Text from 'components/Text';
 import Input from 'components/Input';
 import Button from 'components/Button';
-import MultiDropdown, {Option} from 'components/MultiDropdown';
+import MultiDropdown, { Option } from 'components/MultiDropdown';
+import Card from 'components/Card';
 import Pagination from 'components/Pagination';
 
 import s from './ProductsPage.module.scss';
 
+type ProductInfo = {
+  id: number;
+  description: string;
+  images: string[];
+  price: string;
+  title: string;
+  category: string;
+};
+
 const PoductsPaje = () => {
-  
+  const productsApiUrl: string = import.meta.env.VITE_API_URL + '/products';
+  const [PRODUCTS, setProducts] = useState<ProductInfo[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   const OPTIONS = [
-    { key: 'msk', value: 'Moscow' },
-    { key: 'spb', value: 'Saint Petersburg' },
-    { key: 'ekb', value: 'Ekaterinburg' },
+    { key: 'o1', value: 'Option1' },
+    { key: 'o2', value: 'Option2' },
+    { key: 'o3', value: 'Option3' },
   ];
+
+  const [value, setValue] = React.useState<Option[]>([]);
+  const navigate = useNavigate();
+
+  // Получение данных о продуктах
+  useEffect(() => {
+    const fetch = async () => {
+      const result = await axios({
+        method: 'get',
+        url: productsApiUrl,
+      });
+
+      setProducts(
+        result.data.map((p: { id: any; description: any; images: any; price: any; title: any; category: { name: any; }; }) => ({
+          id: p.id,
+          description: p.description,
+          images: p.images,
+          price: p.price,
+          title: p.title,
+          category: p.category.name,
+        })),
+      );
+    };
+
+    fetch();
+  }, []);
+
   
-  const [value, setValue] = React.useState<Option[]>( []);
+  
+
+  // Количество карточек на странице
+  const itemsPerPage = 9;
+
+  // Вычисление индексов для отображаемых товаров
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentProducts = PRODUCTS.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <main className={s.main}>
@@ -29,6 +83,7 @@ const PoductsPaje = () => {
           name of the item
         </Text>
       </div>
+
       <div className={s.controlsContainer}>
         <div className={s.controlsContainerGroup}>
           <Input placeholder={'Search product'}></Input>
@@ -40,19 +95,46 @@ const PoductsPaje = () => {
           options={OPTIONS}
           value={value}
           onChange={setValue}
-          getTitle={(values: Option[]) => values.length === 0 ? 'Filter': values.map(({ value }) => value).join(', ')}
+          getTitle={(values: Option[]) =>
+            values.length === 0 ? 'Filter' : values.map(({ value }) => value).join(', ')
+          }
         />
-        
       </div>
+
+      <div className={s.contentTitleContainer}>
+        <Text className={s.contentTitle} tag={'h2'} weight={'bold'}>
+          Total Product
+        </Text>
+        <Text tag="div" view="p-20" weight="bold" color="accent" className={s.contentCounter}>
+          {PRODUCTS.length}
+        </Text>
+      </div>
+
       <div className={s.contentContainer}>
-        <div className={s.contentTitleContainer}>
-          <Text className={s.contentTitle} tag={'h2'} weight={'bold'}>
-            Total Product
-          </Text>
-          <Text tag='div' view='p-20' weight='bold' color='accent' className={s.contentCounter}>184</Text>
-        </div>
-        <Pagination currentPage={1} totalPages={10} onPageChange={(cp: any)=>{console.log(cp)}}></Pagination>
+        {currentProducts.map((product, index) => {
+          const imageSrc = product.images ? product.images[0].match(/https?:\/\/[^\s"]+/) : 'src/assets/noimage.png';
+
+          return (
+            <Card
+              key={index}
+              image={imageSrc}
+              captionSlot={product.category}
+              title={product.title}
+              subtitle={product.description}
+              contentSlot={'$' + product.price}
+              actionSlot={<Button>Add to Cart</Button>}
+              onClick={() => navigate(`/products/${product.id}`)}
+            />
+          );
+        })}
       </div>
+
+      <Pagination
+        className={s.paggination}
+        currentPage={currentPage}
+        totalPages={Math.ceil(PRODUCTS.length / itemsPerPage)}
+        onPageChange={handlePageChange}
+      ></Pagination>
     </main>
   );
 };

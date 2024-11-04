@@ -2,6 +2,7 @@
 
 .main{
     padding: 60px 100px 100px 100px;
+    max-width: 1501px;
 }
 
 .backButton{
@@ -35,6 +36,12 @@
 .reletadItemsTitle{
     font-size: 32px;
     margin-bottom: 32px;
+}
+
+.relatedItemsContainer{
+    display: flex;
+    gap: 80px;
+    flex-wrap: wrap;
 }
 
 @media (max-width: 992px) {

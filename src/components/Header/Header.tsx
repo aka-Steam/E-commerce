@@ -51,7 +51,7 @@ const Header = () => (
     <nav className={styles.navContainer}>
       <Link className={styles.navLink} to="products">Products</Link>
       <Link className={styles.navLink} to="/">Categories</Link>
-      <Link className={styles.navLink} to="/product">About us</Link>
+      <Link className={styles.navLink} to="/">About us</Link>
     </nav>
     <div className={styles.otherActionsContainer}>
       <div className={styles.iconStub}></div>

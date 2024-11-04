@@ -33,6 +33,8 @@
 }
 
 .contentTitleContainer{
+    margin-bottom: 32px;
+    
     display: flex;
     align-items: center;
     gap: $space-xl;
@@ -43,6 +45,13 @@
     line-height: 48px;
 }
 
-.contentCounter{
-    
+.contentContainer{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px 80px;
+}
+
+.paggination{
+    margin: 48px auto;
 }
