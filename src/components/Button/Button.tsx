@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({ loading, children, onClick, className, 
       onClick={handleClick}
       {...rest}
     >
-      {loading && <Loader size="s" color="#FFFFFF" />}
+      {loading && <Loader size="s" />}
       <Text tag={'div'} view={'button'}>
         {children}
       </Text>
