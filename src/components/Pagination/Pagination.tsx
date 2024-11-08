@@ -2,6 +2,9 @@ import React from 'react';
 import s from './Pagination.module.scss';
 import cn from 'classnames';
 
+import ArrowRightIcon from 'components/icons/ArrowRightIcon';
+import ArrowLeftIcon from 'components/icons/ArrowLeftIcon';
+
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
@@ -43,16 +46,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
           opacity: currentPage === 1 ? 0.5 : 1,
         }}
       >
-        <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M19.043 25.6126L10.9561 17.5258C10.0011 16.5708 10.0011 15.008 10.9561 14.0529L19.043 5.96613"
-            stroke="black"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <ArrowLeftIcon width="31" height="31" />
       </button>
 
       {/* Кнопки для страниц */}
@@ -85,16 +79,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
           opacity: currentPage === totalPages ? 0.5 : 1,
         }}
       >
-        <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M11.957 25.6126L20.0439 17.5258C20.9989 16.5708 20.9989 15.008 20.0439 14.0529L11.957 5.96613"
-            stroke="black"
-            strokeWidth="1.5"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <ArrowRightIcon width="31" height="31" />
       </button>
     </div>
   );
