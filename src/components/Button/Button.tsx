@@ -8,18 +8,20 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
   /** Текст кнопки */
   children: React.ReactNode;
+  /** Дополнительный класс */
+  className?: string;
 };
 
-const Button: React.FC<ButtonProps> = ({ loading, children, onClick, className, ...rest }) => {
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+const Button: React.FC<ButtonProps> = ({ loading, children, onClick, className, ...rest }) => {  
+  const handleClick = React.useCallback((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!loading && onClick) {
       onClick(event);
     }
-  };
+  },[])
 
   return (
     <button
-      className={`${styles.button} ${loading ? styles.loading : ''} ${className}`}
+      className={`${styles.button} ${loading && styles.button_loading} ${className}`}
       disabled={loading}
       onClick={handleClick}
       {...rest}

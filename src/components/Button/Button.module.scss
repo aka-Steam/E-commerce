@@ -14,25 +14,25 @@
     flex-direction: row;
     white-space: nowrap;
     gap: $space-xxs;
-}
 
-.button:hover {
-    background-color: $button-primary-bg-hover;
-    color: $button-primary-text-hover;
-}
-
-.button.loading:hover:not(.button:disabled, .button[disabled]) {
-    background-color: $button-primary-bg;
-    color: $button-primary-text-hover;
-}
-
-.button:disabled,
-.button[disabled] {
-    background-color: $button-primary-bg-disabled;
-    color: $button-primary-text-disabled;
-}
-
-.button:active {
-    background-color: $button-primary-bg-active;
-    color: $button-primary-text-active;
+    &:hover {
+        background-color: $button-primary-bg-hover;
+        color: $button-primary-text-hover;
+    }
+    
+    &_loading:hover:not(.button:disabled, .button[disabled]) {
+        background-color: $button-primary-bg;
+        color: $button-primary-text-hover;
+    }
+    
+    &:disabled,
+    &[disabled] {
+        background-color: $button-primary-bg-disabled;
+        color: $button-primary-text-disabled;
+    }
+    
+    &:active {
+        background-color: $button-primary-bg-active;
+        color: $button-primary-text-active;
+    }
 }

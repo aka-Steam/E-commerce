@@ -32,10 +32,9 @@ const Card: React.FC<CardProps> = ({
   contentSlot,
   onClick,
   actionSlot,
-  ...otherProps
 }) => {
   return (
-    <div className={cn(s.card, className)} onClick={onClick} {...otherProps}>
+    <div className={cn(s.card, className)} onClick={onClick}>
       <div className={s.card__header}>
         <img className={s['card__header-src']} src={image} alt={'card'} />
       </div>
