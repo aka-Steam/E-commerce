@@ -34,17 +34,17 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     return pages;
   };
 
+  const handlerPreviousPageClick = React.useCallback(() => onPageChange(currentPage - 1), [onPageChange]);
+  const handlerNextPageClick = React.useCallback(() => onPageChange(currentPage + 1), [onPageChange]);
+  const handlePageClick = React.useCallback((page: number) => () => onPageChange(page), [onPageChange]);
+
   return (
     <div className={cn(s.pagination, className)}>
       {/* Кнопка для перехода на предыдущую страницу */}
       <button
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={handlerPreviousPageClick}
         disabled={currentPage === 1}
-        className={s.pagination__button}
-        style={{
-          cursor: currentPage === 1 ? 'default' : 'pointer',
-          opacity: currentPage === 1 ? 0.5 : 1,
-        }}
+        className={cn(s.pagination__button, currentPage === 1 && s.pagination__button_disabled)}
       >
         <ArrowLeftIcon width="31" height="31" />
       </button>
@@ -55,8 +55,8 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
           typeof page === 'number' ? (
             <button
               key={index}
-              onClick={() => onPageChange(page)}
-              className={cn(s.pagination__page, currentPage === page && s[`pagination__page--active`])}
+              onClick={handlePageClick(page)}
+              className={cn(s.pagination__page, currentPage === page && s[`pagination__page_active`])}
             >
               {page}
             </button>
@@ -71,13 +71,9 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
 
       {/* Кнопка для перехода на следующую страницу */}
       <button
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={handlerNextPageClick}
         disabled={currentPage === totalPages}
-        className={s.pagination__button}
-        style={{
-          cursor: currentPage === totalPages ? 'default' : 'pointer',
-          opacity: currentPage === totalPages ? 0.5 : 1,
-        }}
+        className={cn(s.pagination__button, currentPage === totalPages && s.pagination__button_disabled)}
       >
         <ArrowRightIcon width="31" height="31" />
       </button>

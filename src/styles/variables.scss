@@ -70,6 +70,12 @@ $input-text-disabled: rgba(0, 0, 0, 0.2);
 /* Dropdown */
 $dropdown-options-bg: #FFFFFF;
 
+/* Pagination */
+$color-index: currentColor;
+$color-index-active: #FFFFFF;
+
+
+
 @mixin square($size, $border-radius: none){
     width: $size;
     height: $size;
