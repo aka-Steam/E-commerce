@@ -11,7 +11,6 @@ $space-xxs: 8px;
 
 $shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 
-
 /* Layout */
 $color-bg: #FFFFFF;
 $color-bg-header: $color-bg;
@@ -20,7 +19,13 @@ $color-bg-footer: #000000;
 
 $color-bdc-header: #F3F3F3;
 
-$header-height: 90px;
+$header-height-xl: 90px;
+$header-height-lg: 90px;
+$header-height-md: 50px;
+
+$general-padding-xl: 100px;
+$general-padding-lg: 60px;
+$general-padding-md: 50px;
 
 
 /* Loader */
@@ -72,6 +77,12 @@ $dropdown-options-bg: #FFFFFF;
     @if ($border-radius != none){
         border-radius: $border-radius;
     }
+}
+
+@mixin transition-default(
+    $property-name: all,
+){
+    transition: $property-name 0.3s ease 0s normal
 }
 
 

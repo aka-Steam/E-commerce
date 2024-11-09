@@ -1,101 +1,91 @@
 @import 'styles/variables';
 
-.header{
+.header {
     position: relative;
-    
-    height: 90px;
-    padding: 0 100px;
-    
+
+    height: $header-height-xl;
+    padding: 0 $general-padding-xl;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     background-color: $color-bg-header;
     border-bottom: 2px solid $color-bdc-header;
-}
 
-.logoContainer,
-.otherActionsContainer,
-.navContainer{
-    display: flex;
-    justify-content: space-between;
-}
+    @media (max-width: 992px) {
+        padding: 0 $general-padding-lg;
+    }
 
-.logoContainer{
-    align-items: center;
-    gap: $space-xs;
-}
+    @media (max-width: 768px) {
+        height: $header-height-md;
+        padding: 0 $general-padding-md;
+    }
 
-// TODO - При ширине =< 768px nav превратить в бургер 
-.navContainer{
-    position: absolute;
-    top: 32px;
-    left: 0;
-    right: 0;
-    margin: auto;
+    &__other-actions-container,
+    &__nav-container {
+        display: flex;
+        justify-content: space-between;
+    }
 
-    width: 351px;
-}
+    // TODO - При ширине =< 768px nav превратить в бургер 
+    &__nav-container {
+        position: absolute;
+        top: 32px;
+        left: 0;
+        right: 0;
+        margin: auto;
 
-.navLink{
-    position: relative;
+        width: 351px;
+    }
 
-    display: block;
-    text-decoration: none;
-    font-size: 18px;
-    color: $text-primary;
+    &__other-actions-container {
+        gap: $space-xl;
+    }
 
-    transition: .3s;
-}
-
-.navLink::after{
-    content: '';
-    position: absolute;
-    display: none;
-
-    width: 112%;
-    height: 3px;
-
-    top: 56px;
-    left: -6%;
-
-    background-color: $text-accent;
-}
-
-.navLink:hover,
-.navLink:focus{
-    font-weight: 600;
-    color: $text-accent;
-}
-
-.navLink:focus::after{
-    display: block;
-}
-
-
-.otherActionsContainer{
-    gap: $space-xl;
-}
- 
-// Временная заглушка для иконок корзины и профиля
-.iconStub{
-    content: '';
-    width: 30px;
-    height: 30px;
-    border: 1px solid $brand;
-    border-radius: 20%;
-}
-
-@media (max-width: 992px) {
-    .header{
-        padding: 0 60px;
+    &__other-actions-button {
+        padding: 0;
+        @include square(30px);
+        border: none;
+        outline: none;
+        background-color: inherit;
+        cursor: pointer;
     }
 }
 
+.nav{
+    &__link {
+        position: relative;
+        display: block;
 
-@media (max-width: 768px) {
-    .header{
-        height: 50px;
-        padding: 0 50px;
+        text-decoration: none;
+        font-size: 18px;
+        color: $text-primary;
+
+        @include transition-default;
+    }
+
+    &__link::after {
+        content: '';
+        position: absolute;
+        display: none;
+
+        width: 112%;
+        height: 3px;
+
+        top: 56px;
+        left: -6%;
+
+        background-color: $text-accent;
+    }
+
+    &__link:hover,
+    &__link:focus {
+        font-weight: 600;
+        color: $text-accent;
+    }
+
+    &__link:focus::after {
+        display: block;
     }
 }
