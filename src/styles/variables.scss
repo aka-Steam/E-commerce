@@ -23,7 +23,6 @@ $color-bdc-header: #F3F3F3;
 $header-height: 90px;
 
 
-
 /* Loader */
 $loader-bg: $brand;
 
@@ -63,10 +62,18 @@ $input-bg-disabled: #FFFFFF;
 $input-border-disabled: #FFFFFF;
 $input-text-disabled: rgba(0, 0, 0, 0.2);
 
-
-
 /* Dropdown */
 $dropdown-options-bg: #FFFFFF;
+
+@mixin square($size, $border-radius: none){
+    width: $size;
+    height: $size;
+
+    @if ($border-radius != none){
+        border-radius: $border-radius;
+    }
+}
+
 
 // TODO - dark theme
 /* @media (prefers-color-scheme: dark){

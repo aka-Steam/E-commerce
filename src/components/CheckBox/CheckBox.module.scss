@@ -1,0 +1,43 @@
+@import 'styles/variables.scss';
+
+
+.root {
+    display: block;
+    @include square(40px);
+    cursor: pointer;
+    opacity: 1;
+
+    &_disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    &__area {
+        @include square(40px);
+        border: 1px solid transparent;
+        background-color: $checkbox-bg-hover;
+        position: relative;
+        transition: border-color 0.3s;
+    }
+
+    &__area:hover {
+        border-color: $brand;
+    }
+
+    &__area_disabled:hover {
+        border-color: transparent;
+    }
+
+    &__icon {
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        color: $text-accent;
+        stroke-opacity: 1;
+
+        &_disabled {
+            color: $text-primary;
+            stroke-opacity: 0.4;
+        }
+    }
+}

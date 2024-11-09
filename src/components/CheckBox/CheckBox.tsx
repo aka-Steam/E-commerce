@@ -1,49 +1,35 @@
 import React from 'react';
-import styles from './CheckBox.module.css'
-import CheckIcon from '../icons/CheckIcon'
+import cn from 'classnames';
+import CheckIcon from '../icons/CheckIcon';
+import s from './CheckBox.module.scss';
 
-export type CheckBoxProps = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'onChange'
-> & {
+
+export type CheckBoxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   /** Вызывается при клике на чекбокс */
   onChange: (checked: boolean) => void;
 };
 
-const CheckBox: React.FC<CheckBoxProps> = ({
-  checked,
-  disabled,
-  onChange,
-  className,
-  ...props
-}) => {
+const CheckBox: React.FC<CheckBoxProps> = ({ checked, disabled, onChange, className, ...props }) => {
+  const handleChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
+      onChange(event.target.checked);
+    },
+    [onChange],
+  );
+
   return (
-    <label
-      className={styles.label}
-      style={{
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.5 : 1,
-      }}
-    >
+    <label className={cn(s.root, disabled && s[`root_disabled`])}>
       <input
         type="checkbox"
         checked={checked}
         disabled={disabled}
-        onChange={(e) => onChange(e.target.checked)}
-        style={{display: 'none'}} 
-        {...props}    
+        onChange={handleChange}
+        style={{ display: 'none' }}
+        {...props}
       />
-      <div 
-        className={`${className} ${styles.div} ${disabled ? styles.dis : ''}`}
-        
-      >
+      <div className={cn(s.root__area, disabled && s[`root__area_disabled`], className)}>
         {checked && (
-          <CheckIcon 
-          className={styles.CheckBoxIcon} 
-          color={disabled ? "primary" : "accent"}
-          strokeOpacity={disabled ? "0.4" : "1"} 
-          width={40}
-          height={40}/>
+          <CheckIcon className={cn(s.root__icon, disabled && s[`root__icon_disabled`])} width={40} height={40} />
         )}
       </div>
     </label>
