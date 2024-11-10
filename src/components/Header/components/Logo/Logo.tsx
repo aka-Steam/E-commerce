@@ -3,7 +3,7 @@ import s from './Logo.module.scss';
 const Logo = () => (
   <div className={s[`logo`]}>
     <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clip-path="url(#clip0_502_630)">
+      <g clipPath="url(#clip0_502_630)">
         <path d="M42 0H0V42H42V0Z" fill="none" />
         <path
           d="M32.9035 20.601L31.9655 24.101H13.6535L8.66949 5.50549H12.2955L16.338 20.601H32.9035Z"
