@@ -1,4 +1,10 @@
 import * as React from 'react';
+import cn from 'classnames';
+
+import ArrowLeftIcon from 'components/icons/ArrowLeftIcon';
+import ArrowRightIcon from 'components/icons/ArrowRightIcon';
+import noImage from 'assets/noimage.png';
+
 import s from './Carousel.module.scss';
 
 export type CarouselProps = {
@@ -10,33 +16,15 @@ export type CarouselProps = {
   className?: string;
 };
 
-const Carousel: React.FC<CarouselProps> = ({source, alter, className, ...props}) => {
+const Carousel: React.FC<CarouselProps> = ({ source, alter, className, ...props }) => {
   return (
-    <div className={s.caruoselContainer}>
-      <img className={s.caruoselImage} src={source? source[0] : '\\src\\assets\\noimage.png'} alt={alter} />
-      <div className={`${s.carouselControl} ${s.left}`}>
-        <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M19.043 25.6126L10.9561 17.5258C10.0011 16.5708 10.0011 15.008 10.9561 14.0529L19.043 5.96613"
-            stroke="white"
-            strokeWidth="3"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+    <div className={s.carousel}>
+      <img className={s.carousel__image} src={source ? source[0] : noImage} alt={alter} />
+      <div className={cn(s.carousel__control, s.carousel__control_left)}>
+        <ArrowLeftIcon width="31" height="31" strokeWidth="3" />
       </div>
-      <div className={`${s.carouselControl} ${s.right}`}>
-        <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M11.957 25.6126L20.0439 17.5258C20.9989 16.5708 20.9989 15.008 20.0439 14.0529L11.957 5.96613"
-            stroke="white"
-            strokeWidth="3"
-            strokeMiterlimit="10"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+      <div className={cn(s.carousel__control, s.carousel__control_right)}>
+        <ArrowRightIcon width="31" height="31" strokeWidth="3" />
       </div>
     </div>
   );

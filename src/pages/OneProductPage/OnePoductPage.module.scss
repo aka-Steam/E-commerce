@@ -1,63 +1,63 @@
 @import 'styles/variables';
 
-.main{
+.main {
     padding: 60px 100px 100px 100px;
     max-width: 1501px;
 }
 
-.backButton{
+.backButton {
     margin-bottom: 32px;
 }
 
-.productInfoContainer{
+.productInfoContainer {
     display: flex;
     justify-content: center;
     flex-wrap: nowrap;
-    gap:48px;
+    gap: 48px;
     margin-bottom: 48px;
 }
 
-.productDescription{
+.productDescription {
     max-width: 653px;
 }
 
-.title{
+.title {
     margin-bottom: $space-xl;
 }
 
-.subtitle{
+.subtitle {
     margin-bottom: 80px;
 }
 
-.price{
+.price {
     margin-bottom: 48px;
 }
 
-.reletadItemsTitle{
+.reletadItemsTitle {
     font-size: 32px;
     margin-bottom: 32px;
 }
 
-.relatedItemsContainer{
+.relatedItemsContainer {
     display: flex;
     gap: 80px;
     flex-wrap: wrap;
 }
 
 @media (max-width: 992px) {
-    .main{
+    .main {
         padding: 60px;
     }
 }
 
 
 @media (max-width: 768px) {
-    .main{
+    .main {
 
         padding: 50px;
     }
 
-    .productInfoContainer{
+    .productInfoContainer {
         flex-wrap: wrap;
     }
 }

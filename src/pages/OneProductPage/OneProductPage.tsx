@@ -1,42 +1,37 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 
-import s from './OnePoductPaje.module.scss';
-import BackButton from './components/BackButton';
-import Carousel from './components/Carousel';
+import axiosInstanse from 'utils/axiosInstanse';
 import Text from 'components/Text';
 import Button from 'components/Button';
 import Card from 'components/Card';
+import noImage from 'assets/noimage.png';
 
-type ProductInfo = {
-  id: number;
-  description: string;
-  images: string[];
-  price: string;
-  title: string;
-  category: string;
-};
+import { ProductInfo, FetchedProductInfo } from './types';
+import BackButton from './components/BackButton';
+import Carousel from './components/Carousel';
+import s from './OnePoductPage.module.scss';
 
-const OnePoductPaje = () => {
+const OnePoductPage = () => {
   const { id } = useParams();
-  const apiUrl: string = import.meta.env.VITE_API_URL + '/products/' + id;
-  const [PRODUCT, setProduct] = useState<ProductInfo>({});
-  const [RELATED_ITEMS, setRelatedItems] = useState<ProductInfo[]>([]);
+  const [product, setProduct] = useState<Partial<ProductInfo>>({});
+  const [relatedItems, setRelatedItems] = useState<ProductInfo[]>([]);
   const navigate = useNavigate();
+
+  const handlerCardClick = React.useCallback(
+    (relatedItemId: number) => () => navigate(`/products/${relatedItemId}`),
+    [],
+  );
 
   // Получение данных о товаре
   useEffect(() => {
     const fetch = async () => {
-      const result = await axios({
-        method: 'get',
-        url: apiUrl,
-      });
+      const result = await axiosInstanse.get(`/products/${id}`);
 
       setProduct({
         id: result.data.id,
         description: result.data.description,
-        images: result.data.images,
+        images: result.data.images.map((el: string) => el.match(/https?:\/\/[^\s"]+/)),
         price: result.data.price,
         title: result.data.title,
         category: result.data.category.name,
@@ -44,21 +39,23 @@ const OnePoductPaje = () => {
     };
 
     fetch();
-  }, []);
+  }, [id]);
 
   // Получение данных о рекомендуемых товарах
   useEffect(() => {
     const fetch = async () => {
-      const result = await axios({
-        method: 'get',
-        url: import.meta.env.VITE_API_URL + '/products/?limit=3&offset=12',
+      const result = await axiosInstanse.get('/products', {
+        params: {
+          limit: 3,
+          offset: 12,
+        },
       });
 
       setRelatedItems(
-        result.data.map((p: { id: any; description: any; images: any; price: any; title: any; category: { name: any; }; }) => ({
+        result.data.map((p: FetchedProductInfo) => ({
           id: p.id,
           description: p.description,
-          images: p.images,
+          images: p.images ? p.images.map((el) => el.match(/https?:\/\/[^\s"]+/)) : [noImage],
           price: p.price,
           title: p.title,
           category: p.category.name,
@@ -76,16 +73,16 @@ const OnePoductPaje = () => {
       </BackButton>
 
       <div className={s.productInfoContainer}>
-        <Carousel source={PRODUCT.images} />
+        <Carousel source={product.images} />
         <div className={s.productDescription}>
           <Text className={s.title} view="title" tag="h1">
-            {PRODUCT.title}
+            {product.title}
           </Text>
           <Text className={s.subtitle} view="p-20" tag="div" color="secondary">
-            {PRODUCT.description}
+            {product.description}
           </Text>
           <Text className={s.price} view="title" tag="div">
-            {'$' + PRODUCT.price}
+            {'$' + product.price}
           </Text>
           <div className={s.actionGroup}>
             <Button>Buy Now</Button>
@@ -97,19 +94,18 @@ const OnePoductPaje = () => {
         Related Items
       </Text>
       <div className={s.relatedItemsContainer}>
-        {RELATED_ITEMS &&
-          RELATED_ITEMS.map((product, index) => {
-            const imageSrc = product.images ? product.images[0].match(/https?:\/\/[^\s"]+/) : 'src/assets/noimage.png';
+        {relatedItems &&
+          relatedItems.map((product, index) => {
             return (
               <Card
                 key={index}
-                image={imageSrc}
+                image={product.images[0]}
                 captionSlot={product.category}
                 title={product.title}
                 subtitle={product.description}
                 contentSlot={'$' + product.price}
                 actionSlot={<Button>Add to Cart</Button>}
-                onClick={() => navigate(`/products/${product.id}`)}
+                onClick={handlerCardClick(product.id)}
               />
             );
           })}
@@ -118,4 +114,4 @@ const OnePoductPaje = () => {
   );
 };
 
-export default OnePoductPaje;
+export default OnePoductPage;

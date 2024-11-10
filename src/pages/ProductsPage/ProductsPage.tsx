@@ -9,27 +9,19 @@ import MultiDropdown, { Option } from 'components/MultiDropdown';
 import Card from 'components/Card';
 import Pagination from 'components/Pagination';
 
+import { ProductInfo } from './types';
 import s from './ProductsPage.module.scss';
 
-type ProductInfo = {
-  id: number;
-  description: string;
-  images: string[];
-  price: string;
-  title: string;
-  category: string;
-};
+const OPTIONS = [
+  { key: 'o1', value: 'Option1' },
+  { key: 'o2', value: 'Option2' },
+  { key: 'o3', value: 'Option3' },
+];
 
-const PoductsPaje = () => {
+const PoductsPage = () => {
   const productsApiUrl: string = import.meta.env.VITE_API_URL + '/products';
-  const [PRODUCTS, setProducts] = useState<ProductInfo[]>([]);
+  const [products, setProducts] = useState<ProductInfo[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-
-  const OPTIONS = [
-    { key: 'o1', value: 'Option1' },
-    { key: 'o2', value: 'Option2' },
-    { key: 'o3', value: 'Option3' },
-  ];
 
   const [value, setValue] = React.useState<Option[]>([]);
   const navigate = useNavigate();
@@ -43,22 +35,21 @@ const PoductsPaje = () => {
       });
 
       setProducts(
-        result.data.map((p: { id: any; description: any; images: any; price: any; title: any; category: { name: any; }; }) => ({
-          id: p.id,
-          description: p.description,
-          images: p.images,
-          price: p.price,
-          title: p.title,
-          category: p.category.name,
-        })),
+        result.data.map(
+          (p: { id: any; description: any; images: any; price: any; title: any; category: { name: any } }) => ({
+            id: p.id,
+            description: p.description,
+            images: p.images,
+            price: p.price,
+            title: p.title,
+            category: p.category.name,
+          }),
+        ),
       );
     };
 
     fetch();
   }, []);
-
-  
-  
 
   // Количество карточек на странице
   const itemsPerPage = 9;
@@ -66,7 +57,7 @@ const PoductsPaje = () => {
   // Вычисление индексов для отображаемых товаров
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentProducts = PRODUCTS.slice(indexOfFirstItem, indexOfLastItem);
+  const currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -75,10 +66,10 @@ const PoductsPaje = () => {
   return (
     <main className={s.main}>
       <div className={s.titleContainer}>
-        <Text className={s.title} view={'title'}>
+        <Text className={s.title} view="title">
           Products
         </Text>
-        <Text className={s.subtitle} view={'p-20'} weight={'normal'} color={'secondary'}>
+        <Text className={s.subtitle} view="p-20" weight="normal" color="secondary">
           We display products based on the latest products we have, if you want to see our old products please enter the
           name of the item
         </Text>
@@ -86,7 +77,7 @@ const PoductsPaje = () => {
 
       <div className={s.controlsContainer}>
         <div className={s.controlsContainerGroup}>
-          <Input placeholder={'Search product'}></Input>
+          <Input placeholder="Search product"></Input>
           <Button>Find now</Button>
         </div>
 
@@ -102,11 +93,11 @@ const PoductsPaje = () => {
       </div>
 
       <div className={s.contentTitleContainer}>
-        <Text className={s.contentTitle} tag={'h2'} weight={'bold'}>
+        <Text className={s.contentTitle} tag="h2" weight="bold">
           Total Product
         </Text>
         <Text tag="div" view="p-20" weight="bold" color="accent" className={s.contentCounter}>
-          {PRODUCTS.length}
+          {products.length}
         </Text>
       </div>
 
@@ -132,11 +123,11 @@ const PoductsPaje = () => {
       <Pagination
         className={s.paggination}
         currentPage={currentPage}
-        totalPages={Math.ceil(PRODUCTS.length / itemsPerPage)}
+        totalPages={Math.ceil(products.length / itemsPerPage)}
         onPageChange={handlePageChange}
       ></Pagination>
     </main>
   );
 };
 
-export default PoductsPaje;
+export default PoductsPage;

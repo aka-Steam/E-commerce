@@ -18,7 +18,7 @@
     margin-bottom: $space-xxs;
 }
 
-.controlsContainer{
+.controlsContainer {
     margin-bottom: 48px;
 }
 
@@ -28,13 +28,13 @@
     margin-bottom: $space-xl;
 }
 
-.filter{
+.filter {
     max-width: 300px;
 }
 
-.contentTitleContainer{
+.contentTitleContainer {
     margin-bottom: 32px;
-    
+
     display: flex;
     align-items: center;
     gap: $space-xl;
@@ -45,13 +45,13 @@
     line-height: 48px;
 }
 
-.contentContainer{
+.contentContainer {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 30px 80px;
 }
 
-.paggination{
+.paggination {
     margin: 48px auto;
 }
