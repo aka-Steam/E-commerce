@@ -53,7 +53,7 @@
     }
 }
 
-.nav{
+.nav {
     &__link {
         position: relative;
         display: block;
@@ -80,12 +80,14 @@
     }
 
     &__link:hover,
-    &__link:focus {
+    &__link:focus,
+    &__link_active {
         font-weight: 600;
         color: $text-accent;
     }
 
-    &__link:focus::after {
+    &__link:focus::after,
+    &__link_active.nav__link::after {
         display: block;
     }
 }

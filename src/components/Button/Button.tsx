@@ -1,7 +1,8 @@
 import React from 'react';
-import styles from './Button.module.scss';
+import cn from 'classnames';
 import Loader from 'components/Loader';
 import Text from 'components/Text';
+import s from './Button.module.scss';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   /** Состояние загрузки */
@@ -12,16 +13,16 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   className?: string;
 };
 
-const Button: React.FC<ButtonProps> = ({ loading, children, onClick, className, ...rest }) => {  
+const Button: React.FC<ButtonProps> = ({ loading, children, onClick, className, ...rest }) => {
   const handleClick = React.useCallback((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!loading && onClick) {
       onClick(event);
     }
-  },[])
+  }, []);
 
   return (
     <button
-      className={`${styles.button} ${loading && styles.button_loading} ${className}`}
+      className={cn(s.button, loading && s.button_loading, className)}
       disabled={loading}
       onClick={handleClick}
       {...rest}

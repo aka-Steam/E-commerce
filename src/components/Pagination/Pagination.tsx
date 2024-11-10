@@ -1,9 +1,10 @@
 import React from 'react';
-import s from './Pagination.module.scss';
 import cn from 'classnames';
 
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import ArrowLeftIcon from 'components/icons/ArrowLeftIcon';
+
+import s from './Pagination.module.scss';
 
 type PaginationProps = {
   currentPage: number;

@@ -8,8 +8,9 @@ import Button from 'components/Button';
 import MultiDropdown, { Option } from 'components/MultiDropdown';
 import Card from 'components/Card';
 import Pagination from 'components/Pagination';
+import noImage from 'assets/noimage.png';
 
-import { ProductInfo } from './types';
+import { ProductInfo, FetchedProductInfo } from './types';
 import s from './ProductsPage.module.scss';
 
 const OPTIONS = [
@@ -35,16 +36,14 @@ const PoductsPage = () => {
       });
 
       setProducts(
-        result.data.map(
-          (p: { id: any; description: any; images: any; price: any; title: any; category: { name: any } }) => ({
-            id: p.id,
-            description: p.description,
-            images: p.images,
-            price: p.price,
-            title: p.title,
-            category: p.category.name,
-          }),
-        ),
+        result.data.map((p: FetchedProductInfo) => ({
+          id: p.id,
+          description: p.description,
+          images: p.images ? p.images.map((el) => el.match(/https?:\/\/[^\s"]+/)) : [noImage],
+          price: p.price,
+          title: p.title,
+          category: p.category.name,
+        })),
       );
     };
 
@@ -59,13 +58,14 @@ const PoductsPage = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = React.useCallback((page: number) => {
     setCurrentPage(page);
-  };
+  }, []);
 
+  const handlerCardClick = React.useCallback((productId: number) => () => navigate(`/products/${productId}`), []);
   return (
     <main className={s.main}>
-      <div className={s.titleContainer}>
+      <div className={s[`title-container`]}>
         <Text className={s.title} view="title">
           Products
         </Text>
@@ -75,8 +75,8 @@ const PoductsPage = () => {
         </Text>
       </div>
 
-      <div className={s.controlsContainer}>
-        <div className={s.controlsContainerGroup}>
+      <div className={s[`controls-сontainer`]}>
+        <div className={s[`controls-сontainer__group`]}>
           <Input placeholder="Search product"></Input>
           <Button>Find now</Button>
         </div>
@@ -92,40 +92,40 @@ const PoductsPage = () => {
         />
       </div>
 
-      <div className={s.contentTitleContainer}>
-        <Text className={s.contentTitle} tag="h2" weight="bold">
-          Total Product
-        </Text>
-        <Text tag="div" view="p-20" weight="bold" color="accent" className={s.contentCounter}>
-          {products.length}
-        </Text>
+      <div className={s.content}>
+        <div className={s[`content__title-container`]}>
+          <Text className={s[`content__title`]} tag="h2" weight="bold">
+            Total Product
+          </Text>
+          <Text tag="div" view="p-20" weight="bold" color="accent" className={s[`content-counter`]}>
+            {products.length}
+          </Text>
+        </div>
+
+        <div className={s[`content__container`]}>
+          {currentProducts.map((product, index) => {
+            return (
+              <Card
+                key={index}
+                image={product.images[0]}
+                captionSlot={product.category}
+                title={product.title}
+                subtitle={product.description}
+                contentSlot={'$' + product.price}
+                actionSlot={<Button>Add to Cart</Button>}
+                onClick={handlerCardClick(product.id)}
+              />
+            );
+          })}
+        </div>
+
+        <Pagination
+          className={s.content__paggination}
+          currentPage={currentPage}
+          totalPages={Math.ceil(products.length / itemsPerPage)}
+          onPageChange={handlePageChange}
+        ></Pagination>
       </div>
-
-      <div className={s.contentContainer}>
-        {currentProducts.map((product, index) => {
-          const imageSrc = product.images ? product.images[0].match(/https?:\/\/[^\s"]+/) : 'src/assets/noimage.png';
-
-          return (
-            <Card
-              key={index}
-              image={imageSrc}
-              captionSlot={product.category}
-              title={product.title}
-              subtitle={product.description}
-              contentSlot={'$' + product.price}
-              actionSlot={<Button>Add to Cart</Button>}
-              onClick={() => navigate(`/products/${product.id}`)}
-            />
-          );
-        })}
-      </div>
-
-      <Pagination
-        className={s.paggination}
-        currentPage={currentPage}
-        totalPages={Math.ceil(products.length / itemsPerPage)}
-        onPageChange={handlePageChange}
-      ></Pagination>
     </main>
   );
 };

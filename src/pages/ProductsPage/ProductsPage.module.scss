@@ -1,11 +1,11 @@
 @import 'styles/variables';
 
 .main {
-    padding: 100px;
+    padding: $general-padding-xl;
 }
 
-.titleContainer {
-    margin: 0 auto 48px auto;
+.title-container {
+    margin: 0 auto $space-xxxl auto;
     max-width: 653px;
     text-align: center;
 }
@@ -18,40 +18,42 @@
     margin-bottom: $space-xxs;
 }
 
-.controlsContainer {
-    margin-bottom: 48px;
-}
+.controls-сontainer {
+    margin-bottom: $space-xxxl;
 
-.controlsContainerGroup {
-    display: flex;
-    gap: $space-xl;
-    margin-bottom: $space-xl;
+    &__group {
+        display: flex;
+        gap: $space-xl;
+        margin-bottom: $space-xl;
+    }
 }
 
 .filter {
     max-width: 300px;
 }
 
-.contentTitleContainer {
-    margin-bottom: 32px;
+.content {
+    &__title-container {
+        margin-bottom: $space-xxl;
 
-    display: flex;
-    align-items: center;
-    gap: $space-xl;
-}
+        display: flex;
+        align-items: center;
+        gap: $space-xl;
+    }
 
-.contentTitle {
-    font-size: 32px;
-    line-height: 48px;
-}
+    &__title {
+        font-size: 32px;
+        line-height: 48px;
+    }
 
-.contentContainer {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 30px 80px;
-}
+    &__container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: $card-gap;
+    }
 
-.paggination {
-    margin: 48px auto;
+    &__paggination {
+        margin: $space-xxxl auto;
+    }
 }

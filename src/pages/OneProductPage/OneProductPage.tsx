@@ -68,32 +68,33 @@ const OnePoductPage = () => {
 
   return (
     <main className={s.main}>
-      <BackButton className={s.backButton} onClick={() => navigate('/products')}>
+      <BackButton className={s[`back-button`]} onClick={() => navigate('/products')}>
         Назад
       </BackButton>
 
-      <div className={s.productInfoContainer}>
-        <Carousel source={product.images} />
-        <div className={s.productDescription}>
-          <Text className={s.title} view="title" tag="h1">
+      <div className={s[`product-info`]}>
+        <Carousel className={s[`product-info__carousel`]} source={product.images} />
+        <div className={s[`product-info__description`]}>
+          <Text className={s[`product-info__title`]} view="title" tag="h1">
             {product.title}
           </Text>
-          <Text className={s.subtitle} view="p-20" tag="div" color="secondary">
+          <Text className={s[`product-info__subtitle`]} view="p-20" tag="div" color="secondary">
             {product.description}
           </Text>
-          <Text className={s.price} view="title" tag="div">
+          <Text className={s[`product-info__price`]} view="title" tag="div">
             {'$' + product.price}
           </Text>
-          <div className={s.actionGroup}>
+          <div className={s[`product-info__action-group`]}>
             <Button>Buy Now</Button>
           </div>
         </div>
       </div>
 
-      <Text className={s.reletadItemsTitle} tag="h2" weight="bold">
+      <Text className={s[`reletad-items-title`]} tag="h2" weight="bold">
         Related Items
       </Text>
-      <div className={s.relatedItemsContainer}>
+
+      <div className={s[`related-items-container`]}>
         {relatedItems &&
           relatedItems.map((product, index) => {
             return (

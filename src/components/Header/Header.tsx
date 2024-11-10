@@ -1,33 +1,40 @@
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import BagIcon from 'components/icons/BagIcon';
 import UserIcon from 'components/icons/UserIcon';
+import { LINKS } from './config';
 import Logo from './components/Logo';
 import s from './Header.module.scss';
 
-const Header = () => (
-  <header className={s.header}>
-    <Logo />
-    <nav className={cn(s[`header__nav-container`], s[`nav`])}>
-      <Link className={s.nav__link} to="products">
-        Products
-      </Link>
-      <Link className={s.nav__link} to="/">
-        Categories
-      </Link>
-      <Link className={s.nav__link} to="/">
-        About us
-      </Link>
-    </nav>
-    <div className={s[`header__other-actions-container`]}>
-      <button className={s[`header__other-actions-button`]}>
-        <BagIcon className={s[`header__other-actions-icon`]} width={30} height={30} />
-      </button>
-      <button className={s[`header__other-actions-button`]}>
-        <UserIcon className={s[`header__other-actions-icon`]} width={30} height={30} />
-      </button>
-    </div>
-  </header>
-);
+const Header = () => {
+  const location = useLocation();
+  const [activeLink, setActiveLink] = useState('');
+
+  useEffect(() => {
+    setActiveLink(location.pathname);
+  }, [location]);
+
+  return (
+    <header className={s.header}>
+      <Logo />
+      <nav className={cn(s[`header__nav-container`], s[`nav`])}>
+        {LINKS.map((link, index) => (
+          <Link key={index} className={cn(s.nav__link, activeLink === link.url && s.nav__link_active)} to={link.url}>
+            {link.title}
+          </Link>
+        ))}
+      </nav>
+      <div className={s[`header__other-actions-container`]}>
+        <button className={s[`header__other-actions-button`]}>
+          <BagIcon className={s[`header__other-actions-icon`]} width={30} height={30} />
+        </button>
+        <button className={s[`header__other-actions-button`]}>
+          <UserIcon className={s[`header__other-actions-icon`]} width={30} height={30} />
+        </button>
+      </div>
+    </header>
+  );
+};
 
 export default Header;

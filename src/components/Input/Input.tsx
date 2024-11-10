@@ -21,30 +21,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     );
 
     return (
-      <label className={cn(
-          s.input, 
-          props.disabled && s.input_disabled, 
-          className
-        )}
-      >
-        <input 
-          {...props} 
-          ref={ref} 
-          type="text" 
-          value={value}
-          className={s.input__field} 
-          onChange={handleChange} 
-        />
-        {
-        afterSlot && (
-          <div className={s.input__after}>
-            {afterSlot}
-          </div>
-          )
-        }
+      <label className={cn(s.input, props.disabled && s.input_disabled, className)}>
+        <input {...props} ref={ref} type="text" value={value} className={s.input__field} onChange={handleChange} />
+        {afterSlot && <div className={s.input__after}>{afterSlot}</div>}
       </label>
     );
-  }
+  },
 );
 
 export default Input;

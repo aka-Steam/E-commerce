@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import cn from 'classnames';
 import Input from 'components/Input';
 import Text from 'components/Text';
@@ -83,7 +83,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
         className={s['multi-dropdown__field']}
         value={opened ? filter : isEmpty ? '' : title}
         onChange={setFilter}
-        afterSlot={<ArrowDownIcon color="secondary" />}
+        afterSlot={<ArrowDownIcon className={s['multi-dropdown__icon']} />}
       />
       {opened && (
         <div className={s['multi-dropdown__options']}>
