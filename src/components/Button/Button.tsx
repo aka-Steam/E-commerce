@@ -18,7 +18,7 @@ const Button: React.FC<ButtonProps> = ({ loading, children, onClick, className, 
     if (!loading && onClick) {
       onClick(event);
     }
-  }, []);
+  }, [loading, onClick]);
 
   return (
     <button
