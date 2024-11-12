@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { observer } from 'mobx-react-lite';
+
 import axiosInstanse from 'utils/axiosInstanse';
 import Text from 'components/Text';
 import Button from 'components/Button';
@@ -10,11 +12,13 @@ import noImage from 'assets/noimage.png';
 import { ProductInfo, FetchedProductInfo } from './types';
 import BackButton from './components/BackButton';
 import Carousel from './components/Carousel';
+import productStore from '../../stores/ProductStore'
 import s from './OnePoductPage.module.scss';
 
 const OnePoductPage = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState<Partial<ProductInfo>>({});
+  // const [product, setProduct] = useState<Partial<ProductInfo>>({});
+  const { product, fetchProductById } = productStore;
   const [relatedItems, setRelatedItems] = useState<ProductInfo[]>([]);
   const navigate = useNavigate();
 
@@ -25,20 +29,7 @@ const OnePoductPage = () => {
 
   // Получение данных о товаре
   useEffect(() => {
-    const fetch = async () => {
-      const result = await axiosInstanse.get(`/products/${id}`);
-
-      setProduct({
-        id: result.data.id,
-        description: result.data.description,
-        images: result.data.images.map((el: string) => el.match(/https?:\/\/[^\s"]+/)),
-        price: result.data.price,
-        title: result.data.title,
-        category: result.data.category.name,
-      });
-    };
-
-    fetch();
+    fetchProductById(id);
   }, [id]);
 
   // Получение данных о рекомендуемых товарах
@@ -115,4 +106,4 @@ const OnePoductPage = () => {
   );
 };
 
-export default OnePoductPage;
+export default observer(OnePoductPage);
