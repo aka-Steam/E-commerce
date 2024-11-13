@@ -1,25 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 
-import axiosInstanse from 'utils/axiosInstanse';
 import Text from 'components/Text';
 import Button from 'components/Button';
 import Card from 'components/Card';
-import noImage from 'assets/noimage.png';
 
-import { ProductInfo, FetchedProductInfo } from './types';
 import BackButton from './components/BackButton';
 import Carousel from './components/Carousel';
-import productStore from '../../stores/ProductStore'
+import productStore from '../../stores/ProductStore';
 import s from './OnePoductPage.module.scss';
 
 const OnePoductPage = () => {
   const { id } = useParams();
-  // const [product, setProduct] = useState<Partial<ProductInfo>>({});
-  const { product, fetchProductById } = productStore;
-  const [relatedItems, setRelatedItems] = useState<ProductInfo[]>([]);
+  const { product, relatedItems, fetchProductById, fetchRelatedItems } = productStore;
   const navigate = useNavigate();
 
   const handlerCardClick = React.useCallback(
@@ -34,27 +29,7 @@ const OnePoductPage = () => {
 
   // Получение данных о рекомендуемых товарах
   useEffect(() => {
-    const fetch = async () => {
-      const result = await axiosInstanse.get('/products', {
-        params: {
-          limit: 3,
-          offset: 12,
-        },
-      });
-
-      setRelatedItems(
-        result.data.map((p: FetchedProductInfo) => ({
-          id: p.id,
-          description: p.description,
-          images: p.images ? p.images.map((el) => el.match(/https?:\/\/[^\s"]+/)) : [noImage],
-          price: p.price,
-          title: p.title,
-          category: p.category.name,
-        })),
-      );
-    };
-
-    fetch();
+    fetchRelatedItems();
   }, []);
 
   return (

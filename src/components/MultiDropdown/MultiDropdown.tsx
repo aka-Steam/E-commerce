@@ -4,6 +4,7 @@ import Input from 'components/Input';
 import Text from 'components/Text';
 import ArrowDownIcon from 'components/icons/ArrowDownIcon';
 import { Option, MultiDropdownProps } from './types';
+import { observer } from 'mobx-react-lite';
 import s from './MultiDropdown.module.scss';
 
 const MultiDropdown: React.FC<MultiDropdownProps> = ({
@@ -107,4 +108,4 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   );
 };
 
-export default MultiDropdown;
+export default observer(MultiDropdown);

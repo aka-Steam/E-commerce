@@ -17,35 +17,56 @@ const PoductsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchValue, setSearchValue] = React.useState(searchParams.get('search') || '');
   const [currentPage, setCurrentPage] = useState<number>(Number(searchParams.get('page')) || 1);
-  const [multiDropdownValue, setMultiDropdownValue] = React.useState<Option[]>([]);
 
-  const { options, fetchProducts, fetchSearchResult, fetchCategories, getProducts } = productStore;
+  const filterParam = searchParams.get('filter') ? searchParams.get('filter') : '';
+
+  const [multiDropdownValue, setMultiDropdownValue] = React.useState<Option[]>(
+    filterParam!.length === 0 ? [] : filterParam!.split(',').map((key) => ({ key: key, value: '' })),
+  );
+
+  const { options, fetchProducts, fetchSearchResult, fetchCategories, filteredProducts, setSelectedOptions } =
+    productStore;
 
   const handleSearch = React.useCallback(() => {
-    setSearchParams({ search: searchValue, page: '1' });
-    fetchSearchResult(searchValue); // Отправляем запрос поиска с текущим значением searchTerm
+    fetchSearchResult(searchValue);
+    setCurrentPage(1);
   }, [searchValue, setSearchValue]);
 
   const handlePageChange = React.useCallback((page: number) => {
-    setSearchParams({ search: searchValue, page: String(page) });
     setCurrentPage(page);
   }, []);
 
   const handleCardClick = React.useCallback((productId: number) => () => navigate(`/products/${productId}`), []);
 
+  // Получение данных о товарах
+  useEffect(() => {
+    if (searchValue !== '') {
+      fetchSearchResult(searchValue);
+    } else {
+      fetchProducts();
+    }
+
+    fetchCategories(setMultiDropdownValue);
+    setSearchParams({
+      search: searchValue,
+      page: String(currentPage),
+      filter: String(multiDropdownValue.map(({ key }) => key)),
+    });
+  }, []);
+
+  //Установка выбранных фильтров в стор
+  useEffect(() => {
+    setSelectedOptions(multiDropdownValue);
+  }, [multiDropdownValue]);
+
+  //Установка значений в Query-параметры
   useEffect(() => {
     setSearchParams({
       search: searchValue,
-      page: '1',
+      page: String(currentPage),
       filter: String(multiDropdownValue.map(({ key }) => key)),
     });
-  }, [multiDropdownValue]);
-
-  // Получение данных о товарах
-  useEffect(() => {
-    fetchProducts();
-    fetchCategories();
-  }, []);
+  }, [searchValue, currentPage, multiDropdownValue]);
 
   // Количество карточек на странице
   const itemsPerPage = 9;
@@ -53,7 +74,7 @@ const PoductsPage = () => {
   // Вычисление индексов для отображаемых товаров
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentProducts = getProducts(multiDropdownValue).slice(indexOfFirstItem, indexOfLastItem);
+  const currentProducts = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <main className={s.main}>
@@ -74,10 +95,12 @@ const PoductsPage = () => {
         </div>
 
         <MultiDropdown
-          className={s.filter}
+          className={s[`filter`]}
           options={options}
           value={multiDropdownValue}
-          onChange={setMultiDropdownValue}
+          onChange={(value: React.SetStateAction<Option[]>) => {
+            setMultiDropdownValue(value), setCurrentPage(1);
+          }}
           getTitle={(values: Option[]) => {
             return values.length === 0 ? 'Filter' : values.map(({ value }) => value).join(', ');
           }}
@@ -90,7 +113,7 @@ const PoductsPage = () => {
             Total Product
           </Text>
           <Text tag="div" view="p-20" weight="bold" color="accent" className={s[`content-counter`]}>
-            {getProducts(multiDropdownValue).length}
+            {filteredProducts.length}
           </Text>
         </div>
 
@@ -114,7 +137,7 @@ const PoductsPage = () => {
         <Pagination
           className={s.content__paggination}
           currentPage={currentPage}
-          totalPages={Math.ceil(getProducts(multiDropdownValue).length / itemsPerPage)}
+          totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
           onPageChange={handlePageChange}
         ></Pagination>
       </div>

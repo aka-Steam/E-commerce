@@ -1,4 +1,4 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import axiosInstance from 'utils/axiosInstanse';
 import noImage from 'assets/noimage.png';
 import { ProductInfo, Categoty, Option, FetchedProductInfo } from './types.ts';
@@ -6,6 +6,7 @@ import { ProductInfo, Categoty, Option, FetchedProductInfo } from './types.ts';
 class ProductStore {
   products: ProductInfo[] = [];
   product: Partial<ProductInfo> = {};
+  relatedItems: ProductInfo[] = [];
 
   isLoading: boolean = false;
   error: string | null = null;
@@ -23,21 +24,28 @@ class ProductStore {
       selectedOptions: observable,
       isLoading: observable,
       error: observable,
+      relatedItems: observable,
+
+      filteredProducts: computed,
 
       fetchProducts: action,
       fetchSearchResult: action,
       fetchProductById: action,
       fetchCategories: action,
+      setSelectedOptions: action,
+      fetchRelatedItems: action,
     });
   }
 
-  getProducts = (selectedOptions: Option[] = []): ProductInfo[] => {
-    if (selectedOptions.length === 0) {
-      return this.products;
-    }
-    const selectedOptionsNames = selectedOptions.map((option) => option.value);
-    return this.products.filter((product) => selectedOptionsNames.includes(product.category));
+  setSelectedOptions = (options: Option[]) => {
+    this.selectedOptions = options;
   };
+
+  get filteredProducts(): ProductInfo[] {
+    if (this.selectedOptions.length === 0) return this.products;
+    const selectedOptionsNames = this.selectedOptions.map((option) => option.value);
+    return this.products.filter((product) => selectedOptionsNames.includes(product.category));
+  }
 
   // Метод для загрузки всех продуктов
   fetchProducts = async () => {
@@ -123,14 +131,14 @@ class ProductStore {
   };
 
   // Метод для получения категорий
-  fetchCategories = async () => {
+  fetchCategories = async (setMultiDropdownValue: (options: Option[]) => void) => {
     this.isLoading = true;
     try {
       const result = await axiosInstance.get('/categories');
-      this.categories = [];
-      this.options = [];
 
       runInAction(() => {
+        this.categories = [];
+        this.options = [];
         for (const category of result.data) {
           this.categories.push({
             id: category.id,
@@ -144,11 +152,45 @@ class ProductStore {
           });
         }
 
+        const selectedKeys = new Set(this.selectedOptions.map((option) => String(option.key)));
+        this.selectedOptions = this.options.filter((option) => selectedKeys.has(String(option.key)));
+
+        setMultiDropdownValue(this.selectedOptions);
+
         this.isLoading = false;
       });
     } catch (error) {
       runInAction(() => {
         this.error = `Ошибка при загрузке категорий`;
+        this.isLoading = false;
+      });
+    }
+  };
+
+  fetchRelatedItems = async () => {
+    this.isLoading = true;
+    this.error = null;
+    try {
+      const result = await axiosInstance.get('/products', {
+        params: {
+          limit: 3,
+          offset: 12,
+        },
+      });
+
+      runInAction(() => {
+        this.relatedItems = result.data.map((p: FetchedProductInfo) => ({
+          id: p.id,
+          description: p.description,
+          images: p.images ? p.images.map((el) => el.match(/https?:\/\/[^\s"]+/)) : [noImage],
+          price: p.price,
+          title: p.title,
+          category: p.category.name,
+        }));
+      });
+    } catch (error) {
+      runInAction(() => {
+        this.error = 'Ошибка при загрузке товаров';
         this.isLoading = false;
       });
     }
