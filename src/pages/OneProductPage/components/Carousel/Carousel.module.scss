@@ -39,12 +39,14 @@
         }
     }
 
-    &__control:hover {
-        opacity: 1;
+    &__control {
+        &:hover {
+            opacity: 1;
+        }
     }
 }
 
-@media (max-width: 1200px) {
+@include xl {
 
     .carousel,
     .carousel__image {
@@ -53,7 +55,7 @@
     }
 }
 
-@media (max-width: 992px) {
+@include lg {
 
     .carousel,
     .carousel__image {

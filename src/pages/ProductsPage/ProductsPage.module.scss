@@ -2,38 +2,36 @@
 
 .main {
     padding: $general-padding-xl;
-}
 
-.title-container {
-    margin: 0 auto $space-xxxl auto;
-    max-width: 653px;
-    text-align: center;
-}
+    &__title-container {
+        margin: 0 auto $space-xxxl auto;
+        max-width: 653px;
+        text-align: center;
+    }
 
-.title {
-    margin-bottom: $space-xl;
-}
+    &__title {
+        margin-bottom: $space-xl;
+    }
 
-.subtitle {
-    margin-bottom: $space-xxs;
-}
+    &__subtitle {
+        margin-bottom: $space-xxs;
+    }
 
-.controls-сontainer {
-    margin-bottom: $space-xxxl;
+    &__controls-сontainer {
+        margin-bottom: $space-xxxl;
+    }
 
-    &__group {
+    &__controls-group {
         display: flex;
         gap: $space-xl;
         margin-bottom: $space-xl;
     }
-}
 
-.filter {
-    max-width: 300px;
-}
+    &__filter {
+        max-width: 300px;
+    }
 
-.content {
-    &__title-container {
+    &__content-title-container {
         margin-bottom: $space-xxl;
 
         display: flex;
@@ -41,12 +39,12 @@
         gap: $space-xl;
     }
 
-    &__title {
+    &__content-title {
         font-size: 32px;
         line-height: 48px;
     }
 
-    &__container {
+    &__card-container {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;

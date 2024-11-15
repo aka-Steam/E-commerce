@@ -1,0 +1,24 @@
+@import 'styles/variables';
+
+.product-info {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: $space-xxxl;
+
+    &__description {
+        max-width: 653px;
+    }
+
+    &__title {
+        margin-bottom: $space-xl;
+    }
+
+    &__subtitle {
+        margin-bottom: calc($space-l * 4);
+    }
+
+    &__price {
+        margin-bottom: $space-xxxl;
+    }
+}
