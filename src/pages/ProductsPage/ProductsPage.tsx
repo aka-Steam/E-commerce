@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import cn from 'classnames';
-import axios from 'axios';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 import Text from 'components/Text';
 import Input from 'components/Input';
@@ -9,47 +8,65 @@ import Button from 'components/Button';
 import MultiDropdown, { Option } from 'components/MultiDropdown';
 import Card from 'components/Card';
 import Pagination from 'components/Pagination';
-import noImage from 'assets/noimage.png';
 
-import { ProductInfo, FetchedProductInfo } from './types';
+import productStore from '../../stores/ProductStore';
 import s from './ProductsPage.module.scss';
 
-const OPTIONS = [
-  { key: 'o1', value: 'Option1' },
-  { key: 'o2', value: 'Option2' },
-  { key: 'o3', value: 'Option3' },
-];
-
 const PoductsPage = () => {
-  const productsApiUrl: string = import.meta.env.VITE_API_URL + '/products';
-  const [products, setProducts] = useState<ProductInfo[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
-  const [value, setValue] = React.useState<Option[]>([]);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = React.useState(searchParams.get('search') || '');
+  const [currentPage, setCurrentPage] = useState<number>(Number(searchParams.get('page')) || 1);
 
-  // Получение данных о продуктах
-  useEffect(() => {
-    const fetch = async () => {
-      const result = await axios({
-        method: 'get',
-        url: productsApiUrl,
-      });
+  const filterParam = searchParams.get('filter') ? searchParams.get('filter') : '';
 
-      setProducts(
-        result.data.map((p: FetchedProductInfo) => ({
-          id: p.id,
-          description: p.description,
-          images: p.images ? p.images.map((el) => el.match(/https?:\/\/[^\s"]+/)) : [noImage],
-          price: p.price,
-          title: p.title,
-          category: p.category.name,
-        })),
-      );
-    };
+  const [multiDropdownValue, setMultiDropdownValue] = React.useState<Option[]>(
+    filterParam!.length === 0 ? [] : filterParam!.split(',').map((key) => ({ key: key, value: '' })),
+  );
 
-    fetch();
+  const { options, fetchProducts, fetchSearchResult, fetchCategories, filteredProducts, setSelectedOptions } =
+    productStore;
+
+  const handleSearch = React.useCallback(() => {
+    fetchSearchResult(searchValue);
+    setCurrentPage(1);
+  }, [searchValue, setSearchValue]);
+
+  const handlePageChange = React.useCallback((page: number) => {
+    setCurrentPage(page);
   }, []);
+
+  const handleCardClick = React.useCallback((productId: number) => () => navigate(`/products/${productId}`), []);
+
+  // Получение данных о товарах
+  useEffect(() => {
+    if (searchValue !== '') {
+      fetchSearchResult(searchValue);
+    } else {
+      fetchProducts();
+    }
+
+    fetchCategories(setMultiDropdownValue);
+    setSearchParams({
+      search: searchValue,
+      page: String(currentPage),
+      filter: String(multiDropdownValue.map(({ key }) => key)),
+    });
+  }, []);
+
+  //Установка выбранных фильтров в стор
+  useEffect(() => {
+    setSelectedOptions(multiDropdownValue);
+  }, [multiDropdownValue]);
+
+  //Установка значений в Query-параметры
+  useEffect(() => {
+    setSearchParams({
+      search: searchValue,
+      page: String(currentPage),
+      filter: String(multiDropdownValue.map(({ key }) => key)),
+    });
+  }, [searchValue, currentPage, multiDropdownValue]);
 
   // Количество карточек на странице
   const itemsPerPage = 9;
@@ -57,13 +74,8 @@ const PoductsPage = () => {
   // Вычисление индексов для отображаемых товаров
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
+  const currentProducts = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
 
-  const handlePageChange = React.useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
-
-  const handlerCardClick = React.useCallback((productId: number) => () => navigate(`/products/${productId}`), []);
   return (
     <main className={s.main}>
       <div className={s[`main__title-container`]}>
@@ -78,29 +90,32 @@ const PoductsPage = () => {
 
       <div className={s[`main__controls-сontainer`]}>
         <div className={s[`main__controls-group`]}>
-          <Input placeholder="Search product"></Input>
-          <Button>Find now</Button>
+          <Input value={searchValue} onChange={setSearchValue} placeholder="Search product"></Input>
+          <Button onClick={handleSearch}>Find now</Button>
         </div>
 
         <MultiDropdown
           className={s[`main__filter`]}
-          options={OPTIONS}
-          value={value}
-          onChange={setValue}
-          getTitle={(values: Option[]) =>
-            values.length === 0 ? 'Filter' : values.map(({ value }) => value).join(', ')
-          }
+          options={options}
+          value={multiDropdownValue}
+          onChange={(value: React.SetStateAction<Option[]>) => {
+            setMultiDropdownValue(value), setCurrentPage(1);
+          }}
+          getTitle={(values: Option[]) => {
+            return values.length === 0 ? 'Filter' : values.map(({ value }) => value).join(', ');
+          }}
         />
       </div>
+      
       <div className={s[`main__content-title-container`]}>
         <Text className={s[`main__content-title`]} tag="h2" weight="bold">
           Total Product
         </Text>
         <Text tag="div" view="p-20" weight="bold" color="accent" className={s[`main__content-counter`]}>
-          {products.length}
+          {filteredProducts.length}
         </Text>
       </div>
-
+      
       <div className={s[`main__card-container`]}>
         {currentProducts.map((product, index) => {
           return (
@@ -112,7 +127,7 @@ const PoductsPage = () => {
               subtitle={product.description}
               contentSlot={'$' + product.price}
               actionSlot={<Button>Add to Cart</Button>}
-              onClick={handlerCardClick(product.id)}
+              onClick={handleCardClick(product.id)}
             />
           );
         })}
@@ -121,11 +136,11 @@ const PoductsPage = () => {
       <Pagination
         className={s.main__paggination}
         currentPage={currentPage}
-        totalPages={Math.ceil(products.length / itemsPerPage)}
+        totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
         onPageChange={handlePageChange}
       ></Pagination>
     </main>
   );
 };
 
-export default PoductsPage;
+export default observer(PoductsPage);
