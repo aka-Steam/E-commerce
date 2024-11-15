@@ -1,0 +1,43 @@
+@import 'styles/variables';
+
+.main {
+    padding: $general-padding-xl;
+    padding-top: $general-padding-lg;
+    max-width: 1501px;
+
+    &__back {
+        margin-bottom: $space-xxl;
+    }
+
+    &__product-info {
+        margin-bottom: $space-xxxl;
+    }
+
+    &__reletad-items-title {
+        font-size: 32px;
+        line-height: 48px;
+        margin-bottom: $space-xxl;
+    }
+
+    &__related-items-container {
+        display: flex;
+        gap: $card-gap;
+        flex-wrap: wrap;
+    }
+}
+
+@include xl {
+    .main {
+        padding: $general-padding-lg;
+    }
+}
+
+@include md {
+    .main {
+        padding: $general-padding-md;
+    }
+
+    .product-info {
+        flex-wrap: wrap;
+    }
+}

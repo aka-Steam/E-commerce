@@ -1,0 +1,57 @@
+@import 'styles/variables';
+
+.main {
+    padding: $general-padding-xl;
+
+    &__title-container {
+        margin: 0 auto $space-xxxl auto;
+        max-width: 653px;
+        text-align: center;
+    }
+
+    &__title {
+        margin-bottom: $space-xl;
+    }
+
+    &__subtitle {
+        margin-bottom: $space-xxs;
+    }
+
+    &__controls-сontainer {
+        margin-bottom: $space-xxxl;
+    }
+
+    &__controls-group {
+        display: flex;
+        gap: $space-xl;
+        margin-bottom: $space-xl;
+    }
+
+    &__filter {
+        max-width: 300px;
+    }
+
+    &__content-title-container {
+        margin-bottom: $space-xxl;
+
+        display: flex;
+        align-items: center;
+        gap: $space-xl;
+    }
+
+    &__content-title {
+        font-size: 32px;
+        line-height: 48px;
+    }
+
+    &__card-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: $card-gap;
+    }
+
+    &__paggination {
+        margin: $space-xxxl auto;
+    }
+}

@@ -1,0 +1,9 @@
+@import 'styles/variables';
+
+
+.logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $space-xs;
+}

@@ -1,0 +1,42 @@
+@import 'styles/variables';
+
+.multi-dropdown {
+  $self: &;
+
+  position: relative;
+  width: 100%;
+
+  &__options {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: calc(100% + #{$space-xxs});
+    background-color: $dropdown-options-bg;
+    box-shadow: $shadow;
+    z-index: 100;
+  }
+
+  &__option {
+    cursor: pointer;
+    padding: $space-s $space-xs;
+    color: $text-primary;
+    transition: color 0.3s ease;
+    display: block;
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+
+    &:hover {
+      color: $text-secondary;
+    }
+
+    &_selected {
+      color: $text-accent;
+    }
+  }
+
+  &__icon {
+    color: $text-secondary;
+  }
+}

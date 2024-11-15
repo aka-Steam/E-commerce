@@ -1,0 +1,65 @@
+@import 'styles/variables';
+
+.carousel {
+    position: relative;
+    width: 600px;
+    height: 600px;
+
+    &__image {
+        display: block;
+
+        width: 600px;
+        height: 600px;
+    }
+
+    &__control {
+        color: white;
+        position: absolute;
+        top: calc(50% - 32px);
+        width: 64px;
+        height: 64px;
+        background-color: black;
+        border-radius: 50%;
+
+        opacity: 0.6;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+        transition: opacity 0.3s;
+
+        &_left {
+            left: $space-xl;
+        }
+
+        &_right {
+            right: $space-xl;
+        }
+    }
+
+    &__control {
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+@include xl {
+
+    .carousel,
+    .carousel__image {
+        width: 520px;
+        height: 520px;
+    }
+}
+
+@include lg {
+
+    .carousel,
+    .carousel__image {
+        width: 460px;
+        height: 460px;
+    }
+}

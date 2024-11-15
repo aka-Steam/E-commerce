@@ -1,0 +1,94 @@
+@import 'styles/variables';
+
+.header {
+    position: relative;
+
+    height: $header-height-xl;
+    padding: 0 $general-padding-xl;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: $color-bg-header;
+    border-bottom: 2px solid $color-bdc-header;
+
+    @include md {
+        padding: 0 $general-padding-lg;
+    }
+
+    @include lg {
+        height: $header-height-md;
+        padding: 0 $general-padding-md;
+    }
+
+    &__other-actions-container,
+    &__nav-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    // TODO - При ширине =< 768px nav превратить в бургер 
+    &__nav-container {
+        position: absolute;
+        top: 32px;
+        left: 0;
+        right: 0;
+        margin: auto;
+
+        width: 351px;
+    }
+
+    &__other-actions-container {
+        gap: $space-xl;
+    }
+
+    &__other-actions-button {
+        padding: 0;
+        @include square(30px);
+        border: none;
+        outline: none;
+        background-color: inherit;
+        cursor: pointer;
+    }
+}
+
+.nav {
+    &__link {
+        position: relative;
+        display: block;
+
+        text-decoration: none;
+        font-size: 18px;
+        color: $text-primary;
+
+        @include transition-default;
+
+        &::after {
+            content: '';
+            position: absolute;
+            display: none;
+
+            width: 112%;
+            height: 3px;
+
+            top: 56px;
+            left: -6%;
+
+            background-color: $text-accent;
+        }
+
+        &:hover,
+        &:focus,
+        &.nav__link_active {
+            font-weight: 600;
+            color: $text-accent;
+        }
+
+        &.nav__link_active {
+            &::after {
+                display: block;
+            }
+        }
+    }
+}
