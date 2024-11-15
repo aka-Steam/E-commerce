@@ -13,11 +13,11 @@
     background-color: $color-bg-header;
     border-bottom: 2px solid $color-bdc-header;
 
-    @media (max-width: 992px) {
+    @include md {
         padding: 0 $general-padding-lg;
     }
 
-    @media (max-width: 768px) {
+    @include lg {
         height: $header-height-md;
         padding: 0 $general-padding-md;
     }
@@ -63,31 +63,32 @@
         color: $text-primary;
 
         @include transition-default;
-    }
 
-    &__link::after {
-        content: '';
-        position: absolute;
-        display: none;
+        &::after {
+            content: '';
+            position: absolute;
+            display: none;
 
-        width: 112%;
-        height: 3px;
+            width: 112%;
+            height: 3px;
 
-        top: 56px;
-        left: -6%;
+            top: 56px;
+            left: -6%;
 
-        background-color: $text-accent;
-    }
+            background-color: $text-accent;
+        }
 
-    &__link:hover,
-    &__link:focus,
-    &__link_active {
-        font-weight: 600;
-        color: $text-accent;
-    }
+        &:hover,
+        &:focus,
+        &.nav__link_active {
+            font-weight: 600;
+            color: $text-accent;
+        }
 
-    &__link:focus::after,
-    &__link_active.nav__link::after {
-        display: block;
+        &.nav__link_active {
+            &::after {
+                display: block;
+            }
+        }
     }
 }

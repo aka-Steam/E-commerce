@@ -78,24 +78,24 @@ const PoductsPage = () => {
 
   return (
     <main className={s.main}>
-      <div className={s[`title-container`]}>
-        <Text className={s.title} view="title">
+      <div className={s[`main__title-container`]}>
+        <Text className={s[`main__title`]} view="title">
           Products
         </Text>
-        <Text className={s.subtitle} view="p-20" weight="normal" color="secondary">
+        <Text className={s[`main__subtitle`]} view="p-20" weight="normal" color="secondary">
           We display products based on the latest products we have, if you want to see our old products please enter the
           name of the item
         </Text>
       </div>
 
-      <div className={s[`controls-сontainer`]}>
-        <div className={s[`controls-сontainer__group`]}>
+      <div className={s[`main__controls-сontainer`]}>
+        <div className={s[`main__controls-group`]}>
           <Input value={searchValue} onChange={setSearchValue} placeholder="Search product"></Input>
           <Button onClick={handleSearch}>Find now</Button>
         </div>
 
         <MultiDropdown
-          className={s[`filter`]}
+          className={s[`main__filter`]}
           options={options}
           value={multiDropdownValue}
           onChange={(value: React.SetStateAction<Option[]>) => {
@@ -106,41 +106,39 @@ const PoductsPage = () => {
           }}
         />
       </div>
-
-      <div className={s.content}>
-        <div className={s[`content__title-container`]}>
-          <Text className={s[`content__title`]} tag="h2" weight="bold">
-            Total Product
-          </Text>
-          <Text tag="div" view="p-20" weight="bold" color="accent" className={s[`content-counter`]}>
-            {filteredProducts.length}
-          </Text>
-        </div>
-
-        <div className={s[`content__container`]}>
-          {currentProducts.map((product, index) => {
-            return (
-              <Card
-                key={index}
-                image={product.images[0]}
-                captionSlot={product.category}
-                title={product.title}
-                subtitle={product.description}
-                contentSlot={'$' + product.price}
-                actionSlot={<Button>Add to Cart</Button>}
-                onClick={handleCardClick(product.id)}
-              />
-            );
-          })}
-        </div>
-
-        <Pagination
-          className={s.content__paggination}
-          currentPage={currentPage}
-          totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
-          onPageChange={handlePageChange}
-        ></Pagination>
+      
+      <div className={s[`main__content-title-container`]}>
+        <Text className={s[`main__content-title`]} tag="h2" weight="bold">
+          Total Product
+        </Text>
+        <Text tag="div" view="p-20" weight="bold" color="accent" className={s[`main__content-counter`]}>
+          {filteredProducts.length}
+        </Text>
       </div>
+      
+      <div className={s[`main__card-container`]}>
+        {currentProducts.map((product, index) => {
+          return (
+            <Card
+              key={index}
+              image={product.images[0]}
+              captionSlot={product.category}
+              title={product.title}
+              subtitle={product.description}
+              contentSlot={'$' + product.price}
+              actionSlot={<Button>Add to Cart</Button>}
+              onClick={handleCardClick(product.id)}
+            />
+          );
+        })}
+      </div>
+
+      <Pagination
+        className={s.main__paggination}
+        currentPage={currentPage}
+        totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
+        onPageChange={handlePageChange}
+      ></Pagination>
     </main>
   );
 };
