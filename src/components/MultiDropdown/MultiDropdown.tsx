@@ -5,7 +5,7 @@ import Text from 'components/Text';
 import ArrowDownIcon from 'components/icons/ArrowDownIcon';
 import { Option, MultiDropdownProps } from './types';
 import { observer } from 'mobx-react-lite';
-import s from './MultiDropdown.module.scss';
+import * as s from './MultiDropdown.module.scss';
 
 const MultiDropdown: React.FC<MultiDropdownProps> = ({
   className,
@@ -81,7 +81,6 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
         ref={ref}
         disabled={disabled}
         placeholder={title}
-        className={s['multi-dropdown__field']}
         value={opened ? filter : isEmpty ? '' : title}
         onChange={setFilter}
         afterSlot={<ArrowDownIcon className={s['multi-dropdown__icon']} />}

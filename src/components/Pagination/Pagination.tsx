@@ -4,7 +4,7 @@ import cn from 'classnames';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import ArrowLeftIcon from 'components/icons/ArrowLeftIcon';
 
-import s from './Pagination.module.scss';
+import * as s from './Pagination.module.scss';
 
 type PaginationProps = {
   currentPage: number;
@@ -14,6 +14,9 @@ type PaginationProps = {
 };
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange, className }) => {
+  if (currentPage > totalPages){
+    onPageChange(1);
+  }
   // Функция для генерации массива страниц
   const getPageNumbers = () => {
     const pages = [];
@@ -35,8 +38,8 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     return pages;
   };
 
-  const handlerPreviousPageClick = React.useCallback(() => onPageChange(currentPage - 1), [onPageChange]);
-  const handlerNextPageClick = React.useCallback(() => onPageChange(currentPage + 1), [onPageChange]);
+  const handlerPreviousPageClick = React.useCallback(() => onPageChange(currentPage - 1), [currentPage, onPageChange]);
+  const handlerNextPageClick = React.useCallback(() => onPageChange(currentPage + 1), [currentPage, onPageChange]);
   const handlePageClick = React.useCallback((page: number) => () => onPageChange(page), [onPageChange]);
 
   return (

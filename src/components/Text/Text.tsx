@@ -1,6 +1,6 @@
 import * as React from 'react';
 import cn from 'classnames';
-import s from './Text.module.scss';
+import * as s from './Text.module.scss';
 
 export type TextProps = {
   /** Дополнительный класс */
@@ -22,9 +22,7 @@ export type TextProps = {
 const Text: React.FC<TextProps> = ({ className, weight, tag: Tag = 'p', view = 'p-14', color, children, maxLines }) => {
   return (
     <Tag
-      className={cn(
-        s.text,
-        s[`text_view-${view}`],
+      className={cn(s[`text_view-${view}`],
         weight && s[`text_weight-${weight}`],
         color && s[`text_color-${color}`],
         maxLines && s[`text_multi-ellipsis`],

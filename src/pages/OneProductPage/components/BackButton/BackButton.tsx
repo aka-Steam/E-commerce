@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import Text from 'components/Text';
 import ArrowLeftIcon from 'components/icons/ArrowLeftIcon';
-import s from './BackButton.module.scss';
+import * as s from './BackButton.module.scss';
 
 export type BackButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   className?: string;
