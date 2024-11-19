@@ -12,7 +12,7 @@ import ProductInformation from './components/ProductInformation';
 
 import productStore from '../../stores/ProductStore';
 
-import s from './OnePoductPage.module.scss';
+import * as s from './OnePoductPage.module.scss';
 
 const OnePoductPage = () => {
   const { id } = useParams();

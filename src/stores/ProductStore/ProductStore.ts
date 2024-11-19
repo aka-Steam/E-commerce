@@ -42,7 +42,9 @@ class ProductStore {
   };
 
   get filteredProducts(): ProductInfo[] {
-    if (this.selectedOptions.length === 0) return this.products;
+    if (this.selectedOptions.length === 0) {
+      return this.products;
+    }
     const selectedOptionsNames = this.selectedOptions.map((option) => option.value);
     return this.products.filter((product) => selectedOptionsNames.includes(product.category));
   }

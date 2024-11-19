@@ -10,7 +10,7 @@ import Card from 'components/Card';
 import Pagination from 'components/Pagination';
 
 import productStore from '../../stores/ProductStore';
-import s from './ProductsPage.module.scss';
+import * as s from './ProductsPage.module.scss';
 
 const PoductsPage = () => {
   const navigate = useNavigate();
@@ -106,16 +106,16 @@ const PoductsPage = () => {
           }}
         />
       </div>
-      
+
       <div className={s[`main__content-title-container`]}>
         <Text className={s[`main__content-title`]} tag="h2" weight="bold">
           Total Product
         </Text>
-        <Text tag="div" view="p-20" weight="bold" color="accent" className={s[`main__content-counter`]}>
+        <Text tag="div" view="p-20" weight="bold" color="accent">
           {filteredProducts.length}
         </Text>
       </div>
-      
+
       <div className={s[`main__card-container`]}>
         {currentProducts.map((product, index) => {
           return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import Text from 'components/Text';
-import s from './Card.module.scss';
+import * as s from './Card.module.scss';
 
 export type CardProps = {
   /** Дополнительный classname */
@@ -51,7 +51,7 @@ const Card: React.FC<CardProps> = ({
         </Text>
         <div className={s.card__footer}>
           {contentSlot && (
-            <Text view="p-18" weight="bold" className={s.card__content}>
+            <Text view="p-18" weight="bold">
               {contentSlot}
             </Text>
           )}

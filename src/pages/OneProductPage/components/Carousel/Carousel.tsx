@@ -5,7 +5,7 @@ import ArrowLeftIcon from 'components/icons/ArrowLeftIcon';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import noImage from 'assets/noimage.png';
 
-import s from './Carousel.module.scss';
+import * as s from './Carousel.module.scss';
 
 export type CarouselProps = {
   /** Путь до картинки */
