@@ -1,5 +1,15 @@
 @forward './breakpoints.scss';
 
+:root{
+    --color-bg: #FFFFFF;
+    --color-bg-header: #FFFFFF;
+    --color-bg-main: #FAFAFA;
+    --color-bg-footer: #000000;
+
+    --color-bdc-header: #F3F3F3;
+    --color-text:#000000;
+}
+
 $brand: #518581;
 $brand-hover: #86AAA7;
 $brand-active: #487773;
@@ -18,12 +28,13 @@ $card-gap: 30px 80px;
 $shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 
 /* Layout */
-$color-bg: #FFFFFF;
+$color-bg: var(--color-bg);
 $color-bg-header: $color-bg;
-$color-bg-main: #FAFAFA;
+$color-bg-main: var(--color-bg-main);
 $color-bg-footer: #000000;
 
-$color-bdc-header: #F3F3F3;
+$color-bdc-header: var(--color-bdc-header);
+$color-text:#000000;
 
 $header-height-xl: 90px;
 $header-height-lg: 90px;
@@ -99,13 +110,14 @@ $color-index-active: #FFFFFF;
 
 
 // TODO - dark theme
-/* @media (prefers-color-scheme: dark){
+@media (prefers-color-scheme: dark){
     :root{
-        $color-bg:#2f2f2f;
-        $color-bg-header: $color-bg;
-        $color-bg-main: #232323;
-        $color-bg-footer: #000000;
+        --color-bg: #291816;
+        --color-bg-header: #291816;
+        --color-bg-main: #190906;
+        --color-bg-footer: #000000;
 
-        $color-bdc-header: #363636;
+        --color-bdc-header: #4D4646;
+        --color-text:#FFFFFF;
     }
-} */
+} 
