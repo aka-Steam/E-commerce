@@ -79,7 +79,7 @@ const PoductsPage = () => {
   return (
     <main className={s.main}>
       <div className={s[`main__title-container`]}>
-        <Text className={s[`main__title`]} view="title">
+        <Text className={s[`main__title`]} tag="h1" view="title">
           Products
         </Text>
         <Text className={s[`main__subtitle`]} view="p-20" weight="normal" color="secondary">
