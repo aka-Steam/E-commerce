@@ -1,7 +1,12 @@
+import cn from 'classnames'
 import * as s from './Logo.module.scss';
 
-const Logo = () => (
-  <div className={s[`logo`]}>
+type LogoProps = {
+  className?: string;
+};
+
+const Logo: React.FC<LogoProps> = ({ className }) => (
+  <div className={cn(s[`logo`], className)}>
     <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_502_630)">
         <path d="M42 0H0V42H42V0Z" fill="none" />
