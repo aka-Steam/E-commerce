@@ -147,6 +147,10 @@
             @include square(40px);
         }
     }
+
+    @include sm{
+        padding: 0 $general-padding-sm;    
+    }
 }
 
 .nav {

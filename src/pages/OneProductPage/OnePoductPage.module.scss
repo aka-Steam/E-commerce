@@ -23,21 +23,33 @@
         display: flex;
         gap: $card-gap;
         flex-wrap: wrap;
+        justify-content: start;
     }
-}
 
-@include xl {
-    .main {
+
+    @include xl {
+        padding: $general-padding-xl;
+    }
+
+    @include lg {
         padding: $general-padding-lg;
     }
-}
 
-@include md {
-    .main {
+    @include md {
         padding: $general-padding-md;
+
+        &__product-info {
+            flex-wrap: wrap;
+        }
+
+        &__related-items-container{
+            justify-content: center;
+        }
     }
 
-    .product-info {
-        flex-wrap: wrap;
+    @include sm {
+        padding: $general-padding-sm;
+
+        
     }
 }
