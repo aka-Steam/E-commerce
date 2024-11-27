@@ -10,13 +10,16 @@ import Card from 'components/Card';
 import BackButton from './components/BackButton';
 import ProductInformation from './components/ProductInformation';
 
-import productStore from '../../stores/ProductStore';
+import { useLocalStore } from 'utils/useLocalStore';
+import ProductItemStore from '../../stores/ProductItemStore';
 
 import s from './OnePoductPage.module.scss';
 
+
 const OnePoductPage = () => {
   const { id } = useParams();
-  const { product, relatedItems, fetchProductById, fetchRelatedItems } = productStore;
+  const store = useLocalStore(() => new ProductItemStore(Number(id)));
+
   const navigate = useNavigate();
 
   const handlerCardClick = React.useCallback(
@@ -26,12 +29,12 @@ const OnePoductPage = () => {
 
   // Получение данных о товаре
   useEffect(() => {
-    fetchProductById(id);
+    store.fetchProductById(id);
   }, [id]);
 
   // Получение данных о рекомендуемых товарах
   useEffect(() => {
-    fetchRelatedItems();
+    store.fetchRelatedItems();
   }, []);
 
   return (
@@ -41,10 +44,10 @@ const OnePoductPage = () => {
       </BackButton>
 
       <ProductInformation
-        images={product.images}
-        title={product.title}
-        description={product.description}
-        price={product.price}
+        images={store.product.images}
+        title={store.product.title}
+        description={store.product.description}
+        price={store.product.price}
         className={s[`main__product-info`]}
       />
 
@@ -53,8 +56,8 @@ const OnePoductPage = () => {
       </Text>
 
       <div className={s[`main__related-items-container`]}>
-        {relatedItems &&
-          relatedItems.map((product, index) => {
+        {store.relatedItems &&
+          store.relatedItems.map((product: { images: any[]; category: any; title: any; description: any; price: string; id: number; }, index: any) => {
             return (
               <Card
                 key={index}

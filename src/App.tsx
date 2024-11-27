@@ -4,17 +4,20 @@ import './App.scss';
 import Header from 'components/Header';
 import Products from 'pages/ProductsPage';
 import Product from 'pages/OneProductPage';
+import { useQueryParamsStoreInit } from './stores/RootStore/hooks/useQueryParamsStoreInit';
 
 function App() {
+  useQueryParamsStoreInit();
+
   return (
-    <BrowserRouter>
+    <>
       <Header />
       <Routes>
         <Route path="/" element={<Products />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<Product />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 

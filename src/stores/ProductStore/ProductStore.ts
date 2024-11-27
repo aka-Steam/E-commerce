@@ -53,6 +53,7 @@ class ProductStore {
     this.error = null;
     try {
       const result = await axiosInstance.get('/products');
+      
       runInAction(() => {
         this.products = result.data.map((p: FetchedProductInfo) => ({
           id: p.id,

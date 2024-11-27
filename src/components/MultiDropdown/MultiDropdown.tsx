@@ -3,101 +3,48 @@ import cn from 'classnames';
 import Input from 'components/Input';
 import Text from 'components/Text';
 import ArrowDownIcon from 'components/icons/ArrowDownIcon';
-import { Option, MultiDropdownProps } from './types';
+import { Option, MultiDropdownProps, BETA_MultiDropdownProps } from './types';
 import { observer } from 'mobx-react-lite';
 import s from './MultiDropdown.module.scss';
 
-const MultiDropdown: React.FC<MultiDropdownProps> = ({
-  className,
-  options,
-  value,
-  onChange,
-  disabled = false,
-  getTitle,
-}) => {
+const MultiDropdown: React.FC<BETA_MultiDropdownProps> = ({ store, className }) => {
   const wrapperRef = React.useRef<HTMLDivElement>(null);
-  const ref = React.useRef<HTMLInputElement>(null);
-  const [filter, setFilter] = React.useState('');
-  const [isOpened, setIsOpened] = React.useState(false);
-
-  const open = React.useCallback(() => {
-    setIsOpened(true);
-  }, []);
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
-    const handlerClick = (e: MouseEvent) => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (!wrapperRef.current?.contains(e.target as HTMLDivElement)) {
-        setIsOpened(false);
+        store.close();
       }
     };
-
-    window.addEventListener('click', handlerClick);
-
+    window.addEventListener('click', handleClickOutside);
     return () => {
-      window.removeEventListener('click', handlerClick);
+      window.removeEventListener('click', handleClickOutside);
     };
-  }, []);
-
-  React.useEffect(() => {
-    if (isOpened) {
-      setFilter('');
-    }
-  }, [isOpened]);
-
-  const title = React.useMemo(() => getTitle(value), [getTitle, value]);
-
-  const isEmpty = value.length === 0;
-
-  const filteredOptions = React.useMemo(() => {
-    const str = filter.toLocaleLowerCase();
-    return options.filter((o) => o.value.toLocaleLowerCase().indexOf(str) === 0);
-  }, [filter, options]);
-
-  const selectedKeysSet = React.useMemo<Set<Option['key']>>(() => new Set(value.map(({ key }) => key)), [value]);
-
-  const onSelect = React.useCallback(
-    (option: Option) => {
-      if (disabled) {
-        return;
-      }
-
-      if (selectedKeysSet.has(option.key)) {
-        onChange([...value].filter(({ key }) => key !== option.key));
-      } else {
-        onChange([...value, option]);
-      }
-
-      ref.current?.focus();
-    },
-    [disabled, onChange, value, selectedKeysSet],
-  );
-
-  const opened = isOpened && !disabled;
+  }, [store]);
 
   return (
     <div ref={wrapperRef} className={cn(s['multi-dropdown'], className)}>
       <Input
-        onClick={open}
-        ref={ref}
-        disabled={disabled}
-        placeholder={title}
+        onClick={() => store.toggle()}
+        ref={inputRef}
+        placeholder={store.title}
         className={s['multi-dropdown__field']}
-        value={opened ? filter : isEmpty ? '' : title}
-        onChange={setFilter}
+
+        value={store.isOpened ? store.filter : store.isEmpty ? '' : store.title}
+        onChange={(value) => store.setFilter(value)}
         afterSlot={<ArrowDownIcon className={s['multi-dropdown__icon']} />}
       />
-      {opened && (
+      {store.isOpened && (
         <div className={s['multi-dropdown__options']}>
-          {filteredOptions.map((option) => (
+          {store.filteredOptions.map((option) => (
             <button
+              key={option.key}
               className={cn(
                 s['multi-dropdown__option'],
-                selectedKeysSet.has(option.key) && s['multi-dropdown__option_selected'],
+                store.selectedKeysSet.has(option.key) && s['multi-dropdown__option_selected'],
               )}
-              key={option.key}
-              onClick={() => {
-                onSelect(option);
-              }}
+              onClick={() => store.selectOption(option)}
             >
               <Text view="p-16">{option.value}</Text>
             </button>
@@ -106,6 +53,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
       )}
     </div>
   );
-};
+}
+
 
 export default observer(MultiDropdown);

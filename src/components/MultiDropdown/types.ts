@@ -1,3 +1,5 @@
+import { multiDropdownModel } from "../../stores/models/MultiDropdownModel";
+
 export type Option = {
   /** Ключ варианта, используется для отправки на бек/использования в коде */
   key: string;
@@ -20,3 +22,9 @@ export type MultiDropdownProps = {
    * В случае если опции не выбраны, строка должна отображаться как placeholder. */
   getTitle: (value: Option[]) => string;
 };
+
+
+export type BETA_MultiDropdownProps {
+  store: multiDropdownModel;
+  className?: string;
+}
