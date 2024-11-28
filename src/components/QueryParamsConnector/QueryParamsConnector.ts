@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useLocation, useNavigate } from 'react-router-dom'; // для работы с URL
+import { useLocation, useNavigate } from 'react-router-dom'; 
 import qs from 'qs';
-import rootStore from '../../stores/RootStore/instance';
+import rootStore from 'stores/global/RootStore/instance';
 
 interface QueryParamsConnectorProps {
   store: {
@@ -20,21 +20,14 @@ const QueryParamsConnector: React.FC<QueryParamsConnectorProps> = observer(() =>
 
   // Синхронизация URL -> Store
   useEffect(() => {
-    // const queryParams = qs.parse(location.search, { ignoreQueryPrefix: true });
     rootStore.query.setSearch(location.search);
   }, [location.search, rootStore.query]);
 
   // Синхронизация Store -> URL
   useEffect(() => {
     const currentParams = qs.stringify(rootStore.query.params, { addQueryPrefix: true });
-// debugger;
     if (currentParams !== location.search) {
-    
-        navigate(`${location.pathname}${currentParams}`, { replace: true });
-        //   history.replace({
-    //     ...location,
-    //     search: currentParams,
-    //   });
+      navigate(`${location.pathname}${currentParams}`, { replace: true });
     }
   }, [rootStore.query.params, location]);
 

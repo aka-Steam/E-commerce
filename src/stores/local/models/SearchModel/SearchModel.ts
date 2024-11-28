@@ -1,11 +1,5 @@
-import { action, computed, makeObservable, observable, runInAction, reaction } from 'mobx';
-import axiosInstance from 'utils/axiosInstanse';
+import { action, computed, makeObservable, observable} from 'mobx';
 import { ILocalStore } from 'utils/useLocalStore';
-import Meta from 'utils/meta';
-import { normalizeProductInfo, ProductInfoModel } from '../models/products';
-import React from 'react';
-
-//TODO почисть импорты не используемые
 
 type PrivateFields = '_searchValue';
 

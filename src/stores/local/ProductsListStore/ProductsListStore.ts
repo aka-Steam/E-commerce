@@ -1,21 +1,19 @@
 import { action, computed, makeObservable, observable, runInAction, reaction, IReactionDisposer } from 'mobx';
 import axiosInstance from 'utils/axiosInstanse';
-import { ILocalStore, useLocalStore } from 'utils/useLocalStore';
+import { ILocalStore } from 'utils/useLocalStore';
 import Meta from 'utils/meta';
 import { normalizeProductInfo, ProductInfoApi, ProductInfoModel } from '../models/products';
 import { FilterModel } from '../models/FilterModel';
 import { SearchModel } from '../models/SearchModel';
 import { PaginationModel } from '../models/PaginationModel';
-import rootStore from '../RootStore';
-import qs from 'qs';
-// import { useLocalStore } from 'mobx-react-lite';
+import rootStore from '../../global/RootStore';
+
 
 const ITEMS_PER_PAGE = 9;
 
 type PrivateFields = '_products' | '_meta' | '_totalProducts';
 
 export default class ProductsListStore implements ILocalStore {
-  // private _products: ProductInfoModel[] = [];
   // состояние загрузки
   private _meta: Meta = Meta.initial;
 
@@ -23,53 +21,16 @@ export default class ProductsListStore implements ILocalStore {
 
   private _totalProducts: number = 0;
 
-  // filterStore: FilterModel = (new FilterModel(this));
+
   filterStore: FilterModel = new FilterModel();
   searchStore: SearchModel = new SearchModel();
   paginationStore: PaginationModel = new PaginationModel();
 
-  // private reactionFilter = reaction(
-  //   // Первый аргумент – колбэк, который возвращает отслеживаемые поля
-  //   () => this.filterStore.value,
-
-  //   // Второй аргумент – колбэк, в котором выполняется желаемая логика
-  //   (newValue) => {
-  //     console.log('reactionFiltr -' + newValue);
-  //     // this.paginationStore.setCurrentPage(1);
-  //     this.fetchProducts(1, '', Array.from(this.filterStore.selectedKeysSet));
-  //   },
-  // );
-
-  // private readonly _qpReaction = reaction(
-  //   () => rootStore.query.params,
-  //   (params) => {
-  //     // TODO. тут запрос данных, НЕ обращаемся к валью элементов
-  //     console.log('Params reaction[');
-  //     // if (params.search !== this.searchStore.searchValue) {
-  //     //   this.searchStore.setSearchValue((params.search as string) || '');
-  //     // }
-
-  //     // const page = parseInt((params.page as string) || '1');
-  //     // console.log(`${page} !== ${this.paginationStore.currentPage}?`);
-  //     // if (page !== this.paginationStore.currentPage) {
-  //     //   this.paginationStore.setCurrentPage(page);
-  //     // }
-
-  //     // if (params.filters) {
-  //     //   const filters = (params.filters as string).split(',');
-  //     //   // this.filterStore.setSelectedKeys(new Set(filters));
-  //     // }
-  //     console.log(']');
-  //   },
-  // );
-
-  // TODO в конструктор стора надо принимать текущие search-параметры и выставлять дефолтные значения в поиск, фильтр и пагинацию,
   constructor() {
     makeObservable<ProductsListStore, PrivateFields>(this, {
       _products: observable.ref,
       _meta: observable,
       _totalProducts: observable,
-      products: computed,
       meta: computed,
       totalProducts: computed,
       currentProducts: computed,
@@ -110,10 +71,6 @@ export default class ProductsListStore implements ILocalStore {
     );
   }
 
-  get products(): Map<number, ProductInfoModel[]> {
-    return this._products;
-  }
-
   get meta(): Meta {
     return this._meta;
   }
@@ -138,13 +95,12 @@ export default class ProductsListStore implements ILocalStore {
     const response = await axiosInstance.get('/products', {
       params: {
         title: this.searchStore.searchValue,
-        categoryId: Number(rootStore.query.getParam('filter')),
+        categoryId: Number(rootStore.query.getParam('filter')?.toString().split(',')[0]),
       },
     });
-    console.log(response);
 
     runInAction(() => {
-      if (response.status !== 200) {
+      if (response.status < 200 || response.status >= 300) {
         this._meta = Meta.error;
         return;
       }
@@ -152,7 +108,7 @@ export default class ProductsListStore implements ILocalStore {
       try {
         const productsArr = response.data.map(normalizeProductInfo);
         this._totalProducts = productsArr.length;
-        this._products = this.paginateProducts(productsArr);
+        this._products = this._paginateProducts(productsArr);
         this.paginationStore.setTotalPages(Math.ceil(response.data.length / ITEMS_PER_PAGE));
         this._meta = Meta.success;
       } catch (err) {
@@ -164,7 +120,7 @@ export default class ProductsListStore implements ILocalStore {
     });
   };
 
-  private paginateProducts(products: ProductInfoModel[]): Map<number, ProductInfoModel[]> {
+  private _paginateProducts(products: ProductInfoModel[]): Map<number, ProductInfoModel[]> {
     const paginatedMap = new Map<number, ProductInfoModel[]>();
 
     for (let i = 0; i < products.length; i += ITEMS_PER_PAGE) {
@@ -177,9 +133,5 @@ export default class ProductsListStore implements ILocalStore {
   }
 
   destroy(): void {
-    // this.reactionPage;
-    // this.reactionSerch;
-    // this.reactionFilter;
-    // this._qpReaction;
   }
 }

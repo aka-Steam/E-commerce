@@ -1,12 +1,3 @@
-export interface ProductInfo {
-  id: number;
-  description: string;
-  images: string[];
-  price: number;
-  title: string;
-  category: string;
-}
-
 export type Categoty = {
   id: number;
   image: string;
@@ -18,13 +9,4 @@ export type Option = {
   key: string;
   /** Значение варианта, отображается пользователю */
   value: string;
-};
-
-export type FetchedProductInfo = {
-  id: number;
-  description: string;
-  images: string[];
-  price: number;
-  title: string;
-  category: Categoty;
 };

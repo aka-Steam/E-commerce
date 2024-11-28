@@ -57,15 +57,6 @@ export default class ProductItemStore implements ILocalStore {
         category: result.data.category.name,
       };
       this._meta = Meta.success;
-
-      // try {
-      //   this._relatedItems = response.data.map(normalizeProductInfo);
-      //   this._meta = Meta.success;
-      // } catch (err) {
-      //   this._relatedItems = [];
-      //   this._meta = Meta.error;
-      // }
-      this._meta = Meta.error;
     });
   };
 
@@ -80,7 +71,7 @@ export default class ProductItemStore implements ILocalStore {
     });
 
     runInAction(() => {
-      if (response.status !== 200) {
+      if (response.status < 200 || response.status >= 300) {
         this._meta = Meta.error;
         return;
       }

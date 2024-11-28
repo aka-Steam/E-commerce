@@ -1,13 +1,19 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import cn from 'classnames';
 import Input from 'components/Input';
 import Text from 'components/Text';
 import ArrowDownIcon from 'components/icons/ArrowDownIcon';
-import { Option, MultiDropdownProps, BETA_MultiDropdownProps } from './types';
-import { observer } from 'mobx-react-lite';
+import { MultiDropdownProps } from './types';
+
+import { useStore } from 'stores/local/ProductsListStore';
 import s from './MultiDropdown.module.scss';
 
-const MultiDropdown: React.FC<BETA_MultiDropdownProps> = ({ store, className }) => {
+const MultiDropdown: React.FC<MultiDropdownProps> = ({ className }) => {
+  const productsListStore = useStore();
+
+  const store = productsListStore.filterStore;
+
   const wrapperRef = React.useRef<HTMLDivElement>(null);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -26,15 +32,12 @@ const MultiDropdown: React.FC<BETA_MultiDropdownProps> = ({ store, className }) 
   return (
     <div ref={wrapperRef} className={cn(s['multi-dropdown'], className)}>
       <Input
-        // onClick={store.toggle} // TODO  возникает ошибка при использовании isOpened
-        onClick={() => store.toggle()}
+        onClick={store.toggle}
         ref={inputRef}
         placeholder={store.title}
         className={s['multi-dropdown__field']}
-
         value={store.isOpened ? store.filter : store.isEmpty ? '' : store.title}
-        // onChange={store.setFilter} // TODO
-        onChange={(v) => store.setFilter(v)}
+        onChange={store.setFilter}
         afterSlot={<ArrowDownIcon className={s['multi-dropdown__icon']} />}
       />
       {store.isOpened && (
@@ -55,7 +58,6 @@ const MultiDropdown: React.FC<BETA_MultiDropdownProps> = ({ store, className }) 
       )}
     </div>
   );
-}
-
+};
 
 export default observer(MultiDropdown);
