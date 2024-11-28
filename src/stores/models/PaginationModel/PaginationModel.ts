@@ -48,19 +48,24 @@ export class PaginationModel implements ILocalStore {
     if (value === this._currentPage) {
       return;
     }
-    if (value > this.totalPages) {
-      this._currentPage = this.totalPages;
-    } else {
+    // if (value > this.totalPages) {
+    //   this._currentPage = this.totalPages;
+    //   // TODO изменить квери параметры
+    // } else {
       this._currentPage = value;
-    }
+    // }
   };
 
   setTotalPages = (value: number) => {
     this._totalPages = value;
+    if (value > this.totalPages) {
+      this._currentPage = this.totalPages;
+      // TODO изменить квери параметры
+      }
   };
 
   destroy(): void {
     this.reactionTotalPages;
-    this._qpReaction;
+    // this._qpReaction;
   }
 }

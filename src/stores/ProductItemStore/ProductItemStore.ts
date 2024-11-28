@@ -9,7 +9,7 @@ type PrivateFields = '_id' | '_product' | '_relatedItems' | '_meta';
 
 export default class ProductItemStore implements ILocalStore {
   private _id: number;
-  private _product: Partial<ProductInfoModel> = {};
+  private _product: ProductInfoModel | null = null;
   private _relatedItems: ProductInfoModel[] = [];
   // состояние загрузки
   private _meta: Meta = Meta.initial;
@@ -19,7 +19,7 @@ export default class ProductItemStore implements ILocalStore {
 
     makeObservable<ProductItemStore, PrivateFields>(this, {
       _id: observable,
-      _product: observable,
+      _product: observable.ref,
       _meta: observable,
       _relatedItems: observable.ref,
       product: computed,
@@ -30,7 +30,7 @@ export default class ProductItemStore implements ILocalStore {
     });
   }
 
-  get product(): Partial<ProductInfoModel> {
+  get product(): ProductInfoModel | null {
     return this._product;
   }
 
@@ -43,7 +43,7 @@ export default class ProductItemStore implements ILocalStore {
   }
 
   // Метод для загрузки одного товара по ID
-  fetchProductById = async (id: string | undefined) => {
+  fetchProductById = async () => {
     this._meta = Meta.loading;
     const result = await axiosInstance.get(`/products/${this._id}`);
 

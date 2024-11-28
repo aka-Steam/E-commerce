@@ -26,13 +26,15 @@ const MultiDropdown: React.FC<BETA_MultiDropdownProps> = ({ store, className }) 
   return (
     <div ref={wrapperRef} className={cn(s['multi-dropdown'], className)}>
       <Input
+        // onClick={store.toggle} // TODO  возникает ошибка при использовании isOpened
         onClick={() => store.toggle()}
         ref={inputRef}
         placeholder={store.title}
         className={s['multi-dropdown__field']}
 
         value={store.isOpened ? store.filter : store.isEmpty ? '' : store.title}
-        onChange={(value) => store.setFilter(value)}
+        // onChange={store.setFilter} // TODO
+        onChange={(v) => store.setFilter(v)}
         afterSlot={<ArrowDownIcon className={s['multi-dropdown__icon']} />}
       />
       {store.isOpened && (

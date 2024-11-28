@@ -38,7 +38,7 @@ const OnePoductPage = () => {
   }, []);
 
   return (
-    <main className={s.main}>
+    store.product && <main className={s.main}>
       <BackButton className={s[`main__back`]} onClick={() => navigate('/products')}>
         Назад
       </BackButton>
@@ -57,10 +57,10 @@ const OnePoductPage = () => {
 
       <div className={s[`main__related-items-container`]}>
         {store.relatedItems &&
-          store.relatedItems.map((product: { images: any[]; category: any; title: any; description: any; price: string; id: number; }, index: any) => {
+          store.relatedItems?.map((product) => {
             return (
               <Card
-                key={index}
+                key={product.id}
                 image={product.images[0]}
                 captionSlot={product.category}
                 title={product.title}

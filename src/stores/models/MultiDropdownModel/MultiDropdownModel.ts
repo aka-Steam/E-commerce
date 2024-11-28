@@ -4,6 +4,7 @@ import { ILocalStore } from 'utils/useLocalStore';
 import Meta from 'utils/meta';
 import { normalizeProductInfo, ProductInfoModel } from '../models/products';
 import React from 'react';
+import { debug } from 'util';
 
 type PrivateFields = '_products' | '_meta';
 //Todo - props?
@@ -23,6 +24,8 @@ export class MultiDropdownModel implements ILocalStore {
 
   selectedOptions: Option[] = []; // Буффер выбранных обций для корректной работы с query параметрами
 
+  // selectedKeys: Set<string> = new Set; // Буффер ключей обций для корректной работы с query параметрами
+  // selectedKeys: string = '';
 
   private reactionSelectedOptions = reaction(
     // Первый аргумент – колбэк, который возвращает отслеживаемые поля
@@ -33,13 +36,13 @@ export class MultiDropdownModel implements ILocalStore {
   );
 
 
-  private reactionValue = reaction(
-    // Первый аргумент – колбэк, который возвращает отслеживаемые поля
-    () => this.value,
+  // private reactionValue = reaction(
+  //   // Первый аргумент – колбэк, который возвращает отслеживаемые поля
+  //   () => this.value,
   
-    // Второй аргумент – колбэк, в котором выполняется желаемая логика
-    (nvalue) => {console.log("reactionValue") }
-  );
+  //   // Второй аргумент – колбэк, в котором выполняется желаемая логика
+  //   (nvalue) => {console.log("reactionValue") }
+  // );
 
 
   constructor(initialOptions: Option[] = []) {
@@ -53,6 +56,7 @@ export class MultiDropdownModel implements ILocalStore {
       isOpened: observable,
       filteredOptions: computed,
       selectedKeysSet: computed,
+      selectedKeys: computed,
       title: computed,
       isEmpty: computed,
       Vvalue: computed,
@@ -66,7 +70,11 @@ export class MultiDropdownModel implements ILocalStore {
     });
   }
 
+  // useEffect(() => {
+  //   // BETAstor.filterStore.setSelectedOptions(BETAstor.filterStore.value);
+  // }, [BETAstor.filterStore.value]);
 
+//TODO delet or remname
 get Vvalue(){
   return this.value;
 }
@@ -85,10 +93,19 @@ get Vvalue(){
     return new Set(this.value.map(({ key }) => key));
   }
 
+  get selectedKeys() {
+    // if this.value
+
+    return this.value.map(({ key }) => key);
+  }
+
   get title() {
+    // debugger;
+    // console.log(this.value.length === 0 ? 'Filter' : this.value.map(({ value }) => value).join(', '))
     return this.value.length === 0 ? 'Filter' : this.value.map(({ value }) => value).join(', ');
   }
 
+  //TODO open и close вроде не нужны. А вот disabled state надо бы добавить. Или в компоненте просто обрабаатывать его
 
   open() {
     this.isOpened = true;
@@ -115,6 +132,7 @@ get Vvalue(){
     if (this.selectedKeysSet.has(option.key)) {
       this.value = this.value.filter(({ key }) => key !== option.key);
     } else {
+      // TODO push method?
       this.value = [...this.value, option];
     }
   }
@@ -132,12 +150,45 @@ get Vvalue(){
     this.selectedOptions = options;
   };
 
+  //TODO collections
   getOptionsByKeys(keys: string[] = []) {
     return this.options.filter((option) => keys.includes(option.key));
   }
 
+  // FilteredOptions?
+  // state
+  // getTitle?
+  // setValue
+
   destroy(): void {
-    this.reactionValue;
+    // this.reactionValue;
     this.reactionSelectedOptions
   }
 }
+
+// private _title:
+
+// const _filter
+// const [isOpened, setIsOpened] = React.useState(false);
+
+// const open = React.useCallback(() => {
+//   setIsOpened(true);
+// }, []);
+
+// React.useEffect(() => {
+//   if (isOpened) {
+//     setFilter('');
+//   }
+// }, [isOpened]);
+
+// const title = React.useMemo(() => getTitle(value), [getTitle, value]);
+// const isEmpty = value.length === 0;
+// const filteredOptions = React.useMemo(() => {
+//   const str = filter.toLocaleLowerCase();
+//   return options.filter((o) => o.value.toLocaleLowerCase().indexOf(str) === 0);
+// }, [filter, options]);
+// const selectedKeysSet = React.useMemo<Set<Option['key']>>(() => new Set(value.map(({ key }) => key)), [value]);
+
+// const opened = isOpened && !disabled;
+
+//     private _options: Option[] = [];

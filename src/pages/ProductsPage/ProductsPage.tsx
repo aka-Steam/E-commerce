@@ -18,7 +18,7 @@ import { useQueryParamsStoreInit } from '../../stores/RootStore/hooks/useQueryPa
 
 const PoductsPage = () => {
   const navigate = useNavigate();
-  useQueryParamsStoreInit(); 
+
   const store = useLocalStore(() => new ProductsListStore());
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,13 +27,13 @@ const PoductsPage = () => {
   const initialOptions = filterParam!.length === 0 ? [] : filterParam!.split(',').map((key) => ({ key: key, value: '' }));
 
   const handleSearch = React.useCallback(() => {
-    console.log("handleSearch rerender");
-    store.fetchProducts(1,store.searchStore.searchValue,'');
+    store.fetchProducts();
+    rootStore.query.setParam('search', store.searchStore.searchValue)
   }, [store.searchStore]);
 
-  const handlePageChange = React.useCallback((page: number) => {
-    store.paginationStore.setCurrentPage(page);
-  }, []);
+  // const handlePageChange = React.useCallback((page: number) => {
+  //   store.paginationStore.setCurrentPage(page);
+  // }, []);
 
   const handleCardClick = React.useCallback((productId: number) => () => navigate(`/products/${productId}`), []);
 
@@ -41,11 +41,12 @@ const PoductsPage = () => {
   useEffect(() => {
     store.fetchProducts();
 
-    setSearchParams({
-      search: store.searchStore.searchValue,
-      filter: Array.from(store.filterStore.selectedKeysSet).join(','),
-      page: String(store.paginationStore.currentPage),
-    });
+    // TODO У нас наоборот в конструктор стора надо принимать текущие search-параметры и выставлять дефолтные значения в поиск, фильтр и пагинацию, а в useEffect уже делать просто запрос, в котором используются проставленные при создании стора значения
+    // setSearchParams({
+    //   search: store.searchStore.searchValue,
+    //   filter: Array.from(store.filterStore.selectedKeysSet).join(','),
+    //   page: String(store.paginationStore.currentPage),
+    // });
   }, [store]);
 
   return (
@@ -62,11 +63,14 @@ const PoductsPage = () => {
 
       <div className={s[`main__controls-сontainer`]}>
         <div className={s[`main__controls-group`]}>
-          <Input value={store.searchStore.searchValue} onChange={store.searchStore.setSearchValue} placeholder="Search product"></Input>
+          <Input
+            value={store.searchStore.searchValue}
+            onChange={store.searchStore.setSearchValue}
+            placeholder="Search product"
+          ></Input>
           <Button onClick={handleSearch}>Find now</Button>
         </div>
 
-      
         <MultiDropdown store={store.filterStore} className={s[`main__filter`]} />
       </div>
 
@@ -75,38 +79,33 @@ const PoductsPage = () => {
           Total Product
         </Text>
         <Text tag="div" view="p-20" weight="bold" color="accent" className={s[`main__content-counter`]}>
-          {store._totalProducts}
+          {store.totalProducts}
         </Text>
       </div>
 
       <div className={s[`main__card-container`]}>
-        {store.products.get(store.paginationStore.currentPage)?.map(
-          (
-            product: { images: any[]; category: any; title: any; description: any; price: string; id: number },
-            index: any,
-          ) => {
-            return (
-              <Card
-                key={index}
-                image={product.images[0]}
-                captionSlot={product.category}
-                title={product.title}
-                subtitle={product.description}
-                contentSlot={'$' + product.price}
-                actionSlot={<Button>Add to Cart</Button>}
-                onClick={handleCardClick(product.id)}
-              />
-            );
-          },
-        )
-        }
+        {store.currentProducts?.map(
+            ( product ) => {
+              return (
+                <Card
+                  key={product.id}
+                  image={product.images[0]}
+                  captionSlot={product.category}
+                  title={product.title}
+                  subtitle={product.description}
+                  contentSlot={'$' + product.price}
+                  actionSlot={<Button>Add to Cart</Button>}
+                  onClick={handleCardClick(product.id)}
+                />
+              );
+            },
+          )}
       </div>
 
       <Pagination
         className={s.main__paggination}
         store={store.paginationStore}
-      
-        onPageChange={handlePageChange}
+        onPageChange={store.paginationStore.setCurrentPage}
       ></Pagination>
     </main>
   );

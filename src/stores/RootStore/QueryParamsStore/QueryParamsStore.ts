@@ -26,9 +26,23 @@ export default class QueryParamsStore {
     return this._params[key];
   }
 
+  setParam(key: string, value: string){
+    // debugger;
+    this._params = { ...this._params, [key]: value };  
+    // search = search.startsWith('?') ? search.slice(1) : search;
+    // console.log(`obnovim ${this._search} <- setSearch${search} ?`)
+    // // debugger;
+    // if (this._search !== search) {
+    //   this._search = search;
+    //   this._params = qs.parse(search);
+    // }
+    
+  }
+
   setSearch(search: string) {
     search = search.startsWith('?') ? search.slice(1) : search;
-    console.log(`obnovi ${this._search} setSearch${search}`)
+    console.log(`obnovim ${this._search} <- setSearch${search} ?`)
+    // debugger;
     if (this._search !== search) {
       this._search = search;
       this._params = qs.parse(search);
@@ -44,6 +58,6 @@ export default class QueryParamsStore {
 
     }
 
-    console.log(  this._params );
+    console.log( this._params );
   }
 }

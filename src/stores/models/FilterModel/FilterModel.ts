@@ -5,6 +5,7 @@ import Meta from 'utils/meta';
 import { normalizeProductInfo, ProductInfoModel } from '../models/products';
 import React from 'react';
 import { MultiDropdownModel } from '../MultiDropdownModel';
+import rootStore from '../../RootStore';
 
 type PrivateFields = '_products' | '_meta';
 //Todo - props?
@@ -29,20 +30,21 @@ export class FilterModel extends MultiDropdownModel {
   constructor() {
     // console.log("FilterModel, const");
     super();
-    this.fetchCategories();
+    // this.fetchCategories();
   }
 
   get meta(): Meta {
     return this._meta;
   }
-
-  fetchCategories = async () => {
+  
+fetchCategories = async () => {
     // console.log("FilterModel, fetch");
   // fetchCategories = async (setMultiDropdownValue: (options: Option[]) => void) => {
     this._meta = Meta.loading;
 console.log("Filter Stor,fetchCategories")
     const response = await axiosInstance.get('/categories');
-
+    // const response = await axiosInstance.get('/categories');
+  
 
 
 
@@ -63,9 +65,13 @@ console.log("Filter Stor,fetchCategories")
           });
         });
 
-      const selectedKeys = new Set(this.selectedOptions.map((option) => String(option.key)));
-      this.value = this.options.filter((option) => selectedKeys.has(String(option.key)));
-
+      // const selectedKeys = new Set(this.selectedOptions.map((option) => String(option.key)));
+      // this.value = this.options.filter((option) => selectedKeys.has(String(option.key)));
+      // console.log(rootStore.query.getParam('filter'))
+      // debugger;
+      // const f = rootStore.query.getParam('filter')
+      this.setVelueByKeys(rootStore.query.getParam('filter') as string[])
+      // this.setVelueByKeys(this.selectedKeys)
 
 
 
@@ -83,6 +89,6 @@ console.log("Filter Stor,fetchCategories")
   };
 
   destroy() {
-    // TODO 
+    // TODO дестрой или2 удали
   }
 }
