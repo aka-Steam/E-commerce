@@ -13,7 +13,6 @@ import rootStore from 'stores/global/RootStore';
 import { useLocalStore } from 'utils/useLocalStore';
 import { StoreProvider, ProductsListStore } from 'stores/local/ProductsListStore';
 import s from './ProductsPage.module.scss';
-import SearchBar from 'components/SearchBar';
 
 const PoductsPage = () => {
   const navigate = useNavigate();
@@ -54,7 +53,6 @@ const PoductsPage = () => {
             ></Input>
             <Button onClick={handleSearch}>Find now</Button>
           </div>
-          {/* <SearchBar className={s[`main__controls-group`]}/> */}
 
           <MultiDropdown className={s[`main__filter`]} />
         </div>
