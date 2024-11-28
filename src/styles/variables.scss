@@ -59,7 +59,8 @@ $header-height-md: 50px;
 
 $general-padding-xl: 100px;
 $general-padding-lg: 60px;
-$general-padding-md: 50px;
+$general-padding-md: $space-xxxl;
+$general-padding-sm: $space-xxl;
 
 /* Loader */
 $loader-bg: $brand;
@@ -123,5 +124,5 @@ $color-index-active: #FFFFFF;
 @mixin transition-default(
     $property-name: all,
 ){
-    transition: $property-name 0.3s ease 0s normal
+    transition: $property-name 0.3s ease 0s normal;
 }

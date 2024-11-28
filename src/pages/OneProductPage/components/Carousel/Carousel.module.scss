@@ -50,8 +50,8 @@
 
     .carousel,
     .carousel__image {
-        width: 520px;
-        height: 520px;
+        width: 480px;
+        height: 480px;
     }
 }
 
@@ -59,7 +59,24 @@
 
     .carousel,
     .carousel__image {
+        width: 448px;
+        height: 448px;
+    }
+}
+
+@include md {
+    .carousel,
+    .carousel__image {
         width: 460px;
         height: 460px;
+    }
+}
+
+@include sm {
+    .carousel,
+    .carousel__image {
+        width: 100%;
+        aspect-ratio: 1;
+        height: calc(100vw - 2 * $general-padding-sm);
     }
 }

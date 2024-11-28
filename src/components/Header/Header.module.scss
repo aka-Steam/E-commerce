@@ -1,10 +1,12 @@
 @use 'styles/variables' as *;
 
 .header {
-    position: relative;
+    position: sticky;
+    top: 0;
 
-    height: $header-height-xl;
     padding: 0 $general-padding-xl;
+    width: 100%;
+    height: $header-height-xl;
 
     display: flex;
     justify-content: space-between;
@@ -12,14 +14,20 @@
 
     background-color: $color-bg-header;
     border-bottom: 2px solid $color-bdc-header;
+    z-index: 100;
 
-    @include md {
-        padding: 0 $general-padding-lg;
+
+    &__logo {
+        z-index: 110;
     }
 
-    @include lg {
-        height: $header-height-md;
-        padding: 0 $general-padding-md;
+    &__curtain {
+        display: none;
+    }
+
+    &__menu {
+        display: block;
+        z-index: 98;
     }
 
     &__other-actions-container,
@@ -28,10 +36,9 @@
         justify-content: space-between;
     }
 
-    // TODO - При ширине =< 768px nav превратить в бургер 
     &__nav-container {
         position: absolute;
-        top: 32px;
+        top: $space-xxl;
         left: 0;
         right: 0;
         margin: auto;
@@ -51,6 +58,98 @@
         background-color: inherit;
         color: $text-primary;
         cursor: pointer;
+        @include transition-default(color);
+
+        &:hover {
+            color: $brand;
+        }
+    }
+
+    &__burger {
+        margin-right: $space-xxs;
+        z-index: 110
+    }
+
+    @include lg {
+        height: $header-height-md;
+        padding: 0 $general-padding-md;
+
+        &__nav-container {
+            top: $space-s;
+            width: 330px;
+        }
+    }
+
+    @include md {
+        &__curtain {
+            display: block;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: $header-height-md;
+            background-color: $color-bg-header;
+            border-bottom: 2px solid $color-bdc-header;
+            z-index: 100;
+        }
+
+        &__menu {
+            padding: $space-xl $general-padding-md;
+            width: 100%;
+            height: auto;
+
+            position: absolute;
+            top: -300px;
+            left: 0;
+
+            opacity: 0;
+
+            background-color: $color-bg-header;
+            border-bottom: 2px solid $color-bdc-header;
+
+            box-shadow: $shadow;
+
+            transition: top 0.2s, opacity 0.3s;
+
+            z-index: 98;
+        }
+
+        &__menu_visible {
+            top: $header-height-md;
+            opacity: 1;
+        }
+
+        &__nav-container {
+            padding: 0 $space-xs;
+            display: block;
+            position: static;
+            width: 100%;
+        }
+
+        &__other-actions-container {
+            position: relative;
+            justify-content: end;
+            padding-top: $space-s;
+        }
+
+        &__other-actions-container::before {
+            content: '';
+            width: 100%;
+            height: 2px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: $color-bdc-header;
+        }
+
+        &__other-actions-button {
+            @include square(40px);
+        }
+    }
+
+    @include sm{
+        padding: 0 $general-padding-sm;    
     }
 }
 
@@ -58,7 +157,6 @@
     &__link {
         position: relative;
         display: block;
-
         text-decoration: none;
         font-size: 18px;
         color: $text-primary;
@@ -89,6 +187,24 @@
         &.nav__link_active {
             &::after {
                 display: block;
+            }
+        }
+
+        @include lg {
+            &::after {
+                top: 34px;
+            }
+        }
+
+        @include md {
+            height: 44px;
+
+            &::after {
+                width: 4px;
+                height: 24px;
+
+                top: 0;
+                left: -$space-xs;
             }
         }
     }
