@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TsCheckerPlugin = require('fork-ts-checker-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -63,6 +64,17 @@ module.exports = {
     new TsCheckerPlugin(),
     new DefinePlugin({
       'process.env': JSON.stringify(process.env),
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: contentPath, // Путь к папке public
+          to: buildPath,    // Копировать в dist
+          globOptions: {
+            ignore: ['**/index.html'], // Если index.html находится в public, исключаем его
+          },
+        },
+      ],
     }),
   ].filter(Boolean),
   module: {

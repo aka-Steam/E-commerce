@@ -36,7 +36,7 @@ const OnePoductPage = () => {
 
   return (
     <main className={s.main}>
-      <BackButton className={s[`main__back`]} onClick={() => navigate('/products')}>
+      <BackButton className={s[`main__back`]} onClick={() => navigate(-1)}>
         Back
       </BackButton>
 
