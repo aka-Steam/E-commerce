@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import axiosInstanse from 'utils/axiosInstanse';
+import { observer } from 'mobx-react-lite';
+
 import Text from 'components/Text';
 import Button from 'components/Button';
 import Card from 'components/Card';
-import noImage from 'assets/noimage.png';
 
-import { ProductInfo, FetchedProductInfo } from './types';
 import BackButton from './components/BackButton';
 import ProductInformation from './components/ProductInformation';
+
+import { useLocalStore } from 'utils/useLocalStore';
+import ProductItemStore, { StoreProvider } from 'stores/local/ProductItemStore';
+
 import s from './OnePoductPage.module.scss';
 
 const OnePoductPage = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState<Partial<ProductInfo>>({});
-  const [relatedItems, setRelatedItems] = useState<ProductInfo[]>([]);
+  const store = useLocalStore(() => new ProductItemStore(Number(id)));
+
   const navigate = useNavigate();
 
   const handlerCardClick = React.useCallback(
@@ -25,84 +28,51 @@ const OnePoductPage = () => {
 
   // Получение данных о товаре
   useEffect(() => {
-    const fetch = async () => {
-      const result = await axiosInstanse.get(`/products/${id}`);
-
-      setProduct({
-        id: result.data.id,
-        description: result.data.description,
-        images: result.data.images.map((el: string) => el.match(/https?:\/\/[^\s"]+/)),
-        price: result.data.price,
-        title: result.data.title,
-        category: result.data.category.name,
-      });
-    };
-
-    fetch();
+    store.fetchProductById();
+    store.fetchRelatedItems();
   }, [id]);
 
-  // Получение данных о рекомендуемых товарах
-  useEffect(() => {
-    const fetch = async () => {
-      const result = await axiosInstanse.get('/products', {
-        params: {
-          limit: 3,
-          offset: 12,
-        },
-      });
-
-      setRelatedItems(
-        result.data.map((p: FetchedProductInfo) => ({
-          id: p.id,
-          description: p.description,
-          images: p.images ? p.images.map((el) => el.match(/https?:\/\/[^\s"]+/)) : [noImage],
-          price: p.price,
-          title: p.title,
-          category: p.category.name,
-        })),
-      );
-    };
-
-    fetch();
-  }, []);
-
   return (
-    <main className={s.main}>
-      <BackButton className={s[`main__back`]} onClick={() => navigate('/products')}>
-        Назад
-      </BackButton>
+    <StoreProvider store={store}>
+      {store.product && (
+        <main className={s.main}>
+          <BackButton className={s[`main__back`]} onClick={() => navigate(-1)}>
+            Назад
+          </BackButton>
 
-      <ProductInformation
-        images={product.images}
-        title={product.title}
-        description={product.description}
-        price={product.price}
-        className={s[`main__product-info`]}
-      />
+          <ProductInformation
+            images={store.product.images}
+            title={store.product.title}
+            description={store.product.description}
+            price={store.product.price}
+            className={s[`main__product-info`]}
+          />
 
-      <Text className={s[`main__reletad-items-title`]} tag="h2" weight="bold">
-        Related Items
-      </Text>
+          <Text className={s[`main__reletad-items-title`]} tag="h2" weight="bold">
+            Related Items
+          </Text>
 
-      <div className={s[`main__related-items-container`]}>
-        {relatedItems &&
-          relatedItems.map((product, index) => {
-            return (
-              <Card
-                key={index}
-                image={product.images[0]}
-                captionSlot={product.category}
-                title={product.title}
-                subtitle={product.description}
-                contentSlot={'$' + product.price}
-                actionSlot={<Button>Add to Cart</Button>}
-                onClick={handlerCardClick(product.id)}
-              />
-            );
-          })}
-      </div>
-    </main>
+          <div className={s[`main__related-items-container`]}>
+            {store.relatedItems &&
+              store.relatedItems?.map((product) => {
+                return (
+                  <Card
+                    key={product.id}
+                    image={product.images[0]}
+                    captionSlot={product.category}
+                    title={product.title}
+                    subtitle={product.description}
+                    contentSlot={'$' + product.price}
+                    actionSlot={<Button>Add to Cart</Button>}
+                    onClick={handlerCardClick(product.id)}
+                  />
+                );
+              })}
+          </div>
+        </main>
+      )}
+    </StoreProvider>
   );
 };
 
-export default OnePoductPage;
+export default observer(OnePoductPage);

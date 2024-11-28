@@ -1,4 +1,8 @@
-import { multiDropdownModel } from "../../stores/local/models/MultiDropdownModel";
+export type Categoty = {
+  id: number;
+  image: string;
+  name: string;
+};
 
 export type Option = {
   /** Ключ варианта, используется для отправки на бек/использования в коде */
@@ -6,7 +10,3 @@ export type Option = {
   /** Значение варианта, отображается пользователю */
   value: string;
 };
-
-export type MultiDropdownProps = {
-  className?: string;
-}
