@@ -26,8 +26,8 @@ export class PaginationModel implements ILocalStore {
       currentPage: computed,
       totalPages: computed,
       getPageNumbers: computed,
-      prev: action,
-      next: action,
+      prev: action.bound,
+      next: action.bound,
       setCurrentPage: action,
       setTotalPages: action,
     });

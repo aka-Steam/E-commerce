@@ -16,21 +16,13 @@ const Pagination: React.FC<PaginationProps> = ({ className }) => {
   const productsListStore = useStore();
   const store = productsListStore.paginationStore;
 
-  const handlerPreviousPageClick = React.useCallback(
-    () => store.setCurrentPage(store.currentPage - 1),
-    [store.setCurrentPage],
-  );
-  const handlerNextPageClick = React.useCallback(
-    () => store.setCurrentPage(store.currentPage + 1),
-    [store.setCurrentPage],
-  );
   const handlePageClick = React.useCallback((page: number) => () => store.setCurrentPage(page), [store.setCurrentPage]);
 
   return (
     <div className={cn(s.pagination, className)}>
       {/* Кнопка для перехода на предыдущую страницу */}
       <button
-        onClick={handlerPreviousPageClick}
+        onClick={store.prev}
         disabled={store.currentPage === 1}
         className={cn(s.pagination__button, store.currentPage === 1 && s.pagination__button_disabled)}
       >
@@ -59,7 +51,7 @@ const Pagination: React.FC<PaginationProps> = ({ className }) => {
 
       {/* Кнопка для перехода на следующую страницу */}
       <button
-        onClick={handlerNextPageClick}
+        onClick={store.next}
         disabled={store.currentPage === store.totalPages}
         className={cn(s.pagination__button, store.currentPage === store.totalPages && s.pagination__button_disabled)}
       >
