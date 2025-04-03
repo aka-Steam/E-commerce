@@ -13,7 +13,7 @@ import ProductInformation from './components/ProductInformation';
 import { useLocalStore } from 'utils/useLocalStore';
 import ProductItemStore, { StoreProvider } from 'stores/local/ProductItemStore';
 
-import s from './OnePoductPage.module.scss';
+import * as s from './OnePoductPage.module.scss';
 
 const OnePoductPage = () => {
   const { id } = useParams();

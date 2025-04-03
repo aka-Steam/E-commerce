@@ -9,10 +9,12 @@ import MultiDropdown from 'components/MultiDropdown';
 import Card from 'components/Card';
 import Pagination from 'components/Pagination';
 
+
 import rootStore from 'stores/global/RootStore';
 import { useLocalStore } from 'utils/useLocalStore';
 import { StoreProvider, ProductsListStore } from 'stores/local/ProductsListStore';
-import s from './ProductsPage.module.scss';
+import * as s from './ProductsPage.module.scss';
+
 
 const PoductsPage = () => {
   const navigate = useNavigate();
@@ -61,7 +63,7 @@ const PoductsPage = () => {
           <Text className={s[`main__content-title`]} tag="h2" weight="bold">
             Total Product
           </Text>
-          <Text tag="div" view="p-20" weight="bold" color="accent" className={s[`main__content-counter`]}>
+          <Text tag="div" view="p-20" weight="bold" color="accent">
             {store.totalProducts}
           </Text>
         </div>

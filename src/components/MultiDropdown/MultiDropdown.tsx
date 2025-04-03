@@ -7,7 +7,8 @@ import ArrowDownIcon from 'components/icons/ArrowDownIcon';
 import { MultiDropdownProps } from './types';
 
 import { useStore } from 'stores/local/ProductsListStore';
-import s from './MultiDropdown.module.scss';
+import * as s from './MultiDropdown.module.scss';
+
 
 const MultiDropdown: React.FC<MultiDropdownProps> = ({ className }) => {
   const productsListStore = useStore();
@@ -35,7 +36,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({ className }) => {
         onClick={store.toggle}
         ref={inputRef}
         placeholder={store.title}
-        className={s['multi-dropdown__field']}
+    
         value={store.isOpened ? store.filter : store.isEmpty ? '' : store.title}
         onChange={store.setFilter}
         afterSlot={<ArrowDownIcon className={s['multi-dropdown__icon']} />}

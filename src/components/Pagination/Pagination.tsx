@@ -4,7 +4,7 @@ import cn from 'classnames';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import ArrowLeftIcon from 'components/icons/ArrowLeftIcon';
 
-import s from './Pagination.module.scss';
+import * as s from './Pagination.module.scss';
 import { observer } from 'mobx-react-lite';
 import { useStore } from 'stores/local/ProductsListStore';
 
