@@ -1,0 +1,78 @@
+@use 'styles/variables' as *;
+
+
+.burger {
+    content: '';
+    position: relative;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+
+    display: none;
+
+    @include md {
+        display: block;
+
+        &__middle-line {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 88%;
+            height: 2px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            text-align: center;
+            top: calc(50% - 1px);
+            background-color: $text-primary;
+            transition: all 0.3s;
+        }
+
+        &::before,
+        &::after {
+            content: '';
+            width: 88%;
+            height: 2px;
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            left: 0;
+            right: 0;
+            text-align: center;
+            background-color: $text-primary;
+            transition: all 0.3s;
+        }
+
+        &:hover &__middle-line {
+            background-color: $brand;
+        }
+
+        &:hover::before,
+        &:hover::after {
+            background-color: $brand;
+        }
+
+        &::before {
+            top: 24%;
+        }
+
+        &::after {
+            bottom: 24%;
+        }
+
+        &.active &__middle-line {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        &.active::before {
+            transform: rotate(45deg);
+            top: calc(50% - 1px);
+        }
+
+        &.active::after {
+            transform: rotate(-45deg);
+            bottom: calc(50% - 1px);
+        }
+    }
+}

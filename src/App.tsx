@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import * as React from 'react';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import './App.scss';
 
 import Header from 'components/Header';
@@ -11,15 +12,23 @@ function App() {
   useQueryParamsStoreInit();
 
   return (
+// <<<<<<< publication
+<!--     <HashRouter> -->
+<!-- ======= -->
     <>
       <QueryParamsConnector />
+<!-- >>>>>>> main -->
       <Header />
       <Routes>
         <Route path="/" element={<Products />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<Product />} />
       </Routes>
+<!-- <<<<<<< publication -->
+<!--     </HashRouter> -->
+<!-- ======= -->
     </>
+// >>>>>>> main
   );
 }
 

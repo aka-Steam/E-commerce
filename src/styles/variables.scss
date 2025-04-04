@@ -1,5 +1,33 @@
 @forward './breakpoints.scss';
 
+:root{
+    --color-bg: #FFFFFF;
+    --color-bg-header: #FFFFFF;
+    --color-bg-main: #FAFAFA;
+    --color-bg-footer: #FFFFFF;
+
+    --color-bdc-header: #F3F3F3;
+    
+    --color-text:#151411;
+    --color-text-disabled: rgba(0, 0, 0, 0.2);
+    
+    --shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] {
+    --color-bg: #2B1A18;
+    --color-bg-header: #291816;
+    --color-bg-main: #190906;
+    --color-bg-footer: #000000;
+
+    --color-bdc-header: #4D4646;
+    
+    --color-text:#FFFFFF;
+    --color-text-disabled: rgba(255, 255, 255, 0.2);
+    
+    --shadow: 0 4px 10px rgba(255, 255, 255, 0.25);
+}
+
 $brand: #518581;
 $brand-hover: #86AAA7;
 $brand-active: #487773;
@@ -15,15 +43,15 @@ $space-xxs: 8px;
 
 $card-gap: 30px 80px;
 
-$shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+$shadow: var(--shadow);
 
 /* Layout */
-$color-bg: #FFFFFF;
+$color-bg: var(--color-bg);
 $color-bg-header: $color-bg;
-$color-bg-main: #FAFAFA;
+$color-bg-main: var(--color-bg-main);
 $color-bg-footer: #000000;
 
-$color-bdc-header: #F3F3F3;
+$color-bdc-header: var(--color-bdc-header);
 
 $header-height-xl: 90px;
 $header-height-lg: 90px;
@@ -31,14 +59,14 @@ $header-height-md: 50px;
 
 $general-padding-xl: 100px;
 $general-padding-lg: 60px;
-$general-padding-md: 50px;
-
+$general-padding-md: $space-xxxl;
+$general-padding-sm: $space-xxl;
 
 /* Loader */
 $loader-bg: $brand;
 
 /* Text & Icon */
-$text-primary: #000000;
+$text-primary: var(--color-text);
 $text-secondary: #AFADB5;
 $text-accent: $brand;
 
@@ -53,28 +81,30 @@ $button-primary-text-hover: #FFFFFF;
 $button-primary-text-disabled: #FFFFFF;
 $button-primary-text-active: #FFFFFF;
 
-$checkbox-bg-hover: #FFFFFF;
-$checkbox-bg-disabled: #FFFFFF;
+/* Checkbox */
+$checkbox-bg-hover: $color-bg;
+$checkbox-bg-disabled: $color-bg;
 $checkbox-check-disabled: rgba(0, 0, 0, 0.2);
 
 /* Card */
 $card-image-bg: #D9D9D9;
-$card-bg: #FFFFFF;
+$card-image-alt: #000000;
+$card-bg: $color-bg;
 
 /* Input */
-$input-text: #000000;
-$input-bg: #FFFFFF;
+$input-text: var(--color-text);
+$input-bg: $color-bg;
 $input-placeholder: #AFADB5;
-$input-border: #FFFFFF;
-$input-bg-focus: #FFFFFF;
+$input-border: $color-bg;
+$input-bg-focus: $color-bg;
 $input-border-focus: $brand;
-$input-text-focus: #000000;
-$input-bg-disabled: #FFFFFF;
-$input-border-disabled: #FFFFFF;
-$input-text-disabled: rgba(0, 0, 0, 0.2);
+$input-text-focus: var(--color-text);
+$input-bg-disabled: $color-bg;
+$input-border-disabled: $color-bg;
+$input-text-disabled: var(--color-text-disabled);
 
 /* Dropdown */
-$dropdown-options-bg: #FFFFFF;
+$dropdown-options-bg: $color-bg;
 
 /* Pagination */
 $color-index: currentColor;
@@ -94,18 +124,5 @@ $color-index-active: #FFFFFF;
 @mixin transition-default(
     $property-name: all,
 ){
-    transition: $property-name 0.3s ease 0s normal
+    transition: $property-name 0.3s ease 0s normal;
 }
-
-
-// TODO - dark theme
-/* @media (prefers-color-scheme: dark){
-    :root{
-        $color-bg:#2f2f2f;
-        $color-bg-header: $color-bg;
-        $color-bg-main: #232323;
-        $color-bg-footer: #000000;
-
-        $color-bdc-header: #363636;
-    }
-} */
