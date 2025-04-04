@@ -112,6 +112,7 @@ module.exports = {
       styles: path.join(srcPath, 'styles'),
       utils: path.join(srcPath, 'utils'),
       configs: path.join(srcPath, 'configs'),
+      stores: path.join(srcPath, 'stores'),
     },
   },
   devServer: {

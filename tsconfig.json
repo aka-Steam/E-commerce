@@ -17,7 +17,8 @@
       "pages": ["pages/*"],
       "styles": ["styles/*"],
       "utils": ["utils/*"],
-      "configs": ["configs/*"]
+      "configs": ["configs/*"],
+      "stores": ["stores/*"]
     }
   }
 }
