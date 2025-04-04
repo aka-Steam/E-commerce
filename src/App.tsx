@@ -13,20 +13,20 @@ function App() {
 
   return (
 // <<<<<<< publication
-<!--     <HashRouter> -->
-<!-- ======= -->
+//     <HashRouter> 
+// ======= 
     <>
       <QueryParamsConnector />
-<!-- >>>>>>> main -->
+{/* >>>>>>> main  */}
       <Header />
       <Routes>
         <Route path="/" element={<Products />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<Product />} />
       </Routes>
-<!-- <<<<<<< publication -->
-<!--     </HashRouter> -->
-<!-- ======= -->
+{/* <<<<<<< publication 
+     </HashRouter> 
+ =======  */}
     </>
 // >>>>>>> main
   );
