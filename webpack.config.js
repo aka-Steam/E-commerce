@@ -69,7 +69,7 @@ module.exports = {
       patterns: [
         {
           from: contentPath, // Путь к папке public
-          to: buildPath,    // Копировать в dist
+          to: buildPath, // Копировать в dist
           globOptions: {
             ignore: ['**/index.html'], // Если index.html находится в public, исключаем его
           },
@@ -116,7 +116,7 @@ module.exports = {
     },
   },
   devServer: {
-    host: '127.0.0.1', 
+    host: '127.0.0.1',
     port: 9000,
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -127,6 +127,6 @@ module.exports = {
     historyApiFallback: true,
     static: {
       directory: contentPath,
-    }
+    },
   },
 };

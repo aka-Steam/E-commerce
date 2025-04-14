@@ -95,7 +95,7 @@ export default class ProductsListStore implements ILocalStore {
     const response = await axiosInstance.get('/products', {
       params: {
         title: this.searchStore.searchValue,
-        categoryId: Number(rootStore.query.getParam('filter')?.toString().split(',')[0]),
+        categoryId: Number(rootStore.query.getParam('filter')?.toString().split(',')[0]) || 0,
       },
     });
 
