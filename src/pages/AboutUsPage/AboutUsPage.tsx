@@ -1,0 +1,112 @@
+import React from 'react';
+import Text from 'components/Text';
+import * as s from './AboutUsPage.module.scss';
+import chellImg from 'assets/chell.jpg';
+import pepeImg from 'assets/pepe.jpg';
+import kapiImg from 'assets/kapi.jpg';
+
+const AboutUsPage = () => {
+  return (
+    <main className={s.main}>
+      <section className={s.hero}>
+        <Text view="title" className={s.hero__title}>
+          About Us
+        </Text>
+        <Text view="p-20" color="secondary" className={s.hero__subtitle}>
+          Learn more about our company and our amazing team
+        </Text>
+      </section>
+
+      {/* Company Info Section */}
+      <section className={s.company}>
+        <div className={s.company__content}>
+          <div className={s.medal}>
+            <svg className={s.medal__icon} width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clipPath="url(#clip0_502_630)">
+                <path d="M42 0H0V42H42V0Z" fill="none" />
+                <path
+                  d="M32.9035 20.601L31.9655 24.101H13.6535L8.66949 5.50549H12.2955L16.338 20.601H32.9035Z"
+                  fill="#AD7E5C"
+                />
+                <path d="M31.402 26.201L30.464 29.701H9.60749L8.66949 26.201H31.402Z" fill="#518581" />
+                <path d="M29.9005 31.801L28.9625 35.301H14.5915L13.6535 31.801H29.9005Z" fill="#A6D8D1" />
+              </g>
+              <defs>
+                <clipPath id="clip0_502_630">
+                  <rect width="42" height="42" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+          <Text view="title" tag="h2" className={s.company__title}>
+            Our Story
+          </Text>
+          <Text view="p-20" className={s.company__text}>
+            Founded in 2024, our company has been at the forefront of e-commerce innovation. We started with a simple
+            mission: to make online shopping more accessible, enjoyable, and efficient for everyone. Today, we're proud
+            to serve millions of customers worldwide with our carefully curated selection of products and exceptional
+            customer service.
+          </Text>
+          <Text view="p-20" className={s.company__text}>
+            Our commitment to quality, sustainability, and customer satisfaction has helped us grow into one of the
+            leading e-commerce platforms in the industry.
+          </Text>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section className={s.team}>
+        <Text view="title" tag="h2" className={s.team__title}>
+          Meet Our Team
+        </Text>
+        <div className={s.team__container}>
+          <div className={s.team__member}>
+            <img className={s.team__photo} src={chellImg} alt="John Doe" />
+            <Text view="p-20" weight="bold" className={s.team__name}>
+              John Doe
+            </Text>
+            <Text view="p-16" color="secondary">
+              CEO & Founder
+            </Text>
+          </div>
+          <div className={s.team__member}>
+            <img className={s.team__photo} src={pepeImg} alt="Jane Smith" />
+            <Text view="p-20" weight="bold" className={s.team__name}>
+              Jane Smith
+            </Text>
+            <Text view="p-16" color="secondary">
+              CTO
+            </Text>
+          </div>
+          <div className={s.team__member}>
+            <img className={s.team__photo} src={kapiImg} alt="Mike Johnson" />
+            <Text view="p-20" weight="bold" className={s.team__name}>
+              Mike Johnson
+            </Text>
+            <Text view="p-16" color="secondary">
+              Head of Design
+            </Text>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Section */}
+      <section className={s.video}>
+        <Text view="title" tag="h2" className={s.video__title}>
+          Our Mission
+        </Text>
+        <div className={s.video__container}>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/UHO1IitpNto?si=zir4ldtfVh9HpkZZ&amp;start=64"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          ></iframe>
+        </div>
+      </section>
+    </main>
+  );
+};
+
+export default AboutUsPage;

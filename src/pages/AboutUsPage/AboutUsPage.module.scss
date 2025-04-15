@@ -1,0 +1,183 @@
+@use 'styles/variables' as *;
+
+.main {
+  padding: $general-padding-xl;
+
+  @include xl {
+    padding: $general-padding-xl;
+  }
+
+  @include lg {
+    padding: $general-padding-md;
+  }
+
+  @include sm {
+    padding: $general-padding-sm;
+  }
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 60px;
+
+  &__title {
+    margin-bottom: 20px;
+  }
+
+  &__subtitle {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+.company {
+  margin-bottom: 80px;
+
+  &__content {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  &__title {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  &__text {
+    margin-bottom: 20px;
+    text-align: justify;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.team {
+  margin-bottom: 80px;
+  padding: 0 20px;
+
+  &__title {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__member {
+    text-align: center;
+    flex: 1 1 calc(33.33% - 20px);
+
+    &:last-child {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  &__photo {
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    background-size: cover;
+    background-position: center;
+
+    &:hover {
+      transition: transform 0.3s ease-in-out;
+      transform: scale(1.06);
+    }
+  }
+
+  &__name {
+    margin-bottom: 10px;
+  }
+}
+
+.video {
+  padding: 20px;
+  background-color: $color-bg;
+  border-radius: 20px;;
+
+  &__title {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  &__container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; // Для соотношения сторон 16:9
+    height: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+
+    iframe,
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  }
+}
+
+
+.medal {
+  $medal-size: 200px;
+
+  content: '';
+  @include square($medal-size, 20px);
+  margin: 0 auto 40px auto;
+  position: relative;
+  animation: flipInY 8s ease-in-out 0s infinite;
+
+  &::after {
+    content: '';
+    display: block;
+    @include square(80%, 30px);
+
+    position: absolute;
+    top: calc(($medal-size - 80%) / 2); // (.medal width - .medal::after width) / 2
+    left: calc(($medal-size - 80%) / 2);
+
+    border: 3px solid $brand;
+    transform: rotate(45deg);
+  }
+
+  &__icon {
+    @include square(66%);
+    position: absolute;
+    top: calc(($medal-size - 64%) / 2);
+    left: calc(($medal-size - 63%) / 2);
+  }
+}
+
+@keyframes flipInY {
+  0% {
+    transform: rotateY(0deg);
+    -webkit-transform: rotateY(0deg);
+  }
+
+  80% {
+    transform: rotateY(360deg);
+    -webkit-transform: rotateY(360deg);
+  }
+
+  80.01%,
+  to {
+    transform: rotateY(360deg);
+    -webkit-transform: rotateY(360deg);
+  }
+}

@@ -5,6 +5,7 @@ import './App.scss';
 import Header from 'components/Header';
 import Products from 'pages/ProductsPage';
 import Product from 'pages/OneProductPage';
+import AboutUs from 'pages/AboutUsPage';
 import { useQueryParamsStoreInit } from 'stores/global/RootStore/hooks/useQueryParamsStoreInit';
 import QueryParamsConnector from 'components/QueryParamsConnector';
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/" element={<Products />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<Product />} />
+        <Route path="/about" element={<AboutUs />} />
       </Routes>
 {/* <<<<<<< publication 
      </HashRouter> 
