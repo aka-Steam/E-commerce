@@ -1,0 +1,49 @@
+@use 'styles/variables' as *;
+
+.medal {
+    $medal-size: 200px;
+
+    content: '';
+    @include square($medal-size, 20px);
+    margin: 0 auto 40px auto;
+    position: relative;
+    animation: flipInY 8s ease-in-out 0s infinite;
+
+    &::after {
+        content: '';
+        display: block;
+        @include square(80%, 30px);
+
+        position: absolute;
+        top: calc(($medal-size - 80%) / 2); // (.medal width - .medal::after width) / 2
+        left: calc(($medal-size - 80%) / 2);
+
+        border: 3px solid $brand;
+        transform: rotate(45deg);
+    }
+
+    &__icon {
+        @include square(66%);
+        position: absolute;
+        top: calc(($medal-size - 64%) / 2);
+        left: calc(($medal-size - 63%) / 2);
+    }
+}
+
+@keyframes flipInY {
+    0% {
+        transform: rotateY(0deg);
+        -webkit-transform: rotateY(0deg);
+    }
+
+    80% {
+        transform: rotateY(360deg);
+        -webkit-transform: rotateY(360deg);
+    }
+
+    80.01%,
+    to {
+        transform: rotateY(360deg);
+        -webkit-transform: rotateY(360deg);
+    }
+}
