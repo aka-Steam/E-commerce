@@ -4,9 +4,9 @@
     position: sticky;
     top: 0;
 
-    padding: 0 $general-padding-xl;
     width: 100%;
     height: $header-height-xl;
+    padding: 0 max(calc((100% - $general-max-width) / 2 + $general-padding-xl), $general-padding-xl);
 
     display: flex;
     justify-content: space-between;

@@ -25,3 +25,8 @@ figure,
 pre {
   margin: 0;
 }
+
+main {
+  max-width: $general-max-width;
+  margin: 0 auto;
+}
