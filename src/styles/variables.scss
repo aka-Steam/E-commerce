@@ -51,10 +51,11 @@ $shadow: var(--shadow);
 $color-bg: var(--color-bg);
 $color-bg-header: $color-bg;
 $color-bg-main: var(--color-bg-main);
-$color-bg-footer: #000000;
+$color-bg-footer: $color-bg;
 $color-shadow: var(--color-shadow);
 
 $color-bdc-header: var(--color-bdc-header);
+$color-bdc-footer: $color-bdc-header;
 
 $header-height-xl: 90px;
 $header-height-lg: 90px;
