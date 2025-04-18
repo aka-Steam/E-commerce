@@ -18,7 +18,8 @@
       "styles": ["styles/*"],
       "utils": ["utils/*"],
       "configs": ["configs/*"],
-      "stores": ["stores/*"]
+      "stores": ["stores/*"],
+      "hooks": ["hooks/*"]
     }
   }
 }

@@ -32,6 +32,11 @@ const Card: React.FC<CardProps> = ({
   onClick,
   actionSlot,
 }) => {
+  // Обработчик для предотвращения всплытия события клика из actionSlot
+  const handleActionClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
     <div className={cn(s.card, className)} onClick={onClick}>
       <div className={s.card__header}>
@@ -55,7 +60,9 @@ const Card: React.FC<CardProps> = ({
               {contentSlot}
             </Text>
           )}
-          <div className={s.card__action}>{actionSlot}</div>
+          <div className={s.card__action} onClick={handleActionClick}>
+            {actionSlot}
+          </div>
         </div>
       </div>
     </div>

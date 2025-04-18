@@ -8,6 +8,7 @@ import SunMoonIcon from 'components/icons/SunMoonIcon';
 import { LINKS } from './config';
 import Logo from './components/Logo';
 import Burger from './components/Burger';
+import CartCounter from './components/CartCounter';
 import * as s from './Header.module.scss';
 
 const Header = () => {
@@ -16,8 +17,8 @@ const Header = () => {
   return (
     <header className={s['header']}>
       <div className={s.header__curtain}></div>
-      <Logo  className={s.header__logo}/>
-      <div className={cn(s.header__menu, menuState && s.header__menu_visible )}>
+      <Logo className={s.header__logo} />
+      <div className={cn(s.header__menu, menuState && s.header__menu_visible)}>
         <nav className={cn(s['header__nav-container'])}>
           {LINKS.map((link, index) => (
             <NavLink
@@ -33,15 +34,18 @@ const Header = () => {
           <button onClick={toggleTheme} className={s[`header__other-actions-button`]}>
             <SunMoonIcon width={30} height={30} />
           </button>
-          <button className={s[`header__other-actions-button`]}>
-            <BagIcon width={30} height={30} />
-          </button>
+          <NavLink to="/cart" className={s[`header__other-actions-button`]}>
+            <div className={s.cartButton}>
+              <BagIcon width={30} height={30} />
+              <CartCounter />
+            </div>
+          </NavLink>
           <button className={s[`header__other-actions-button`]}>
             <UserIcon width={30} height={30} />
           </button>
         </div>
       </div>
-      <Burger state={menuState} setState={setMenuState} className={s.header__burger}/>
+      <Burger state={menuState} setState={setMenuState} className={s.header__burger} />
     </header>
   );
 };

@@ -12,13 +12,16 @@ import ProductInformation from './components/ProductInformation';
 
 import { useLocalStore } from 'utils/useLocalStore';
 import ProductItemStore, { StoreProvider } from 'stores/local/ProductItemStore';
+import { ProductInfoModel } from 'stores/local/models/products/productInfo';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 
 import * as s from './OnePoductPage.module.scss';
+
 
 const OnePoductPage = () => {
   const { id } = useParams();
   const store = useLocalStore(() => new ProductItemStore(Number(id)));
-
+  const [cartItems, setCartItems] = useLocalStorage('cart', []);
   const navigate = useNavigate();
 
   const handlerCardClick = React.useCallback(
@@ -26,25 +29,38 @@ const OnePoductPage = () => {
     [],
   );
 
+  
+
   // Получение данных о товаре
   useEffect(() => {
     store.fetchProductById();
     store.fetchRelatedItems();
   }, [id]);
 
+  const addItemToCart = (item: ProductInfoModel) => {
+    const existingItemIndex = cartItems.findIndex((cartItem : ProductInfoModel) => cartItem.id === item.id);
+    let newCartItems = [...cartItems];
+
+    if (existingItemIndex !== -1) {
+      // Если товар уже есть, увеличиваем его количество
+      newCartItems[existingItemIndex].quantity += 1;
+    } else {
+      // Если товара нет, добавляем его с количеством 1
+      newCartItems.push({ ...item, quantity: 1 });
+    }
+    setCartItems(newCartItems);
+  };
+
   return (
     <StoreProvider store={store}>
       {store.product && (
         <main className={s.main}>
           <BackButton className={s[`main__back`]} onClick={() => navigate(-1)}>
-            Назад
+            Back
           </BackButton>
 
           <ProductInformation
-            images={store.product.images}
-            title={store.product.title}
-            description={store.product.description}
-            price={store.product.price}
+            product={store.product}
             className={s[`main__product-info`]}
           />
 
@@ -63,7 +79,7 @@ const OnePoductPage = () => {
                     title={product.title}
                     subtitle={product.description}
                     contentSlot={'$' + product.price}
-                    actionSlot={<Button>Add to Cart</Button>}
+                    actionSlot={<Button onClick={() => addItemToCart(product)}>Add to Cart</Button>}
                     onClick={handlerCardClick(product.id)}
                   />
                 );
