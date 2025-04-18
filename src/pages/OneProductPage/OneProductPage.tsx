@@ -17,28 +17,30 @@ import { useLocalStorage } from 'hooks/useLocalStorage';
 
 import * as s from './OnePoductPage.module.scss';
 
-
 const OnePoductPage = () => {
   const { id } = useParams();
-  const store = useLocalStore(() => new ProductItemStore(Number(id)));
-  const [cartItems, setCartItems] = useLocalStorage('cart', []);
   const navigate = useNavigate();
+  const [cartItems, setCartItems] = useLocalStorage('cart', []);
+
+  // Создаем store только один раз при монтировании компонента
+  const store = useLocalStore(() => new ProductItemStore());
 
   const handlerCardClick = React.useCallback(
     (relatedItemId: number) => () => navigate(`/products/${relatedItemId}`),
     [],
   );
 
-  
-
-  // Получение данных о товаре
+  // Получение данных о товаре при изменении id
   useEffect(() => {
-    store.fetchProductById();
-    store.fetchRelatedItems();
-  }, [id]);
+    if (id) {
+      store.setProductId(Number(id));
+      store.fetchProductById();
+      store.fetchRelatedItems();
+    }
+  }, [id, store]);
 
   const addItemToCart = (item: ProductInfoModel) => {
-    const existingItemIndex = cartItems.findIndex((cartItem : ProductInfoModel) => cartItem.id === item.id);
+    const existingItemIndex = cartItems.findIndex((cartItem: ProductInfoModel) => cartItem.id === item.id);
     let newCartItems = [...cartItems];
 
     if (existingItemIndex !== -1) {
@@ -59,10 +61,7 @@ const OnePoductPage = () => {
             Back
           </BackButton>
 
-          <ProductInformation
-            product={store.product}
-            className={s[`main__product-info`]}
-          />
+          <ProductInformation product={store.product} className={s[`main__product-info`]} />
 
           <Text className={s[`main__reletad-items-title`]} tag="h2" weight="bold">
             Related Items

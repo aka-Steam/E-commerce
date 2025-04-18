@@ -8,14 +8,16 @@ import noImage from 'assets/noimage.png';
 type PrivateFields = '_id' | '_product' | '_relatedItems' | '_meta';
 
 export default class ProductItemStore implements ILocalStore {
-  private _id: number;
+  private _id: number | null = null;
   private _product: ProductInfoModel | null = null;
   private _relatedItems: ProductInfoModel[] = [];
   // состояние загрузки
   private _meta: Meta = Meta.initial;
 
-  constructor(id: number) {
-    this._id = id;
+  constructor(id?: number) {
+    if (id) {
+      this._id = id;
+    }
 
     makeObservable<ProductItemStore, PrivateFields>(this, {
       _id: observable,
@@ -25,6 +27,7 @@ export default class ProductItemStore implements ILocalStore {
       product: computed,
       meta: computed,
       relatedItems: computed,
+      setProductId: action,
       fetchProductById: action,
       fetchRelatedItems: action,
     });
@@ -42,48 +45,73 @@ export default class ProductItemStore implements ILocalStore {
     return this._relatedItems;
   }
 
+  setProductId = (id: number) => {
+    this._id = id;
+    this._product = null;
+    this._relatedItems = [];
+    this._meta = Meta.initial;
+  };
+
   // Метод для загрузки одного товара по ID
   fetchProductById = async () => {
-    this._meta = Meta.loading;
-    const result = await axiosInstance.get(`/products/${this._id}`);
+    if (!this._id) {
+      return;
+    }
 
-    runInAction(() => {
-      this._product = {
-        id: result.data.id,
-        description: result.data.description,
-        images: result.data.images ? result.data.images.map((el: string) => el.match(/https?:\/\/[^\s"]+/)) : [noImage],
-        price: result.data.price,
-        title: result.data.title,
-        category: result.data.category.name,
-      };
-      this._meta = Meta.success;
-    });
+    this._meta = Meta.loading;
+    try {
+      const result = await axiosInstance.get(`/products/${this._id}`);
+
+      runInAction(() => {
+        this._product = {
+          id: result.data.id,
+          description: result.data.description,
+          images: result.data.images
+            ? result.data.images.map((el: string) => el.match(/https?:\/\/[^\s"]+/))
+            : [noImage],
+          price: result.data.price,
+          title: result.data.title,
+          category: result.data.category.name,
+        };
+        this._meta = Meta.success;
+      });
+    } catch (error) {
+      runInAction(() => {
+        this._meta = Meta.error;
+      });
+    }
   };
 
   // Метод для загрузки рекомендованных товаров
   fetchRelatedItems = async () => {
+    if (!this._id) {
+      return;
+    }
+
     this._meta = Meta.loading;
-    const response = await axiosInstance.get('/products', {
-      params: {
-        limit: 3,
-        offset: 1,
-      },
-    });
+    try {
+      const response = await axiosInstance.get('/products', {
+        params: {
+          limit: 3,
+          offset: 1,
+        },
+      });
 
-    runInAction(() => {
-      if (response.status < 200 || response.status >= 300) {
-        this._meta = Meta.error;
-        return;
-      }
+      runInAction(() => {
+        if (response.status < 200 || response.status >= 300) {
+          this._meta = Meta.error;
+          return;
+        }
 
-      try {
         this._relatedItems = response.data.map(normalizeProductInfo);
         this._meta = Meta.success;
-      } catch (err) {
+      });
+    } catch (error) {
+      runInAction(() => {
         this._relatedItems = [];
         this._meta = Meta.error;
-      }
-    });
+      });
+    }
   };
 
   destroy(): void {
