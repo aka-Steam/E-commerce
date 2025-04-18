@@ -1,0 +1,10 @@
+@use 'styles/variables' as *;
+
+
+.logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $text-primary;
+    gap: $space-xs;
+}

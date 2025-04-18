@@ -1,0 +1,87 @@
+@use 'styles/variables' as *;
+
+
+.footer {
+    min-height: 180px;
+    background-color: $color-bg-footer;
+
+    border-top: 2px solid $color-bdc-footer;
+
+    padding: 0 max(calc((100% - $general-max-width) / 2 + $general-padding-xl), $general-padding-xl);
+    padding-top: $space-xxxl;
+    padding-bottom: $space-xl;
+
+    @include xl {
+        padding-left: $general-padding-xl;
+        padding-right: $general-padding-xl;
+    }
+
+    @include lg {
+        padding-left: $general-padding-md;
+        padding-right: $general-padding-md;
+    }
+
+    @include sm {
+        padding-left: $general-padding-sm;
+        padding-right: $general-padding-sm;
+    }
+
+    &__container {
+        margin: 0 auto;
+        margin-bottom: $space-xl;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0 20px;
+        justify-content: space-between;
+        align-items: top;
+
+        @include md {
+            justify-content: center;
+        }
+    }
+
+    &__logo {
+        margin-bottom: 18px;
+    }
+}
+
+
+.contact {
+    display: flex;
+    justify-content: center;
+    gap: 0 20px;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &__text-container {
+        margin-bottom: 18px;
+    }
+
+    &__icons {
+        margin-bottom: 18px;
+        display: flex;
+        width: 172px;
+        justify-content: space-between;
+    }
+}
+
+
+.svg-icon {
+    @include square(44px);
+    color: $text-primary;
+
+    &:hover {
+        color: $brand;
+        transform: scale(1.2);
+        transition: 0.3s;
+    }
+}
+
+.icon-link {
+    @include square(44px);
+}
+
+.copyright {
+    margin: 0 auto;
+    text-align: center;
+}

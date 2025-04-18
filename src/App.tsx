@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
-import './App.scss';
+import { Routes, Route } from 'react-router-dom';
 
 import Header from 'components/Header';
+import Footer from 'components/Footer';
 import Products from 'pages/ProductsPage';
 import Product from 'pages/OneProductPage';
 import AboutUs from 'pages/AboutUsPage';
@@ -10,17 +10,14 @@ import Cart from 'pages/CartPage';
 import Categories from 'pages/CategoriesPage';
 import { useQueryParamsStoreInit } from 'stores/global/RootStore/hooks/useQueryParamsStoreInit';
 import QueryParamsConnector from 'components/QueryParamsConnector';
+import './App.scss';
 
 function App() {
   useQueryParamsStoreInit();
 
   return (
-// <<<<<<< publication
-//     <HashRouter> 
-// ======= 
     <>
       <QueryParamsConnector />
-{/* >>>>>>> main  */}
       <Header />
       <Routes>
         <Route path="/" element={<Products />} />
@@ -30,11 +27,8 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
-{/* <<<<<<< publication 
-     </HashRouter> 
- =======  */}
+      <Footer />
     </>
-// >>>>>>> main
   );
 }
 
