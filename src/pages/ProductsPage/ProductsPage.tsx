@@ -46,7 +46,6 @@ const PoductsPage = () => {
     setCartItems(newCartItems);
   };
 
-
   return (
     <StoreProvider store={store}>
       <main className={s.main}>
@@ -66,6 +65,7 @@ const PoductsPage = () => {
               value={store.searchStore.searchValue}
               onChange={store.searchStore.setSearchValue}
               placeholder="Search product"
+              onEnterPress={handleSearch}
             ></Input>
             <Button onClick={handleSearch}>Find now</Button>
           </div>
