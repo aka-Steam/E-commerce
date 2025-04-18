@@ -7,8 +7,8 @@ const VkIcon: React.FC<IconProps> = (props) => {
       <Icon viewBox="0 0 30 30" {...props}>
         <svg
           fill="currentColor"
-          fill-rule="evenodd"
-          enable-background="new 0 0 97.75 97.75"
+          fillRule="evenodd"
+          enableBackground="new 0 0 97.75 97.75"
           viewBox="0 0 97.75 97.75"
           xmlns="http://www.w3.org/2000/svg"
         >
