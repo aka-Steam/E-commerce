@@ -15,14 +15,6 @@ const CategoriesPage: React.FC = () => {
     categoriesStore.fetchCategories();
   }, []);
 
-  if (categoriesStore.meta === Meta.loading) {
-    return <Loader />;
-  }
-
-  if (categoriesStore.meta === Meta.error) {
-    return <div>Error loading categories</div>;
-  }
-
   return (
     <main>
       <section className={s.hero}>
@@ -35,6 +27,8 @@ const CategoriesPage: React.FC = () => {
       </section>
 
       <div className={s.grid}>
+        {categoriesStore.meta === Meta.loading && <Loader />}
+        {categoriesStore.meta === Meta.error && <div>Error loading categories</div>}
         {categoriesStore.categories.map((category) => (
           <CategoryCard
             key={category.id}

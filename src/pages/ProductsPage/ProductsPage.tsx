@@ -12,6 +12,8 @@ import Button from 'components/Button';
 import MultiDropdown from 'components/MultiDropdown';
 import Card from 'components/Card';
 import Pagination from 'components/Pagination';
+import Loader from 'components/Loader';
+import Meta from 'utils/meta';
 import * as s from './ProductsPage.module.scss';
 
 const PoductsPage = () => {
@@ -83,6 +85,8 @@ const PoductsPage = () => {
         </div>
 
         <div className={s[`main__card-container`]}>
+          {store.meta === Meta.loading && <Loader />}
+          {store.meta === Meta.error && <div>Error loading products</div>}
           {store.currentProducts?.map((product) => {
             return (
               <Card
