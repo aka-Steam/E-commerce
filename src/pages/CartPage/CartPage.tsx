@@ -23,7 +23,6 @@ export const CartPage = () => {
     setCartItems([]);
   };
 
-
   const totalItems = cartItems.reduce((sum: number, item: any) => sum + item.quantity, 0);
   const totalPrice = cartItems.reduce((sum: number, item: any) => sum + item.price * item.quantity, 0);
 
@@ -41,32 +40,33 @@ export const CartPage = () => {
         </div>
       ) : (
         <div className={s.cart__items}>
-        {cartItems.map((item: any) => (
-          <div key={item.id} className={s.cart__item}>
-            <img src={item.images[0]} alt={item.title} className={s.cart__item_image} />
-            <div className={s.cart__item_info}>
-              <Text tag="h3" view="p-20" weight="bold">
-                {item.title}
-              </Text>
-              <Text className={s.cart__item_price} view="p-20" weight="bold">
-                ${item.price}
-              </Text>
-              <div className={s.cart__item_quantity}>
-                <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className={s.cart__item_button}>
-                  -
-                </button>
-                <Text view="p-16">{item.quantity}</Text>
-                <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className={s.cart__item_button}>
-                  +
-                </button>
+          {cartItems.map((item: any) => (
+            <div key={item.id} className={s.cart__item}>
+              <img src={item.images[0]} alt={item.title} className={s.cart__item_image} />
+              <div className={s.cart__item_info}>
+                <Text tag="h3" view="p-20" weight="bold">
+                  {item.title}
+                </Text>
+                <Text className={s.cart__item_price} view="p-20" weight="bold">
+                  ${item.price}
+                </Text>
+                <div className={s.cart__item_quantity}>
+                  <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className={s.cart__item_button}>
+                    -
+                  </button>
+                  <Text view="p-16">{item.quantity}</Text>
+                  <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className={s.cart__item_button}>
+                    +
+                  </button>
+                </div>
+                <Button onClick={() => removeItem(item.id)} className={s.cart__item_remove}>
+                  Remove
+                </Button>
               </div>
-              <Button onClick={() => removeItem(item.id)} className={s.cart__item_remove}>
-                Remove
-              </Button>
             </div>
-          </div>
-        ))}
-      </div>)}
+          ))}
+        </div>
+      )}
 
       <div className={s.cart__summary}>
         <Text tag="h2" view="p-20" weight="bold">
@@ -74,6 +74,7 @@ export const CartPage = () => {
         </Text>
         <Text view="p-16">Total Items: {totalItems}</Text>
         <Text view="p-16">Total Price: ${totalPrice}</Text>
+        <Button disabled onClick={() => alert('Checkout is currently unavailable')} className={s.cart__summary_making}>Place an order</Button>
         <Button onClick={clearCart} className={s.cart__summary_clear}>
           Clear Cart
         </Button>
