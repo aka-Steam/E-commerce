@@ -30,27 +30,27 @@ const Carousel: React.FC<CarouselProps> = ({ source = [], alter, className }) =>
 
   return (
     <div className={cn(s.carousel, className)}>
-      <img
-        className={s.carousel__image}
-        src={images[currentIndex]}
-        alt={alter || 'Product image ' + currentIndex}
-      />
-      <button
-        className={cn(s.carousel__control, s.carousel__control_left)}
-        onClick={handlePrevClick}
-        type="button"
-        aria-label="Previous image"
-      >
-        <ArrowLeftIcon width="31" height="31" strokeWidth="3" />
-      </button>
-      <button
-        className={cn(s.carousel__control, s.carousel__control_right)}
-        onClick={handleNextClick}
-        type="button"
-        aria-label="Next image"
-      >
-        <ArrowRightIcon width="31" height="31" strokeWidth="3" />
-      </button>
+      <img className={s.carousel__image} src={images[currentIndex]} alt={alter || 'Product image ' + currentIndex} />
+      {source.length > 1 && (
+        <>
+          <button
+            className={cn(s.carousel__control, s.carousel__control_left)}
+            onClick={handlePrevClick}
+            type="button"
+            aria-label="Previous image"
+          >
+            <ArrowLeftIcon width="31" height="31" strokeWidth="3" />
+          </button>
+          <button
+            className={cn(s.carousel__control, s.carousel__control_right)}
+            onClick={handleNextClick}
+            type="button"
+            aria-label="Next image"
+          >
+            <ArrowRightIcon width="31" height="31" strokeWidth="3" />
+          </button>
+        </>
+      )}
     </div>
   );
 };
