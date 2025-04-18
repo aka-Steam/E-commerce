@@ -1,0 +1,125 @@
+@use 'styles/variables' as *;
+
+.cart {
+    padding: $general-padding-xl;
+
+    &__title {
+        margin-bottom: $space-xxxl;
+        text-align: center;
+    }
+
+    &__empty {
+        text-align: center;
+        padding: $space-xxxl;
+    }
+
+    &__items {
+        display: flex;
+        flex-direction: column;
+        gap: $space-xl;
+    }
+
+    &__item {
+        display: flex;
+        gap: $space-xl;
+        padding: $space-xl;
+        background-color: $color-bg;
+
+        &_image {
+            width: 120px;
+            height: 120px;
+            border: 1px solid $color-bdc-header;
+            object-fit: cover;
+        }
+
+        &_info {
+            flex: 1;
+        }
+
+        &_price {
+            margin: $space-s 0;
+        }
+
+        &_quantity {
+            display: flex;
+            align-items: center;
+            gap: $space-s;
+            margin: $space-s 0;
+        }
+
+        &_button {
+            padding: $space-xxs $space-s;
+            border: 1px solid $color-bdc-header;
+            background-color: $color-bg;
+            cursor: pointer;
+            color: $text-primary;
+            font-weight: 600;
+
+            &:hover {
+                color: white;
+                background-color: $brand;
+            }
+        }
+
+        &_remove {
+            padding: $space-xs $space-l;
+            background-color: black;
+            color: white;
+            border: none;
+
+            &:hover {
+                background-color: $brand;
+            }
+        }
+
+        &:hover {
+            box-shadow: $shadow;
+        }
+    }
+
+    &__summary {
+        margin-top: $space-xxxl;
+        padding: $space-xl;
+        border: 2px solid $color-bdc-header;
+        
+        background-color: $color-bg;
+
+        &_clear {
+            margin-top: $space-l;
+            padding: $space-s $space-xl;
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $brand;
+            }
+        }
+
+        
+    }
+
+    @include xl {
+        padding: $general-padding-xl;
+    }
+
+    @include lg {
+        padding: $general-padding-md;
+    }
+
+    @include sm {
+        padding: $general-padding-sm;
+
+        &__item {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+
+            &_image {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    }
+}

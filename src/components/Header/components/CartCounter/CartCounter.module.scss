@@ -1,0 +1,22 @@
+@use 'styles/variables' as *;
+
+.counter {
+    position: absolute;
+    top: 18px;
+    left: -6px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background-color: $brand;
+    color: white;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include md {
+        left: -1px;
+    }
+}

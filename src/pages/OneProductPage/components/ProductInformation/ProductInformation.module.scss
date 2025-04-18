@@ -22,6 +22,27 @@
         margin-bottom: $space-xxxl;
     }
 
+    &__buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $space-xl $space-xxxl;
+    }
+
+    &__button {
+        padding-left: $space-xxl;
+        padding-right: $space-xxl;
+    }
+
+    &__button_add-to-cart {
+        background-color: transparent;
+        color: $text-primary;
+        border: 1px solid $text-primary;
+
+        &:hover {
+            border-color: $button-primary-bg-hover;
+        }
+    }
+
 
     // @include xl {
     //     &__subtitle {
