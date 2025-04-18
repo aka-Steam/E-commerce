@@ -29,4 +29,18 @@ pre {
 main {
   max-width: $general-max-width;
   margin: 0 auto;
+
+  padding: $general-padding-xl;
+
+  @include xl {
+    padding: $general-padding-xl;
+  }
+
+  @include lg {
+    padding: $general-padding-md;
+  }
+
+  @include sm {
+    padding: $general-padding-sm;
+  }
 }
