@@ -7,30 +7,28 @@ import { useLocalStorage } from 'hooks/useLocalStorage';
 import Carousel from '../Carousel';
 import * as s from './ProductInformation.module.scss';
 
-
 export type ProductInfoProps = {
   product?: ProductInfoModel;
   className?: string;
 };
 
 const ProductInformation: React.FC<ProductInfoProps> = ({ product, className }) => {
-    const [cartItems, setCartItems] = useLocalStorage('cart', []);
-    const addItemToCart = (item: ProductInfoModel) => {
-      // debugger;
-      const existingItemIndex = cartItems.findIndex((cartItem) => cartItem.id === item.id);
-      let newCartItems = [...cartItems];
-      
-      if (existingItemIndex !== -1) {
-        // Если товар уже есть, увеличиваем его количество
-        newCartItems[existingItemIndex].quantity += 1;
-      } else {
-        // Если товара нет, добавляем его с количеством 1
-        newCartItems.push({ ...item, quantity: 1 });
-      }
-  
-      setCartItems(newCartItems);
-    };
-  
+  const [cartItems, setCartItems] = useLocalStorage('cart', []);
+  const addItemToCart = (item: ProductInfoModel) => {
+    // debugger;
+    const existingItemIndex = cartItems.findIndex((cartItem) => cartItem.id === item.id);
+    let newCartItems = [...cartItems];
+
+    if (existingItemIndex !== -1) {
+      // Если товар уже есть, увеличиваем его количество
+      newCartItems[existingItemIndex].quantity += 1;
+    } else {
+      // Если товара нет, добавляем его с количеством 1
+      newCartItems.push({ ...item, quantity: 1 });
+    }
+
+    setCartItems(newCartItems);
+  };
 
   return (
     <div className={cn(s[`product-info`], className)}>
@@ -46,8 +44,15 @@ const ProductInformation: React.FC<ProductInfoProps> = ({ product, className }) 
           {'$' + product.price}
         </Text>
         <div className={s[`product-info__buttons`]}>
-          <Button className={s[`product-info__button`]}>Buy Now</Button>
-          <Button className={cn(s[`product-info__button`], s['product-info__button_add-to-cart'])} onClick={() => addItemToCart(product)}>Add to Cart</Button>
+          <Button className={s[`product-info__button`]} onClick={() => alert('Checkout is currently unavailable')}>
+            Buy Now
+          </Button>
+          <Button
+            className={cn(s[`product-info__button`], s['product-info__button_add-to-cart'])}
+            onClick={() => addItemToCart(product)}
+          >
+            Add to Cart
+          </Button>
         </div>
       </div>
     </div>
