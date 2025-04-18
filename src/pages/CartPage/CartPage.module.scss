@@ -84,6 +84,10 @@
         
         background-color: $color-bg;
 
+        &_making{
+            margin-top: $space-l;
+        }
+        
         &_clear {
             margin-top: $space-l;
             padding: $space-s $space-xl;
