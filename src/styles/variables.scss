@@ -5,13 +5,14 @@
     --color-bg-header: #FFFFFF;
     --color-bg-main: #FAFAFA;
     --color-bg-footer: #FFFFFF;
+    --color-shadow: rgba(0, 0, 0, 0.25);
 
     --color-bdc-header: #F3F3F3;
     
     --color-text:#151411;
     --color-text-disabled: rgba(0, 0, 0, 0.2);
     
-    --shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    --shadow: 0 4px 4px var(--color-shadow);
 }
 
 [data-theme="dark"] {
@@ -19,13 +20,14 @@
     --color-bg-header: #291816;
     --color-bg-main: #190906;
     --color-bg-footer: #000000;
+    --color-shadow: rgba(255, 255, 255, 0.25);
 
     --color-bdc-header: #4D4646;
     
     --color-text:#FFFFFF;
     --color-text-disabled: rgba(255, 255, 255, 0.2);
     
-    --shadow: 0 4px 10px rgba(255, 255, 255, 0.25);
+    --shadow: 0 4px 10px var(--color-shadow);
 }
 
 $brand: #518581;
@@ -50,6 +52,7 @@ $color-bg: var(--color-bg);
 $color-bg-header: $color-bg;
 $color-bg-main: var(--color-bg-main);
 $color-bg-footer: #000000;
+$color-shadow: var(--color-shadow);
 
 $color-bdc-header: var(--color-bdc-header);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import LoaderIcon from 'components/icons/LoaderIcon';
-import s from './Loader.module.scss';
+import * as s from './Loader.module.scss';
 
 export type LoaderProps = {
   /** Размер */
