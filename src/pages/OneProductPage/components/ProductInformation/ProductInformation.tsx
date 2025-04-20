@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
 import Text from 'components/Text';
 import Button from 'components/Button';
@@ -14,6 +16,22 @@ export type ProductInfoProps = {
 
 const ProductInformation: React.FC<ProductInfoProps> = ({ product, className }) => {
   const [cartItems, setCartItems] = useLocalStorage('cart', []);
+  const [quantityInCart, setQuantityInCart] = useState(0);
+
+  // Проверяем наличие товара в корзине при загрузке компонента
+  useEffect(() => {
+    if (product) {
+      const itemInCart = cartItems.find((item: any) => item.id === product.id);
+      if (itemInCart) {
+        // setIsInCart(true);
+        setQuantityInCart(itemInCart.quantity || 0);
+      } else {
+        // setIsInCart(false);
+        setQuantityInCart(0);
+      }
+    }
+  }, [cartItems, product]);
+
   const addItemToCart = (item: ProductInfoModel) => {
     // debugger;
     const existingItemIndex = cartItems.findIndex((cartItem) => cartItem.id === item.id);
@@ -28,6 +46,14 @@ const ProductInformation: React.FC<ProductInfoProps> = ({ product, className }) 
     }
 
     setCartItems(newCartItems);
+  };
+
+  const updateQuantity = (itemId: number, newQuantity: number) => {
+    if (newQuantity === 0) {
+      setCartItems(cartItems.filter((item: any) => item.id !== itemId));
+    } else {
+      setCartItems(cartItems.map((item: any) => (item.id === itemId ? { ...item, quantity: newQuantity } : item)));
+    }
   };
 
   return (
@@ -47,12 +73,39 @@ const ProductInformation: React.FC<ProductInfoProps> = ({ product, className }) 
           <Button className={s[`product-info__button`]} onClick={() => alert('Checkout is currently unavailable')}>
             Buy Now
           </Button>
-          <Button
-            className={cn(s[`product-info__button`], s['product-info__button_add-to-cart'])}
-            onClick={() => addItemToCart(product)}
-          >
-            Add to Cart
-          </Button>
+
+          {quantityInCart > 0 ? (
+            <>
+              <NavLink to="/cart" className={cn(s[`product-info__button`], s['product-info__button_go-to-cart'])}>
+                <Text tag={'div'} view={'button'}>
+                  Go to Cart
+                </Text>
+              </NavLink>
+
+              <div className={s[`cart-quantity`]}>
+                <button
+                  onClick={() => updateQuantity(product.id, quantityInCart - 1)}
+                  className={s[`cart-quantity__button`]}
+                >
+                  -
+                </button>
+                <Text view="p-18">{quantityInCart}</Text>
+                <button
+                  onClick={() => updateQuantity(product.id, quantityInCart + 1)}
+                  className={s[`cart-quantity__button`]}
+                >
+                  +
+                </button>
+              </div>
+            </>
+          ) : (
+            <Button
+              className={cn(s[`product-info__button`], s['product-info__button_add-to-cart'])}
+              onClick={() => addItemToCart(product)}
+            >
+              Add to Cart
+            </Button>
+          )}
         </div>
       </div>
     </div>
