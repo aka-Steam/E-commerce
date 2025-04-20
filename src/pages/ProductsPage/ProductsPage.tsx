@@ -85,22 +85,30 @@ const PoductsPage = () => {
         </div>
 
         <div className={s[`main__card-container`]}>
-          {store.meta === Meta.loading && <Loader />}
-          {store.meta === Meta.error && <div>Error loading products</div>}
-          {store.currentProducts?.map((product) => {
-            return (
-              <Card
-                key={product.id}
-                image={product.images[0]}
-                captionSlot={product.category}
-                title={product.title}
-                subtitle={product.description}
-                contentSlot={'$' + product.price}
-                actionSlot={<Button onClick={() => addItemToCart(product)}>Add to Cart</Button>}
-                onClick={handleCardClick(product.id)}
-              />
-            );
-          })}
+          {store.meta === Meta.loading || store.meta === Meta.error ? (
+            store.meta === Meta.loading ? (
+              <Loader />
+            ) : (
+              <Text view="p-20" color="primary">
+                Error loading products
+              </Text>
+            )
+          ) : (
+            store.currentProducts?.map((product) => {
+              return (
+                <Card
+                  key={product.id}
+                  image={product.images[0]}
+                  captionSlot={product.category}
+                  title={product.title}
+                  subtitle={product.description}
+                  contentSlot={'$' + product.price}
+                  actionSlot={<Button onClick={() => addItemToCart(product)}>Add to Cart</Button>}
+                  onClick={handleCardClick(product.id)}
+                />
+              );
+            })
+          )}
         </div>
 
         <Pagination className={s.main__paggination} />

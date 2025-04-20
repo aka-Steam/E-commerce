@@ -1,28 +1,33 @@
-
 @use 'styles/variables' as *;
 
 .hero {
-    text-align: center;
-    margin-bottom: $space-xxxl;
-  
-    &__title {
-      margin-bottom: 20px;
-    }
-  
-    &__subtitle {
-      max-width: 600px;
-      margin: 0 auto;
-    }
+  text-align: center;
+  margin-bottom: $space-xxxl;
+
+  &__title {
+    margin-bottom: 20px;
   }
 
-  
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: $space-xl;
+  &__subtitle {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
 
-    @include md {
-        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-        gap: $space-m;
-    }
+.state-сontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: $space-xl;
+
+  @include md {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: $space-m;
+  }
 }

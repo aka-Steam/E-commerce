@@ -22,22 +22,26 @@ const CategoriesPage: React.FC = () => {
           Categories
         </Text>
         <Text view="p-20" color="secondary" className={s.hero__subtitle}>
-        Here you can find all product categories organized for your convenience
+          Here you can find all product categories organized for your convenience
         </Text>
       </section>
-
-      <div className={s.grid}>
-        {categoriesStore.meta === Meta.loading && <Loader />}
-        {categoriesStore.meta === Meta.error && <div>Error loading categories</div>}
-        {categoriesStore.categories.map((category) => (
-          <CategoryCard
-            key={category.id}
-            id={category.id}
-            name={category.name}
-            image={category.image}
-          />
-        ))}
-      </div>
+      {categoriesStore.meta === Meta.loading || categoriesStore.meta === Meta.error ? (
+        <div className={s[`state-сontainer`]}>
+          {categoriesStore.meta === Meta.loading ? (
+            <Loader />
+          ) : (
+            <Text view="p-20" color="primary">
+              Error loading categories
+            </Text>
+          )}
+        </div>
+      ) : (
+        <div className={s.grid}>
+          {categoriesStore.categories.map((category) => (
+            <CategoryCard key={category.id} id={category.id} name={category.name} image={category.image} />
+          ))}
+        </div>
+      )}
     </main>
   );
 };
