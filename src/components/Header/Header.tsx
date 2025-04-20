@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
 import { toggleTheme } from 'utils/theme';
 import BagIcon from 'components/icons/BagIcon';
-import UserIcon from 'components/icons/UserIcon';
+// import UserIcon from 'components/icons/UserIcon';
 import SunMoonIcon from 'components/icons/SunMoonIcon';
 import { LINKS } from './config';
 import Logo from './components/Logo';

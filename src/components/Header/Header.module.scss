@@ -63,6 +63,12 @@
         &:hover {
             color: $brand;
         }
+
+        &:focus{
+            color: $brand;
+            border-radius: 2px;
+            outline: 2px solid black;
+        }
     }
 
     &__burger {

@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import Text from 'components/Text';
 import VkIcon from 'components/icons/VkIcon';
 import TgIcon from 'components/icons/TgIcon';
@@ -8,7 +9,9 @@ import * as s from './Footer.module.scss';
 const Footer = () => (
   <footer className={s.footer}>
     <div className={s.footer__container}>
-      <Logo className={s.footer__logo} />
+      <NavLink to="/products" className={s.footer__logo} >
+        <Logo />
+      </NavLink>
       <div className={s.contact}>
         <div className={s[`contact__text-container`]}>
           <Text view={'p-18'} tad={'span'}>
