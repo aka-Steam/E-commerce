@@ -28,9 +28,13 @@ const Carousel: React.FC<CarouselProps> = ({ source = [], alter, className }) =>
     setCurrentIndex((prevIndex) => (prevIndex < images.length - 1 ? prevIndex + 1 : 0));
   }, [images.length]);
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = noImage;
+  };
+
   return (
     <div className={cn(s.carousel, className)}>
-      <img className={s.carousel__image} src={images[currentIndex]} alt={alter || 'Product image ' + currentIndex} />
+      <img className={s.carousel__image} src={images[currentIndex]} alt={alter || 'Product image ' + currentIndex} onError={handleImageError}/>
       {source.length > 1 && (
         <>
           <button

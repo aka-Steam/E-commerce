@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import noImage from 'assets/noimage.png';
 import Text from 'components/Text';
 import * as s from './Card.module.scss';
 
@@ -37,10 +38,14 @@ const Card: React.FC<CardProps> = ({
     e.stopPropagation();
   };
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = noImage;
+  };
+
   return (
     <div className={cn(s.card, className)} onClick={onClick}>
       <div className={s.card__header}>
-        <img className={s['card__header-src']} src={image} alt={'card'} />
+        <img className={s['card__header-src']} src={image} alt={title} onError={handleImageError}/>
       </div>
       <div className={s.card__body}>
         {captionSlot && (
