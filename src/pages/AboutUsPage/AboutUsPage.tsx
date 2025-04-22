@@ -13,7 +13,7 @@ const AboutUsPage = () => {
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-  
+
   return (
     <main>
       <section className={s.hero}>
@@ -88,11 +88,12 @@ const AboutUsPage = () => {
         </Text>
         <div className={s.video__container}>
           <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/UHO1IitpNto?si=zir4ldtfVh9HpkZZ&amp;start=64"
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            src="https://vk.com/video_ext.php?oid=-197257188&id=456239383&hd=2&t=57s&autoplay=1"
+            width="853"
+            height="480"
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+            frameBorder="0"
+            allowFullScreen
           ></iframe>
         </div>
       </section>
