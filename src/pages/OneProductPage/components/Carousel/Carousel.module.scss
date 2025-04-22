@@ -7,8 +7,8 @@
 
     &__image {
         display: block;
-        width: 100%;
-        height: 100%;
+        width: 600px;
+        height: 600px;
         border: 1px solid $color-bdc-header;
         background-color: $card-image-bg;
         object-fit: contain;
@@ -98,17 +98,21 @@
 
 @include sm {
 
-    .carousel,
+    .carousel {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1;
+    }
+
     .carousel__image {
         width: 100%;
-        aspect-ratio: 1;
-        height: calc(100vw - 2 * $general-padding-sm);
+        height: 100%;
     }
 
     .carousel__control {
-        width: 40px;
-        height: 40px;
-        top: calc(50% - 20px);
+        width: 44px;
+        height: 44px;
+        top: calc(50% - 22px);
 
         &_left {
             left: $space-s;

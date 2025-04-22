@@ -26,6 +26,11 @@
         padding-right: $general-padding-sm;
     }
 
+    @include xs {
+        padding-left: $general-padding-xs;
+        padding-right: $general-padding-xs;
+    }
+
     &__container {
         margin: 0 auto;
         margin-bottom: $space-xl;

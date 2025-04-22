@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useLocalStore } from 'utils/useLocalStore';
 import CategoriesStore from 'stores/local/CategoriesStore';
@@ -14,6 +15,12 @@ const CategoriesPage: React.FC = () => {
   React.useEffect(() => {
     categoriesStore.fetchCategories();
   }, []);
+
+  const { pathname } = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <main>

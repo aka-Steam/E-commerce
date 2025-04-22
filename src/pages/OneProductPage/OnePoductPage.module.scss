@@ -3,7 +3,7 @@
 .main {
     padding: $general-padding-xl;
     padding-top: $general-padding-lg;
-    max-width: 1501px;
+    // max-width: 1501px;
 
     &__back {
         margin-bottom: $space-xxl;
@@ -48,8 +48,10 @@
     }
 
     @include sm {
-        padding: $general-padding-sm;
-
-        
+        padding: $general-padding-sm;    
+    }
+    
+    @include xs {
+        padding: $general-padding-sm $general-padding-xs;    
     }
 }

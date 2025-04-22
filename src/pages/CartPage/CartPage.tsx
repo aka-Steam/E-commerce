@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Text from 'components/Text';
 import Button from 'components/Button';
 import { useLocalStorage } from 'hooks/useLocalStorage';
@@ -6,6 +7,7 @@ import * as s from './CartPage.module.scss';
 
 export const CartPage = () => {
   const [cartItems, setCartItems] = useLocalStorage('cart', []);
+  const { pathname } = useLocation();
 
   const updateQuantity = (itemId: number, newQuantity: number) => {
     if (newQuantity === 0) {
@@ -25,6 +27,10 @@ export const CartPage = () => {
 
   const totalItems = cartItems.reduce((sum: number, item: any) => sum + item.quantity, 0);
   const totalPrice = cartItems.reduce((sum: number, item: any) => sum + item.price * item.quantity, 0);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <div className={s.cart}>

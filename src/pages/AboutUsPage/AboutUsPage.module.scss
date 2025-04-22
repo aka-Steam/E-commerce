@@ -1,20 +1,5 @@
 @use 'styles/variables' as *;
 
-.main {
-  padding: $general-padding-xl;
-
-  @include xl {
-    padding: $general-padding-xl;
-  }
-
-  @include lg {
-    padding: $general-padding-md;
-  }
-
-  @include sm {
-    padding: $general-padding-sm;
-  }
-}
 
 .hero {
   text-align: center;

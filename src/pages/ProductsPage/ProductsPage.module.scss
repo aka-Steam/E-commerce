@@ -66,4 +66,34 @@
     @include sm{
         padding: $general-padding-sm;
     }
+
+    @include xs {
+        padding: $general-padding-sm $general-padding-xs;
+
+        &__controls-group {
+            gap: $space-xl 0;
+        }
+    }
+}
+
+.serch-button{
+    &__text{
+        display: inline;
+    }
+    &__icon{
+        display: none;
+        
+    }
+
+    @include sm{
+        padding: 12px;
+
+        &__text{
+            display: none;
+        }
+        &__icon{
+            display: block;
+            @include square(28px) 
+        }  
+    }
 }

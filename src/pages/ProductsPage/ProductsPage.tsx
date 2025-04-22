@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import rootStore from 'stores/global/RootStore';
@@ -13,6 +13,7 @@ import MultiDropdown from 'components/MultiDropdown';
 import Card from 'components/Card';
 import Pagination from 'components/Pagination';
 import Loader from 'components/Loader';
+import LoupeIcon from 'components/icons/LoupeIcon';
 import Meta from 'utils/meta';
 import * as s from './ProductsPage.module.scss';
 
@@ -32,6 +33,13 @@ const PoductsPage = () => {
   useEffect(() => {
     store.fetchProducts();
   }, [store]);
+
+
+  const { pathname } = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   const [cartItems, setCartItems] = useLocalStorage('cart', []);
   const addItemToCart = (item: ProductInfoModel) => {
@@ -69,7 +77,10 @@ const PoductsPage = () => {
               placeholder="Search product"
               onEnterPress={handleSearch}
             ></Input>
-            <Button onClick={handleSearch}>Find now</Button>
+            <Button onClick={handleSearch} className={s[`serch-button`]}>
+              <span className={s[`serch-button__text`]}>Find now</span>
+              <LoupeIcon className={s[`serch-button__icon`]}/>
+            </Button>
           </div>
 
           <MultiDropdown className={s[`main__filter`]} />
@@ -111,7 +122,7 @@ const PoductsPage = () => {
           )}
         </div>
 
-        <Pagination className={s.main__paggination} />
+        { !(store.meta === Meta.loading || store.meta === Meta.error) && <Pagination className={s.main__paggination} />}
       </main>
     </StoreProvider>
   );

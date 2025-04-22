@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Text from 'components/Text';
 import chellImg from 'assets/chell.jpg';
 import pepeImg from 'assets/pepe.jpg';
@@ -7,8 +8,14 @@ import Medal from './components/Medal';
 import * as s from './AboutUsPage.module.scss';
 
 const AboutUsPage = () => {
+  const { pathname } = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  
   return (
-    <main className={s.main}>
+    <main>
       <section className={s.hero}>
         <Text view="title" className={s.hero__title}>
           About Us

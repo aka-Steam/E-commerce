@@ -90,12 +90,14 @@ export default class ProductItemStore implements ILocalStore {
 
     this._meta = Meta.loading;
     try {
-      const response = await axiosInstance.get('/products', {
-        params: {
-          limit: 3,
-          offset: 1,
-        },
-      });
+      const response = await axiosInstance.get(`/products/${this._id}/related`);
+      // тестовые related items на основе общего списка товаров
+      // const response = await axiosInstance.get('/products', {
+      //   params: {
+      //     limit: 3,
+      //     offset: 1,
+      //   },
+      // });
 
       runInAction(() => {
         if (response.status < 200 || response.status >= 300) {
@@ -103,7 +105,7 @@ export default class ProductItemStore implements ILocalStore {
           return;
         }
 
-        this._relatedItems = response.data.map(normalizeProductInfo);
+        this._relatedItems = response.data.slice(0, 3).map(normalizeProductInfo);
         this._meta = Meta.success;
       });
     } catch (error) {

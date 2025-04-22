@@ -151,6 +151,10 @@
     @include sm {
         padding: 0 $general-padding-sm;
     }
+
+    @include xs {
+        padding: 0 $general-padding-xs;
+    }
 }
 
 .nav {

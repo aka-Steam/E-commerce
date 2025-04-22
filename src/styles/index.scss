@@ -51,4 +51,8 @@ main {
   @include sm {
     padding: $general-padding-sm;
   }
+
+  @include xs {
+    padding: $general-padding-sm $general-padding-xs;
+  }
 }

@@ -37,6 +37,21 @@
     &__pages {
         display: inline-block;
         margin: 0 18px;
+        
+        &_xs{
+            display: none;
+        }
+
+        @include xs{
+            &_xl{
+                display: none;
+            }
+    
+            &_xs{
+                display: inline-block;
+            }
+        }
+        
     }
 
     &__ellipsis {

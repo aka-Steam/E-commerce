@@ -55,37 +55,40 @@ const OnePoductPage = () => {
 
   return (
     <StoreProvider store={store}>
-      {store.product && (
-        <main className={s.main}>
-          <BackButton className={s[`main__back`]} onClick={() => navigate(-1)}>
-            Back
-          </BackButton>
-
-          <ProductInformation product={store.product} className={s[`main__product-info`]} />
-
-          <Text className={s[`main__reletad-items-title`]} tag="h2" weight="bold">
-            Related Items
-          </Text>
-
-          <div className={s[`main__related-items-container`]}>
-            {store.relatedItems &&
-              store.relatedItems?.map((product) => {
-                return (
-                  <Card
-                    key={product.id}
-                    image={product.images[0]}
-                    captionSlot={product.category}
-                    title={product.title}
-                    subtitle={product.description}
-                    contentSlot={'$' + product.price}
-                    actionSlot={<Button onClick={() => addItemToCart(product)}>Add to Cart</Button>}
-                    onClick={handlerCardClick(product.id)}
-                  />
-                );
-              })}
-          </div>
-        </main>
-      )}
+      <main className={s.main}>
+        <BackButton className={s[`main__back`]} onClick={() => navigate(-1)}>
+          Back
+        </BackButton>
+        {store.product && (
+          <>
+            <ProductInformation product={store.product} className={s[`main__product-info`]} />
+            {store.relatedItems.length > 0 && (
+              <>
+                <Text className={s[`main__reletad-items-title`]} tag="h2" weight="bold">
+                  Related Items
+                </Text>
+                <div className={s[`main__related-items-container`]}>
+                  {store.relatedItems &&
+                    store.relatedItems?.map((product) => {
+                      return (
+                        <Card
+                          key={product.id}
+                          image={product.images[0]}
+                          captionSlot={product.category}
+                          title={product.title}
+                          subtitle={product.description}
+                          contentSlot={'$' + product.price}
+                          actionSlot={<Button onClick={() => addItemToCart(product)}>Add to Cart</Button>}
+                          onClick={handlerCardClick(product.id)}
+                        />
+                      );
+                    })}
+                </div>{' '}
+              </>
+            )}
+          </>
+        )}
+      </main>
     </StoreProvider>
   );
 };
