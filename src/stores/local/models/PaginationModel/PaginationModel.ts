@@ -65,7 +65,6 @@ export class PaginationModel implements ILocalStore {
 
   prev() {
     this._currentPage = this._currentPage - 1;
-    console.log('awwwww&');
     window.scrollTo(0, 360);
     // TODO: заставить работать вариант со smooth
     // window.scrollTo({ top: 360, left: 0, behavior: 'smooth'})
