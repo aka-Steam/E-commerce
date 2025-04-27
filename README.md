@@ -1,50 +1,68 @@
-# React + TypeScript + Vite
+# E-commerce
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About the Project
 
-Currently, two official plugins are available:
+This is an educational pet-project of an online store built using React, TypeScript, and MobX. The application interacts with the open backend API [Platzi Fake Store API](https://fakeapi.platzi.com/en/) to fetch product and category data.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Technology Stack:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Frontend**: React + TypeScript
+- **State Management**: MobX
+- **Package manager**: yarn
+- **API requests**: Axios
+- **Styling**: CSS/SCSS
+- **Routing**: React Router
+- **Module  Builder**:  Initially Vite, now Webpack
 
-- Configure the top-level `parserOptions` property like this:
+---
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🛠️ Installation and Running:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+To install and run the project locally, follow these steps:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Clone the repository:
+   
+   ```bash
+   git clone https://github.com/aka-Steam/E-commerce.git
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+2. Navigate to the project directory:
+   
+   ```bash
+   cd E-commerce
+   ```
+
+3. Install dependencies:
+   
+   ```bash
+   yarn install
+   ```
+
+4. Create a `.env` file with the required environment variables (e.g., API URL):
+   
+   ```env
+   API_URL = "http://comp.example/api/v1"
+   ```
+
+5. Start the application:
+   
+   ```bash
+   yarn dev
+   ```
+
+The application will be available locally at: [http://127.0.0.1:9000/#/](http://127.0.0.1:9000/#/)
+
+---
+
+## 🎥 Demo:
+
+You can try the application online:
+[https://aka-steam.github.io/E-commerce/#/](https://aka-steam.github.io/E-commerce/#/)
+
+---
+
+## 🙏Special Thanks:
+
+I would like to express my gratitude to the developer school [kts Metaclass](https://metaclass.kts.studio/) for their training, which made this project possible, as well as to my mentors who helped me during its creation and provided valuable feedback.
